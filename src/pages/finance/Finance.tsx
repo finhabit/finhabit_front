@@ -2,23 +2,24 @@ import { useMemo } from "react";
 import styled from "styled-components";
 import BottomNav from "../../components/BottomNav";
 
-// 아이콘(이미지는 교체해서 사용하세요)
-import bellIcon from "../../assets/bell.png";
-import searchIcon from "../../assets/search.png";
-import bulbIcon from "../../assets/bulb.png";
-import quizIcon from "../../assets/quiz.png";
-import calendarIcon from "../../assets/calendar.png";
-import plusIcon from "../../assets/plus.png";
+// 아이콘
+import bellIcon from "../../assets/bell.svg";
+import searchIcon from "../../assets/search.svg";
+import bulbIcon from "../../assets/bulb.svg";
+import quizIcon from "../../assets/quiz.svg";
+import calendarIcon from "../../assets/calendar.svg";
+import plusIcon from "../../assets/plus.svg";
 
-export default function Financ() {
-    // 카드 사이 간격: 1→2 = 71px, 2→3 = 63px
-    const gaps = useMemo(() => ({ afterFirst: 71, afterSecond: 63 }), []);
+export default function Finance() {
+    // 카드 사이 간격: 1→2 = 33px, 2→3 = 27px 
+    const gaps = useMemo(() => ({ afterFirst: 33, afterSecond: 27 }), []);
 
     return (
         <Screen>
             <SafeArea>
+                {/* 상단 헤더 (오른쪽 아이콘 고정) */}
                 <Header>
-                    <HeaderSpacer />{/* 왼쪽 정렬 맞추기용 */}
+                    <HeaderSpacer />
                     <HeaderIcons>
                         <IconBtn aria-label="알림">
                             <TopIcon src={bellIcon} alt="bell" />
@@ -41,7 +42,13 @@ export default function Financ() {
                         </Right>
                     </TitleRow>
 
-                    <CardKnowledge />{/* height 114, bg #DFE678 */}
+                    <CardKnowledge>
+                        <CardBody>
+                            <CardTitle>금융 한 줄 지식</CardTitle>
+                            <CardDesc>오늘은 복리와 단리의 차이를 알아봐요.</CardDesc>
+                        </CardBody>
+                    </CardKnowledge>
+
                     <Gap style={{ height: gaps.afterFirst }} />
                 </Section>
 
@@ -57,7 +64,13 @@ export default function Financ() {
                         </Right>
                     </TitleRow>
 
-                    <CardQuiz />{/* height 114, bg rgba(223,230,120,0.5) */}
+                    <CardQuiz>
+                        <CardBody>
+                            <CardTitle>퀴즈: 예금 이자 계산</CardTitle>
+                            <CardDesc>연 3% 단리로 1,000,000원을 2년 맡기면 이자는?</CardDesc>
+                        </CardBody>
+                    </CardQuiz>
+
                     <Gap style={{ height: gaps.afterSecond }} />
                 </Section>
 
@@ -73,17 +86,28 @@ export default function Financ() {
                         </Right>
                     </TitleRow>
 
-                    <CardArchive />{/* height 260, border #DFE678 */}
+                    <CardArchive>
+                        <CardBody>
+                            <CardTitle>이번 주 학습 요약</CardTitle>
+                            <div>
+                                그래프
+                            </div>
+                        </CardBody>
+                    </CardArchive>
                 </Section>
+
+                <BottomSpacer />
             </SafeArea>
 
-            <BottomPadding />{/* 고정 하단바 공간 확보 */}
             <BottomNav />
         </Screen>
     );
 }
 
 /* ===================== styled ===================== */
+
+const SCREEN_MAX = 414;
+const CARD_MAX = 321;
 
 const Screen = styled.div`
   width: 100%;
@@ -96,8 +120,8 @@ const Screen = styled.div`
 
 const SafeArea = styled.main`
   width: 100%;
-  max-width: 414px; /* 하단 네비와 동일한 기준 너비 */
-  padding: 12px 16px 0;
+  max-width: ${SCREEN_MAX}px;  
+  padding:35px;
   box-sizing: border-box;
 `;
 
@@ -109,7 +133,7 @@ const Header = styled.header`
 `;
 
 const HeaderSpacer = styled.div`
-  width: 28px; /* 왼쪽 아이콘 없을 때 균형 맞춤 */
+  width: 28px;  
 `;
 
 const HeaderIcons = styled.div`
@@ -129,16 +153,23 @@ const TopIcon = styled.img`
   height: 22px;
 `;
 
+/* 섹션(제목줄 + 카드)만 중앙 정렬 */
 const Section = styled.section`
   display: flex;
   flex-direction: column;
+  align-items: center;      
+  width: 100%;
 `;
 
+/* 제목줄은 카드 폭과 동일하게 가운데 */
 const TitleRow = styled.div`
+  position: relative;               
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px; /* 타이틀과 카드 사이 간격(이미지 기준으로 타이트) */
+  width: 100%;
+  max-width: ${CARD_MAX}px;           
+  margin-bottom: 10px;                
 `;
 
 const Left = styled.div`
@@ -150,16 +181,20 @@ const Left = styled.div`
 const Right = styled.div``;
 
 const TinyIcon = styled.img`
-  width: 18px;
-  height: 18px;
+  width: 32px;
+  height: 32px;
 `;
 
 const TinyPlus = styled.img`
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
 `;
 
 const TitleText = styled.span`
+  position: absolute;          
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;          
   color: #000;
   font-family: Pretendard, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
     "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
@@ -169,12 +204,16 @@ const TitleText = styled.span`
   line-height: normal;
 `;
 
+/* 카드 베이스: 중앙 + 공통 그림자 */
 const BaseCard = styled.div`
   width: 100%;
+  max-width: ${CARD_MAX}px;
   border-radius: 23px;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 `;
 
+/* 각 카드 스타일 */
 const CardKnowledge = styled(BaseCard)`
   height: 114px;
   background: #dfe678;
@@ -191,8 +230,33 @@ const CardArchive = styled(BaseCard)`
   border: 2px solid #dfe678;
 `;
 
+/* 카드 내부 컨텐츠 레이아웃 */
+const CardBody = styled.div`
+  height: 100%;
+  display: flex;
+  padding-left:20px;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const CardTitle = styled.h3`
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2a2a2a;
+`;
+
+const CardDesc = styled.p`
+  margin: 0;
+  font-size: 13px;
+  color: #4a4a4a;
+`;
+
+
+
 const Gap = styled.div``;
 
-const BottomPadding = styled.div`
-  height: 84px; /* 하단 고정 네비(64px) + 여유 20px */
+/* 하단 고정 네비 공간 확보 */
+const BottomSpacer = styled.div`
+  height: 84px; /* 하단 고정 네비(64px) + 여유 */
 `;

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Home from "./pages/home/Home";
+import Finance from "./pages/finance/Finance";
+import Mypage from "./pages/mypage/Mypage";
 import { Routes, Route } from "react-router-dom";
 
 const AppWrapper = styled.div`
@@ -17,8 +19,9 @@ function App() {
   return (
     <AppWrapper>
       <Routes>
+        <Route path="/finance" element={<Finance />} />
         <Route path="/" element={<Home />} />
-        {/* 위와 같이 페이지 만들고 연결해주세요 */}
+        <Route path="/mypage" element={<Mypage />} />
       </Routes>
     </AppWrapper>
   );
