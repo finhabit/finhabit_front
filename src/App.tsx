@@ -1,7 +1,12 @@
 import styled from "styled-components";
+
 import Home from "./pages/home/Home";
+
 import Notification from "./pages/notification/Notification";
 import Mission from "./pages/mission/Mission";
+
+import LedgerMain from "./pages/ledger/ledgermain/LedgerMain";
+import ConsumePlus from "./pages/ledger/consumeplus/ConsumePlus";
 import { Routes, Route } from "react-router-dom";
 
 const AppWrapper = styled.div`
@@ -22,6 +27,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/notification" element={<Notification />} />
         <Route path="/mission" element={<Mission />} />
+        <Route path="/ledger" element={<LedgerMain />} />
+        <Route path="/consumeplus" element={<ConsumePlus />} />
         {/* 위와 같이 페이지 만들고 연결해주세요 */}
       </Routes>
     </AppWrapper>

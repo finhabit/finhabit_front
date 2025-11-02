@@ -1,0 +1,61 @@
+import { useNavigate } from "react-router-dom";
+import back from "../../../assets/back.png";
+import setting from "../../../assets/setting.png";
+import piggybank from "../../../assets/piggybank.png";
+import plus from "../../../assets/plus.png";
+import percategory from "../../../assets/percategory.png";
+
+import * as S from "./LedgerMain.style";
+
+export default function LedgerMain(){
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <S.UpLine>
+        <S.Icons src={back} alt="이전으로" onClick={() => navigate(-1)} />
+        가계부
+        <S.Icons src={setting} alt="설정아이콘" />
+      </S.UpLine>
+      <S.ConsumeSection>
+        <S.L_Section>
+          <S.L_Header>
+            <S.MiniIcons src={piggybank} alt="저금통 아이콘" />
+            오늘의 소비
+            <S.PlusIcons
+              src={plus}
+              alt="추가버튼"
+              onClick={() => navigate("/consumeplus")}
+            />
+          </S.L_Header>
+          <S.ContentBox_1>
+            <S.Perrow>
+              <div>메가커피</div>
+              <div>2,000원</div>
+            </S.Perrow>
+          </S.ContentBox_1>
+        </S.L_Section>
+        <S.L_Section>
+          <S.L_Header>
+            <S.MiniIcons src={percategory} alt="카테고리 아이콘" />
+            카테고리별 소비
+            <S.PlusIcons
+              src={plus}
+              alt="추가버튼"
+              onClick={() => navigate("/consumeplus")}
+            />
+          </S.L_Header>
+          <S.ContentBox>
+            <S.Perrow>
+              <S.CategoryIcon>
+                <S.MiniIcons src={percategory} alt="더미 카테고리 아이콘" />
+              </S.CategoryIcon>
+              <div>음료</div>
+              <div>2,000원</div>
+            </S.Perrow>
+          </S.ContentBox>
+        </S.L_Section>
+      </S.ConsumeSection>
+    </>
+  );
+}
