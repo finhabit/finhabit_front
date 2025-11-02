@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Home from "./pages/home/Home";
+import Notification from "./pages/notification/Notification";
+import Mission from "./pages/mission/Mission";
 import { Routes, Route } from "react-router-dom";
 
 const AppWrapper = styled.div`
@@ -18,6 +20,8 @@ function App() {
     <AppWrapper>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/notification" element={<Notification />} />
+        <Route path="/mission" element={<Mission />} />
         {/* 위와 같이 페이지 만들고 연결해주세요 */}
       </Routes>
     </AppWrapper>
