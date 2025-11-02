@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Home from "./pages/home/Home";
+import { Routes, Route } from "react-router-dom";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -15,7 +16,10 @@ const AppWrapper = styled.div`
 function App() {
   return (
     <AppWrapper>
-      <Home />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* 위와 같이 페이지 만들고 연결해주세요 */}
+      </Routes>
     </AppWrapper>
   );
 }
