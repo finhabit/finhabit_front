@@ -88,23 +88,11 @@ export const TitleText = styled.span`
   transform: translateX(-50%);
   pointer-events: none;
   color: #000;
-  font-family: Pretendard, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: Pretendard;
   font-size: 14px;
   font-weight: 600;
 `;
 
-/* ======= 오늘의 미션 카드 ======= */
-// export const MissionCard = styled.div`
-//   position: relative;
-//   display: grid;
-//   place-items: center;
-//   width: 320px; 
-//   height: 114px;
-//   border-radius: 23px;
-//   background: #DFE678;
-//   box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.10);
-// `;
 export const MissionCard = styled.div`
   position: relative;
   display: grid;
@@ -144,7 +132,6 @@ export const MissionText = styled.div`
   max-width: 277px;  
   white-space: nowrap;
 `;
-
 
 
 /* ======= 오늘의 지식 카드 ======= */
@@ -195,8 +182,7 @@ export const SummaryCard = styled.div`
 export const SummaryHeader = styled.div`
   color: #000;
   text-align: center;
-  font-family: Pretendard, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: Pretendard;
   font-size: 20px;
   font-weight: 600;
 `;

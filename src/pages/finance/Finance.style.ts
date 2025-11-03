@@ -90,8 +90,7 @@ export const TitleText = styled.span`
   transform: translateX(-50%);
   pointer-events: none;          
   color: #000;
-  font-family: Pretendard, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
