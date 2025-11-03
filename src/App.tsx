@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 import Home from "./pages/home/Home";
+import Finance from "./pages/finance/Finance";
+import Mypage from "./pages/mypage/Mypage";
 
 import Notification from "./pages/notification/Notification";
 import Mission from "./pages/mission/Mission";
@@ -24,7 +26,9 @@ function App() {
   return (
     <AppWrapper>
       <Routes>
+        <Route path="/finance" element={<Finance />} />
         <Route path="/" element={<Home />} />
+        <Route path="/mypage" element={<Mypage />} />
         <Route path="/notification" element={<Notification />} />
         <Route path="/mission" element={<Mission />} />
         <Route path="/ledger" element={<LedgerMain />} />

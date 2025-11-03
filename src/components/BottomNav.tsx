@@ -1,29 +1,40 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import financeIcon from "../assets/financepage.png";
 import homeIcon from "../assets/homepage.png";
 import mypageIcon from "../assets/mypage.png";
-// 모든 페이지 파일들이 만들어진 후 각각 페이지 연결하시면 됩니다.
 
 export default function BottomNav() {
-  const [active, setActive] = useState("home");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const currentPath = location.pathname;
+  const currentActive =
+    currentPath === "/finance"
+      ? "finance"
+      : currentPath === "/mypage"
+        ? "mypage"
+        : "home";
 
   return (
     <NavBar>
       <NavItem
-        $active={active === "finance"}
-        onClick={() => setActive("finance")}
+        $active={currentActive === "finance"}
+        onClick={() => navigate("/finance")}
       >
         <Icon src={financeIcon} alt="finance" />
       </NavItem>
 
-      <NavItem $active={active === "home"} onClick={() => setActive("home")}>
+      <NavItem
+        $active={currentActive === "home"}
+        onClick={() => navigate("/")}
+      >
         <Icon src={homeIcon} alt="home" />
       </NavItem>
 
       <NavItem
-        $active={active === "mypage"}
-        onClick={() => setActive("mypage")}
+        $active={currentActive === "mypage"}
+        onClick={() => navigate("/mypage")}
       >
         <Icon src={mypageIcon} alt="mypage" />
       </NavItem>
