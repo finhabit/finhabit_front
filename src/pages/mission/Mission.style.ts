@@ -21,7 +21,9 @@ export const N_Section = styled.div`
 
 export const ContentBox = styled.div`
   width: 321px;
-  height: 104px;
+  min-height: 84px;
+  max-height: 213px;
+  overflow: hidden;
   border-radius: 23px;
   background: #dfe67880;
   padding: 10px;

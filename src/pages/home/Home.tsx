@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 
 // 아이콘
@@ -23,6 +24,7 @@ import {
 
 export default function Home() {
   const gaps = useMemo(() => ({ afterFirst: 33, afterSecond: 27 }), []);
+  const navigate = useNavigate();
 
   return (
     <Screen>
@@ -32,7 +34,11 @@ export default function Home() {
           <HeaderSpacer />
           <HeaderIcons>
             <IconBtn aria-label="알림">
-              <TopIcon src={bellIcon} alt="bell" />
+              <TopIcon
+                src={bellIcon}
+                alt="bell"
+                onClick={() => navigate("/notification")}
+              />
             </IconBtn>
             <IconBtn aria-label="검색">
               <TopIcon src={searchIcon} alt="search" />
@@ -52,13 +58,14 @@ export default function Home() {
             </Right>
           </TitleRow>
 
-
           <MissionCard>
             <DecorLeft src={decoLeft || missionIcon} alt="장식 아이콘 왼쪽" />
-            <DecorRight src={decoRight || missionIcon} alt="장식 아이콘 오른쪽" />
+            <DecorRight
+              src={decoRight || missionIcon}
+              alt="장식 아이콘 오른쪽"
+            />
             <MissionText>커피값 2000원 이상 사용하지 않기</MissionText>
           </MissionCard>
-
 
           <Gap style={{ height: gaps.afterFirst }} />
         </Section>
@@ -97,9 +104,7 @@ export default function Home() {
             </Right>
           </TitleRow>
 
-          <SummaryCard>
-
-          </SummaryCard>
+          <SummaryCard></SummaryCard>
         </Section>
 
         <BottomSpacer />
