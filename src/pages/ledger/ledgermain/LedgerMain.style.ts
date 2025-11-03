@@ -23,6 +23,7 @@ export const L_Section = styled.div`
 export const ContentBox = styled.div`
   width: 301px;
   min-height: 84px;
+  max-height: 213px;
   border-radius: 23px;
   background: #dfe67880;
   padding: 20px;
@@ -33,6 +34,8 @@ export const ContentBox = styled.div`
 export const ContentBox_1 = styled.div`
   width: 301px;
   min-height: 84px;
+  max-height: 213px;
+  overflow: hidden;
   border-radius: 23px;
   background: #dfe678;
   padding: 20px;
@@ -56,7 +59,7 @@ export const L_Header = styled.div`
 `;
 
 export const MiniIcons = styled.img`
-    height: 23px;
+    width:20px;
 `;
 
 export const PlusIcons = styled.img`
@@ -69,14 +72,9 @@ export const Perrow = styled.div`
     align-items: center;
     justify-content: space-between;
     font-size: 20px;
+    margin: 5px 0;
 `;
 
-export const CategoryIcon = styled.div`
+export const CategoryIcon = styled.img`
     width: 35px;
-    height: 35px;
-    background-color: #D4DE47;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `;

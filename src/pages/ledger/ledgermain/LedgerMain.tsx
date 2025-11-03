@@ -4,7 +4,7 @@ import setting from "../../../assets/setting.png";
 import piggybank from "../../../assets/piggybank.png";
 import plus from "../../../assets/plus.png";
 import percategory from "../../../assets/percategory.png";
-
+import dumcat from "../../../assets/categoryeat.png";
 import * as S from "./LedgerMain.style";
 
 export default function LedgerMain(){
@@ -47,9 +47,7 @@ export default function LedgerMain(){
           </S.L_Header>
           <S.ContentBox>
             <S.Perrow>
-              <S.CategoryIcon>
-                <S.MiniIcons src={percategory} alt="더미 카테고리 아이콘" />
-              </S.CategoryIcon>
+                <S.CategoryIcon src={dumcat} alt="더미 카테고리 아이콘" />
               <div>음료</div>
               <div>2,000원</div>
             </S.Perrow>
