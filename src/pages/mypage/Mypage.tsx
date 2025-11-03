@@ -3,9 +3,9 @@ import {
     Header,
     Title,
     IconButton,
-    ContentWrap,
-    List,
-    ListRow,
+    FirstSectionSpacer,
+    ItemSection,
+    ItemRow,
     LeftCol,
     Label,
     Value,
@@ -15,6 +15,7 @@ import {
     FooterActions,
     TextButton,
 } from "./Mypage.style";
+
 import BottomNav from "../../components/BottomNav";
 
 //아이콘
@@ -32,50 +33,61 @@ export default function Mypage() {
                 </IconButton>
             </Header>
 
-            <ContentWrap>
-                <List>
-                    <ListRow>
-                        <LeftCol>
-                            <Label>닉네임</Label>
-                            <Value>연짱이</Value>
-                        </LeftCol>
-                        <RightCol>
-                            <img src={chevronRight} alt="" />
-                        </RightCol>
-                    </ListRow>
-                    <Divider />
+            <FirstSectionSpacer />
 
-                    <ListRow>
-                        <LeftCol>
-                            <Label>이메일</Label>
-                            <Value>연짱이</Value>
-                        </LeftCol>
-                        <RightCol>
-                            <img src={chevronRight} alt="" />
-                        </RightCol>
-                    </ListRow>
-                    <Divider />
+            {/* 닉네임 */}
+            <ItemSection>
+                <ItemRow>
+                    <LeftCol>
+                        <Label>닉네임</Label>
+                        <Value>연짱이</Value>
+                    </LeftCol>
+                    <RightCol>
+                        <img src={chevronRight} alt="" />
+                    </RightCol>
+                </ItemRow>
+                <Divider />
+            </ItemSection>
 
-                    <ListRow>
-                        <LeftCol>
-                            <Label>비밀번호</Label>
-                            <Value>연짱이</Value>
-                        </LeftCol>
-                        <RightCol>
-                            <img src={chevronRight} alt="" />
-                        </RightCol>
-                    </ListRow>
-                    <Divider />
+            {/* 이메일 */}
+            <ItemSection>
+                <ItemRow>
+                    <LeftCol>
+                        <Label>이메일</Label>
+                        <Value>연짱이</Value>
+                    </LeftCol>
+                    <RightCol>
+                        <img src={chevronRight} alt="" />
+                    </RightCol>
+                </ItemRow>
+                <Divider />
+            </ItemSection>
 
-                    <SectionTitle>성취 현황</SectionTitle>
-                    <Divider />
-                </List>
+            {/* 비밀번호 */}
+            <ItemSection>
+                <ItemRow>
+                    <LeftCol>
+                        <Label>비밀번호</Label>
+                        <Value>연짱이</Value>
+                    </LeftCol>
+                    <RightCol>
+                        <img src={chevronRight} alt="" />
+                    </RightCol>
+                </ItemRow>
+                <Divider />
+            </ItemSection>
 
-                <FooterActions>
-                    <TextButton type="button">회원탈퇴</TextButton>
-                    <TextButton type="button">로그아웃</TextButton>
-                </FooterActions>
-            </ContentWrap>
+            {/* 성취 현황 */}
+            <ItemSection>
+                <SectionTitle>성취 현황</SectionTitle>
+                <Divider />
+            </ItemSection>
+
+            {/* 회원탈퇴/로그아웃 */}
+            <FooterActions>
+                <TextButton type="button">회원탈퇴</TextButton>
+                <TextButton type="button">로그아웃</TextButton>
+            </FooterActions>
             <BottomNav />
         </Page>
     );
