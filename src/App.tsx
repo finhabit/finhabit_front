@@ -9,6 +9,8 @@ import Mission from "./pages/mission/Mission";
 
 import LedgerMain from "./pages/ledger/ledgermain/LedgerMain";
 import ConsumePlus from "./pages/ledger/consumeplus/ConsumePlus";
+import SetCategory from "./pages/ledger/setcategory/SetCategory";
+
 import { Routes, Route } from "react-router-dom";
 
 const AppWrapper = styled.div`
@@ -33,6 +35,7 @@ function App() {
         <Route path="/mission" element={<Mission />} />
         <Route path="/ledger" element={<LedgerMain />} />
         <Route path="/consumeplus" element={<ConsumePlus />} />
+        <Route path="/setcategory" element={<SetCategory />} />
         {/* 위와 같이 페이지 만들고 연결해주세요 */}
       </Routes>
     </AppWrapper>

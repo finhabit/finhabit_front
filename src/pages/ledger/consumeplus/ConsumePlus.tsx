@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import close from "../../../assets/close.png";
 import won from "../../../assets/won.png";
 import save from "../../../assets/save.png";
 import * as S from "./ConsumePlus.style";
 
 export default function ConsumePlus() {
+  const navigate = useNavigate(); 
   const [amount, setAmount] = useState<string>(""); // 금액 상태
   const [selected, setSelected] = useState<"income" | "expense" | "">(""); // 수입/지출 선택 상태
 
@@ -19,7 +21,6 @@ export default function ConsumePlus() {
 
   return (
     <>
-      {" "}
       <S.Header>
         <S.DateText>2025.04.06</S.DateText>
         <S.CloseBtn src={close} alt="취소아이콘" onClick={handleReset} />
@@ -49,7 +50,11 @@ export default function ConsumePlus() {
           지출
         </S.TypeButton>
       </S.ButtonSection>
-      <S.SaveBtn src={save} alt="저장버튼" />
+      <S.SaveBtn
+        src={save}
+        alt="저장버튼"
+        onClick={() => navigate("/setcategory")}
+      />
     </>
   );
 }

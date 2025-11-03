@@ -59,7 +59,7 @@ export const TypeButton = styled.button<TypeButtonProps>`
   width: 144px;
   height: 61px;
   border-radius: 8px;
-  background: ${({ $active, color }) => ($active ? color + "33" : "#f6f7d7")};
+  background: ${({ $active, color }) => ($active ? color + "33" : "#DFE67880")};
   border: none;
   font-size: 24px;
   font-weight: 500;
