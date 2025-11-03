@@ -89,7 +89,7 @@ export default function SetCategory() {
       <S.SaveBtn
         src={save}
         alt="저장버튼"
-        onClick={() => navigate("/setcategory")}
+        onClick={() => navigate("/ledgercalendar")}
       />
     </S.Container>
   );
