@@ -12,7 +12,7 @@ import plusIcon from "../../assets/plus.svg";
 import {
     Screen, SafeArea, Header, HeaderSpacer, HeaderIcons, IconBtn, TopIcon,
     Section, TitleRow, Left, Right, TinyIcon, TinyPlus, TitleText,
-    CardKnowledge, CardQuiz, CardArchive, CardBody, CardTitle, CardDesc,
+    CardKnowledge, CardQuiz, CardArchive, CardBody, CardTitle,
     Gap, BottomSpacer
 } from "./Finance.style";
 
@@ -50,8 +50,8 @@ export default function Finance() {
 
                     <CardKnowledge>
                         <CardBody>
-                            <CardTitle>금융 한 줄 지식</CardTitle>
-                            <CardDesc>오늘은 복리와 단리의 차이를 알아봐요.</CardDesc>
+                            <CardTitle>선불과 후불의 차이,<br />
+                                내 소비 습관엔 어떤 카드가 맞을까?</CardTitle>
                         </CardBody>
                     </CardKnowledge>
 
@@ -72,8 +72,7 @@ export default function Finance() {
 
                     <CardQuiz>
                         <CardBody>
-                            <CardTitle>퀴즈: 예금 이자 계산</CardTitle>
-                            <CardDesc>연 3% 단리로 1,000,000원을 2년 맡기면 이자는?</CardDesc>
+                            <CardTitle>연 3% 단리로 1,000,000원을 <br />2년 맡기면 이자는?</CardTitle>
                         </CardBody>
                     </CardQuiz>
 

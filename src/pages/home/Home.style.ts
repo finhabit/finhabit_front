@@ -122,7 +122,7 @@ export const DecorRight = styled.img`
 `;
 
 export const MissionText = styled.div`
-  color: #000;
+  color: #2B2B27;
   text-align: center;
   font-family: Pretendard;
   font-size: 18px;
@@ -153,17 +153,17 @@ export const CardBody = styled.div`
 `;
 
 export const CardTitle = styled.h3`
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: #2a2a2a;
+  color: #2B2B27;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+  width: 100%;
+  max-width: 277px;  
+  white-space: nowrap;
 `;
 
-export const CardDesc = styled.p`
-  margin: 0;
-  font-size: 13px;
-  color: #4a4a4a;
-`;
 
 /* ======= 간단 소비 요약 카드 ======= */
 export const SummaryCard = styled.div`

@@ -17,7 +17,7 @@ import {
   Screen, SafeArea, Header, HeaderSpacer, HeaderIcons, IconBtn, TopIcon,
   Section, TitleRow, Left, Right, TinyIcon, TinyPlus, TitleText,
   MissionCard, DecorLeft, DecorRight, MissionText,
-  KnowledgeCard, CardBody, CardTitle, CardDesc,
+  KnowledgeCard, CardBody, CardTitle,
   SummaryCard,
   Gap, BottomSpacer
 } from "./Home.style";
@@ -84,8 +84,8 @@ export default function Home() {
 
           <KnowledgeCard>
             <CardBody>
-              <CardTitle>금융 한 줄 지식</CardTitle>
-              <CardDesc>복리와 단리의 차이를 알아봐요.</CardDesc>
+              <CardTitle>선불과 후불의 차이,<br />
+                내 소비 습관엔 어떤 카드가 맞을까?</CardTitle>
             </CardBody>
           </KnowledgeCard>
 
