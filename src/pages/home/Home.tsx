@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
+import Donuts from "../../components/Donuts";
 
 // 아이콘
 import bellIcon from "../../assets/bell.svg";
@@ -17,10 +18,10 @@ import {
   Screen, SafeArea, Header, HeaderSpacer, HeaderIcons, IconBtn, TopIcon,
   Section, TitleRow, Left, Right, TinyIcon, TinyPlus, TitleText,
   MissionCard, DecorLeft, DecorRight, MissionText,
-  KnowledgeCard, CardBody, CardTitle, CardDesc,
-  SummaryCard,
+  KnowledgeCard, CardBody, CardTitle, SummaryCard,
   Gap, BottomSpacer
 } from "./Home.style";
+
 
 export default function Home() {
   const gaps = useMemo(() => ({ afterFirst: 33, afterSecond: 27 }), []);
@@ -84,8 +85,8 @@ export default function Home() {
 
           <KnowledgeCard>
             <CardBody>
-              <CardTitle>금융 한 줄 지식</CardTitle>
-              <CardDesc>복리와 단리의 차이를 알아봐요.</CardDesc>
+              <CardTitle>선불과 후불의 차이,<br />
+                내 소비 습관엔 어떤 카드가 맞을까?</CardTitle>
             </CardBody>
           </KnowledgeCard>
 
@@ -103,8 +104,9 @@ export default function Home() {
               <TinyPlus src={plusIcon} alt="추가" />
             </Right>
           </TitleRow>
-
-          <SummaryCard></SummaryCard>
+          <SummaryCard>
+            <Donuts />
+          </SummaryCard>
         </Section>
 
         <BottomSpacer />

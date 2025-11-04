@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SCREEN_MAX = 414;
-export const CARD_MAX = 320;
+export const CARD_MAX = 321;
 
 export const Screen = styled.div`
   width: 100%;
@@ -98,7 +98,7 @@ export const MissionCard = styled.div`
   display: grid;
   place-items: center;
   width: 100%;
-  max-width: 320px;  
+  max-width: ${CARD_MAX}px;
   height: 114px;
   border-radius: 23px;
   background: #DFE678;
@@ -122,7 +122,7 @@ export const DecorRight = styled.img`
 `;
 
 export const MissionText = styled.div`
-  color: #000;
+  color: #2B2B27;
   text-align: center;
   font-family: Pretendard;
   font-size: 18px;
@@ -153,51 +153,33 @@ export const CardBody = styled.div`
 `;
 
 export const CardTitle = styled.h3`
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: #2a2a2a;
+  color: #2B2B27;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+  width: 100%;
+  max-width: 277px;  
+  white-space: nowrap;
 `;
 
-export const CardDesc = styled.p`
-  margin: 0;
-  font-size: 13px;
-  color: #4a4a4a;
-`;
 
 /* ======= 간단 소비 요약 카드 ======= */
 export const SummaryCard = styled.div`
-  display: flex;
-  width: ${CARD_MAX}px;
+  width: 100%;
+  max-width: ${CARD_MAX}px;
   height: 260px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
   border-radius: 23px;
   border: 2px solid #dfe678;
   background: #fdfdfd;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
-`;
 
-export const SummaryHeader = styled.div`
-  color: #000;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-export const GraphBox = styled.div`
-  margin-top: 6px;
-  width: 100%;
-  flex: 1;
-  border-radius: 14px;
-  border: 1.5px dashed rgba(0, 0, 0, 0.25);
+  /* Donuts가 그래프만 렌더 */
+  padding: 25px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: rgba(0, 0, 0, 0.45);
-  font-size: 12px;
 `;
 
 export const Gap = styled.div``;
