@@ -165,40 +165,8 @@ export const CardTitle = styled.h3`
 `;
 
 
-/* ======= 간단 소비 요약 카드 ======= */
-export const SummaryCard = styled.div`
-  display: flex;
-  width: ${CARD_MAX}px;
-  height: 260px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  border-radius: 23px;
-  border: 2px solid #dfe678;
-  background: #fdfdfd;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
-`;
 
-export const SummaryHeader = styled.div`
-  color: #000;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 600;
-`;
 
-export const GraphBox = styled.div`
-  margin-top: 6px;
-  width: 100%;
-  flex: 1;
-  border-radius: 14px;
-  border: 1.5px dashed rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(0, 0, 0, 0.45);
-  font-size: 12px;
-`;
 
 export const Gap = styled.div``;
 
