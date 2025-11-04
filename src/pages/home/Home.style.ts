@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SCREEN_MAX = 414;
-export const CARD_MAX = 320;
+export const CARD_MAX = 321;
 
 export const Screen = styled.div`
   width: 100%;
@@ -98,7 +98,7 @@ export const MissionCard = styled.div`
   display: grid;
   place-items: center;
   width: 100%;
-  max-width: 320px;  
+  max-width: ${CARD_MAX}px;
   height: 114px;
   border-radius: 23px;
   background: #DFE678;
@@ -165,8 +165,22 @@ export const CardTitle = styled.h3`
 `;
 
 
+/* ======= 간단 소비 요약 카드 ======= */
+export const SummaryCard = styled.div`
+  width: 100%;
+  max-width: ${CARD_MAX}px;
+  height: 260px;
+  border-radius: 23px;
+  border: 2px solid #dfe678;
+  background: #fdfdfd;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
 
-
+  /* Donuts가 그래프만 렌더 */
+  padding: 25px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+`;
 
 export const Gap = styled.div``;
 

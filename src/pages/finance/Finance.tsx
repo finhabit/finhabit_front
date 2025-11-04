@@ -94,9 +94,6 @@ export default function Finance() {
                     <CardArchive>
                         <CardBody>
                             <CardTitle>이번 주 학습 요약</CardTitle>
-                            <div>
-                                그래프
-                            </div>
                         </CardBody>
                     </CardArchive>
                 </Section>

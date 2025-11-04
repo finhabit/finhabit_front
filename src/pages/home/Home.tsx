@@ -18,7 +18,7 @@ import {
   Screen, SafeArea, Header, HeaderSpacer, HeaderIcons, IconBtn, TopIcon,
   Section, TitleRow, Left, Right, TinyIcon, TinyPlus, TitleText,
   MissionCard, DecorLeft, DecorRight, MissionText,
-  KnowledgeCard, CardBody, CardTitle,
+  KnowledgeCard, CardBody, CardTitle, SummaryCard,
   Gap, BottomSpacer
 } from "./Home.style";
 
@@ -104,7 +104,9 @@ export default function Home() {
               <TinyPlus src={plusIcon} alt="추가" />
             </Right>
           </TitleRow>
-          <Donuts />
+          <SummaryCard>
+            <Donuts />
+          </SummaryCard>
         </Section>
 
         <BottomSpacer />
