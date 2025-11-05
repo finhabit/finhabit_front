@@ -21,9 +21,15 @@ export const N_Section = styled.div`
 
 export const ContentBox = styled.div`
   width: 321px;
-  min-height: 84px;
+  min-height: 114px;
   max-height: 213px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
   border-radius: 23px;
   background: #dfe67880;
   padding: 10px;
