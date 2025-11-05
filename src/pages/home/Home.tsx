@@ -55,7 +55,11 @@ export default function Home() {
               <TitleText>오늘의 미션</TitleText>
             </Left>
             <Right>
-              <TinyPlus src={plusIcon} alt="추가" />
+              <TinyPlus
+                src={plusIcon}
+                alt="추가"
+                onClick={() => navigate("/mission")}
+              />
             </Right>
           </TitleRow>
 
@@ -79,14 +83,20 @@ export default function Home() {
               <TitleText>오늘의 지식</TitleText>
             </Left>
             <Right>
-              <TinyPlus src={plusIcon} alt="추가" />
+              <TinyPlus
+                src={plusIcon}
+                alt="추가"
+                onClick={() => navigate("/knowledge")}
+              />
             </Right>
           </TitleRow>
 
           <KnowledgeCard>
             <CardBody>
-              <CardTitle>선불과 후불의 차이,<br />
-                내 소비 습관엔 어떤 카드가 맞을까?</CardTitle>
+              <CardTitle>
+                선불과 후불의 차이,
+                <br />내 소비 습관엔 어떤 카드가 맞을까?
+              </CardTitle>
             </CardBody>
           </KnowledgeCard>
 
@@ -101,7 +111,11 @@ export default function Home() {
               <TitleText>간단 소비 요약</TitleText>
             </Left>
             <Right>
-              <TinyPlus src={plusIcon} alt="추가" />
+              <TinyPlus
+                src={plusIcon}
+                alt="추가"
+                onClick={() => navigate("/ledger")}
+              />
             </Right>
           </TitleRow>
           <SummaryCard>
