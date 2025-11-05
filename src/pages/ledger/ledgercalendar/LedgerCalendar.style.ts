@@ -155,3 +155,36 @@ export const IncomeWon = styled.div`
 export const OutcomeWon = styled.div`
   color: #dc6d6d;
 `;
+
+
+export const SummaryCard = styled.div`
+  width: 100%;
+  max-width: 321px;
+  height: 260px;
+  border-radius: 23px;
+  border: 2px solid #dfe678;
+  background: #fdfdfd;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
+
+  /* Donuts가 그래프만 렌더 */
+  padding: 25px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+`;
+
+export const Gap = styled.div``;
+
+export const BottomSpacer = styled.div`
+  height: 84px;
+`;
+
+
+
+export const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top:10px
+`;

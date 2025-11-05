@@ -44,7 +44,7 @@ function arcPath(cx: number, cy: number, r: number, startDeg: number, endDeg: nu
 }
 
 const Donuts: React.FC = () => {
-    const percent = 30;
+    const percent =30;
     const label = "식비";
 
     const size = 176;

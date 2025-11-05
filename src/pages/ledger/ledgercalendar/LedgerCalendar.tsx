@@ -7,6 +7,7 @@ import setting from "../../../assets/setting.png";
 import stats from "../../../assets/stats.png";
 import search from "../../../assets/search.png";
 import memo from "../../../assets/memo.png";
+import Donuts from "../../../components/Donuts";
 import filter from "../../../assets/filter.png";
 import * as S from "./LedgerCalendar.style";
 
@@ -17,8 +18,7 @@ const LedgerCalendar: React.FC = () => {
   const [date, setDate] = useState<Date>(new Date());
 
   const onDateChange = (
-    value: Date | Date[] | null,
-    event: React.MouseEvent<HTMLButtonElement> // 👈 이 두 번째 인자를 추가해야 합니다.
+    value: Date | Date[],
   ) => {
     if (value instanceof Date) {
       setDate(value);
@@ -75,14 +75,20 @@ const LedgerCalendar: React.FC = () => {
       </S.Details>
       <S.Details>
         <S.InOutcome>
-            <div>수입</div>
-            <S.IncomeWon>0원</S.IncomeWon>
+          <div>수입</div>
+          <S.IncomeWon>0원</S.IncomeWon>
         </S.InOutcome>
         <S.InOutcome>
-            <div>지출</div>
-            <S.OutcomeWon>2000원</S.OutcomeWon>
+          <div>지출</div>
+          <S.OutcomeWon>2000원</S.OutcomeWon>
         </S.InOutcome>
       </S.Details>
+
+      <S.Section>
+        <S.SummaryCard>
+          <Donuts />
+        </S.SummaryCard>
+      </S.Section>
     </>
   );
 };
