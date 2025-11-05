@@ -5,6 +5,8 @@ import piggybank from "../../../assets/piggybank.png";
 import plus from "../../../assets/plus.png";
 import percategory from "../../../assets/percategory.png";
 import dumcat from "../../../assets/categoryeat.png";
+import chartIcon from "../../../assets/chart.svg";
+import Donuts from "../../../components/Donuts";
 import * as S from "./LedgerMain.style";
 
 export default function LedgerMain(){
@@ -47,13 +49,32 @@ export default function LedgerMain(){
           </S.L_Header>
           <S.ContentBox>
             <S.Perrow>
-                <S.CategoryIcon src={dumcat} alt="더미 카테고리 아이콘" />
+              <S.CategoryIcon src={dumcat} alt="더미 카테고리 아이콘" />
               <div>음료</div>
               <div>2,000원</div>
             </S.Perrow>
           </S.ContentBox>
         </S.L_Section>
       </S.ConsumeSection>
+
+      <S.Section>
+        <S.TitleRow>
+          <S.Left>
+            <S.MiniIcons src={chartIcon} alt="소비 요약" />
+            <S.TitleText>간단 소비 요약</S.TitleText>
+          </S.Left>
+          <S.Right>
+            <S.PlusIcons
+              src={plus}
+              alt="추가버튼"
+              onClick={() => navigate("/consumeplus")}
+            />
+          </S.Right>
+        </S.TitleRow>
+        <S.SummaryCard>
+          <Donuts />
+        </S.SummaryCard>
+      </S.Section>
     </>
   );
 }
