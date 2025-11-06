@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import back from "../../assets/back.png";
-import setting from "../../assets/setting.png";
 import * as S from "./Knowledge.style";
 
 export default function Knowledge() {
@@ -11,7 +10,6 @@ export default function Knowledge() {
       <S.UpLine>
         <S.Icons src={back} alt="이전으로" onClick={() => navigate(-1)} />
         지식
-        <S.Icons src={setting} alt="설정아이콘" />
       </S.UpLine>
       <S.RemindingSection>
         <S.N_Section>
@@ -19,11 +17,17 @@ export default function Knowledge() {
           <S.ContentBox>
             <S.PerK>
               <S.KTitle>신용점수 관리의 중요성</S.KTitle>
-              <div>이번 주 배운 금융 용어 3개 복습하기</div>
+              <div>
+                신용점수는 '금융 신뢰도'입니다.
+                <br /> 연체나 과도한 대출은 점수를 낮춥니다.
+              </div>
             </S.PerK>
             <S.PerK>
               <S.KTitle>신용점수 관리의 중요성</S.KTitle>
-              <div>이번 주 배운 금융 용어 3개 복습하기</div>
+              <div>
+                신용점수는 '금융 신뢰도'입니다.
+                <br /> 연체나 과도한 대출은 점수를 낮춥니다.
+              </div>
             </S.PerK>
           </S.ContentBox>
         </S.N_Section>

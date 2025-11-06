@@ -6,7 +6,8 @@ import save from "../../../assets/save.png";
 import * as S from "./ConsumePlus.style";
 
 export default function ConsumePlus() {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
   const [amount, setAmount] = useState<string>(""); // 금액 상태
   const [selected, setSelected] = useState<"income" | "expense" | "">(""); // 수입/지출 선택 상태
 
@@ -14,17 +15,23 @@ export default function ConsumePlus() {
     setAmount(e.target.value);
   };
 
- const handleReset = () => {
-   setAmount("");
-   setSelected("");
- };
+  // 버튼 클릭 핸들러
+  const handleTypeSelect = (type: "income" | "expense") => {
+    setSelected(type);
+    navigate("/setcategory"); // setcategory 페이지로 이동
+  };
 
   return (
     <>
       <S.Header>
         <S.DateText>2025.04.06</S.DateText>
-        <S.CloseBtn src={close} alt="취소아이콘" onClick={handleReset} />
+        <S.CloseBtn
+          src={close}
+          alt="취소아이콘"
+          onClick={() => navigate("/ledger")}
+        />
       </S.Header>
+
       <S.AmountBox>
         <S.WonImg src={won} alt="원 글자" />
         <S.Input
@@ -34,27 +41,25 @@ export default function ConsumePlus() {
           onChange={handleAmountChange}
         />
       </S.AmountBox>
+
       <S.ButtonSection>
         <S.TypeButton
           $active={selected === "income"}
           color="#68B6F3"
-          onClick={() => setSelected("income")}
+          onClick={() => handleTypeSelect("income")}
         >
           수입
         </S.TypeButton>
         <S.TypeButton
           $active={selected === "expense"}
           color="#F87171"
-          onClick={() => setSelected("expense")}
+          onClick={() => handleTypeSelect("expense")}
         >
           지출
         </S.TypeButton>
       </S.ButtonSection>
-      <S.SaveBtn
-        src={save}
-        alt="저장버튼"
-        onClick={() => navigate("/setcategory")}
-      />
+
+      <S.SaveBtn src={save} alt="메모버튼" />
     </>
   );
 }
