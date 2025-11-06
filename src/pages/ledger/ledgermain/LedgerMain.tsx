@@ -44,7 +44,7 @@ export default function LedgerMain(){
             <S.PlusIcons
               src={plus}
               alt="추가버튼"
-              onClick={() => navigate("/consumeplus")}
+              onClick={() => navigate("/ledgercalendar")}
             />
           </S.L_Header>
           <S.ContentBox>
@@ -67,7 +67,7 @@ export default function LedgerMain(){
             <S.PlusIcons
               src={plus}
               alt="추가버튼"
-              onClick={() => navigate("/consumeplus")}
+              onClick={() => navigate("/ledgercalendar")}
             />
           </S.Right>
         </S.TitleRow>

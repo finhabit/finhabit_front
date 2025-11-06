@@ -7,8 +7,10 @@ import setting from "../../../assets/setting.png";
 import stats from "../../../assets/stats.png";
 import search from "../../../assets/search.png";
 import memo from "../../../assets/memo.png";
-import Donuts from "../../../components/Donuts";
 import filter from "../../../assets/filter.png";
+import Donuts from "../../../components/Donuts";
+import dumcat from "../../../assets/categoryeat.png";
+
 import * as S from "./LedgerCalendar.style";
 
 const weekDays: string[] = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -16,13 +18,17 @@ const weekDays: string[] = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const LedgerCalendar: React.FC = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState<Date>(new Date());
+  const [selectedTab, setSelectedTab] = useState<string | null>(null); // 어떤 버튼이 눌렸는지
 
-  const onDateChange = (
-    value: Date | Date[],
-  ) => {
+  const onDateChange = (value: Date | Date[]) => {
     if (value instanceof Date) {
       setDate(value);
     }
+  };
+
+  // 버튼 클릭 시
+  const handleTabClick = (tabName: string) => {
+    setSelectedTab((prev) => (prev === tabName ? null : tabName)); // 다시 누르면 해제
   };
 
   return (
@@ -51,28 +57,49 @@ const LedgerCalendar: React.FC = () => {
           />
         </S.StyledCalendarWrapper>
       </S.CalendarSection>
+
+      {/* --- 버튼 4개 --- */}
       <S.Details>
         <S.DetailSide>
-          <S.PerDetail>
+          <S.PerDetail
+            onClick={() => handleTabClick("stats")}
+            $active={selectedTab === "stats"}
+            $dimOthers={!!selectedTab && selectedTab !== "stats"}
+          >
             <S.DetailIcons src={stats} alt="통계" />
             통계
           </S.PerDetail>
-          <S.PerDetail>
+
+          <S.PerDetail
+            onClick={() => handleTabClick("memo")}
+            $active={selectedTab === "memo"}
+            $dimOthers={!!selectedTab && selectedTab !== "memo"}
+          >
             <S.DetailIcons src={memo} alt="메모" />
             메모
           </S.PerDetail>
-        </S.DetailSide>
-        <S.DetailSide>
-          <S.PerDetail>
+
+          <S.PerDetail
+            onClick={() => handleTabClick("search")}
+            $active={selectedTab === "search"}
+            $dimOthers={!!selectedTab && selectedTab !== "search"}
+          >
             <S.DetailIcons src={search} alt="검색" />
             내역 검색
           </S.PerDetail>
-          <S.PerDetail>
+
+          <S.PerDetail
+            onClick={() => handleTabClick("category")}
+            $active={selectedTab === "category"}
+            $dimOthers={!!selectedTab && selectedTab !== "category"}
+          >
             <S.DetailIcons src={filter} alt="필터" />
-            필터
+            카테고리
           </S.PerDetail>
         </S.DetailSide>
       </S.Details>
+
+      {/* --- 수입/지출 요약 --- */}
       <S.Details>
         <S.InOutcome>
           <div>수입</div>
@@ -86,7 +113,17 @@ const LedgerCalendar: React.FC = () => {
 
       <S.Section>
         <S.SummaryCard>
-          <Donuts />
+          {selectedTab === "stats" && <Donuts />}
+          {selectedTab === "memo" && <div>메모 내용</div>}
+          {selectedTab === "search" && <div>내역 검색 내용</div>}
+          {selectedTab === "category" && (
+            <S.Perrow>
+              <S.CategoryIcon src={dumcat} alt="더미 카테고리 아이콘" />
+              <div>음료</div>
+              <div>2,000원</div>
+            </S.Perrow>
+          )}
+          {!selectedTab && <div style={{ color: "#aaa" }}>버튼을 눌러 소비를 분석해보세요!</div>}
         </S.SummaryCard>
       </S.Section>
     </>

@@ -7,6 +7,7 @@ import Mypage from "./pages/mypage/Mypage";
 import Notification from "./pages/notification/Notification";
 import Mission from "./pages/mission/Mission";
 import Knowledge from "./pages/knowledge/Knowledge";
+import Quiz from "./pages/quiz/Quiz";
 
 import LedgerMain from "./pages/ledger/ledgermain/LedgerMain";
 import ConsumePlus from "./pages/ledger/consumeplus/ConsumePlus";
@@ -36,6 +37,7 @@ function App() {
         <Route path="/notification" element={<Notification />} />
         <Route path="/mission" element={<Mission />} />
         <Route path="/knowledge" element={<Knowledge />} />
+        <Route path="/quiz" element={<Quiz />} />
         <Route path="/ledger" element={<LedgerMain />} />
         <Route path="/consumeplus" element={<ConsumePlus />} />
         <Route path="/setcategory" element={<SetCategory />} />

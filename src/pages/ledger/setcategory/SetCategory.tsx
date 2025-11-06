@@ -11,7 +11,7 @@ import categoryrest from "../../../assets/categoryrest.png";
 import save from "../../../assets/save.png";
 
 export default function SetCategory() {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [desc, setDesc] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedMethod, setSelectedMethod] = useState<"cash" | "card" | null>(
@@ -36,11 +36,10 @@ export default function SetCategory() {
     }
   };
 
-  // 닫기(X) 버튼 클릭 시 초기화
-  const handleReset = () => {
-    setDesc("");
-    setSelectedCategory(null);
-    setSelectedMethod(null);
+  // 결제수단 클릭 시
+  const handleMethodClick = (method: "cash" | "card") => {
+    setSelectedMethod(method);
+    navigate("/ledgercalendar"); // ledgercalendar 페이지로 이동
   };
 
   return (
@@ -54,7 +53,7 @@ export default function SetCategory() {
           />
           <S.Amount>2,000원</S.Amount>
         </div>
-        <S.Icon src={close} alt="close" onClick={handleReset} />
+        <S.Icon src={close} alt="close" onClick={() => navigate("/ledger")} />
       </S.TopBar>
 
       <S.DescDisplay $isPlaceholder={!desc}>{desc || "내역"}</S.DescDisplay>
@@ -75,22 +74,19 @@ export default function SetCategory() {
       <S.MethodContainer>
         <S.MethodButton
           $active={selectedMethod === "cash"}
-          onClick={() => setSelectedMethod("cash")}
+          onClick={() => handleMethodClick("cash")}
         >
           현금
         </S.MethodButton>
         <S.MethodButton
           $active={selectedMethod === "card"}
-          onClick={() => setSelectedMethod("card")}
+          onClick={() => handleMethodClick("card")}
         >
           카드
         </S.MethodButton>
       </S.MethodContainer>
-      <S.SaveBtn
-        src={save}
-        alt="저장버튼"
-        onClick={() => navigate("/ledgercalendar")}
-      />
+
+      <S.SaveBtn src={save} alt="메모버튼" />
     </S.Container>
   );
 }
