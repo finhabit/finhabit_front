@@ -94,8 +94,8 @@ export default function Home() {
           <KnowledgeCard>
             <CardBody>
               <CardTitle>
-                선불과 후불의 차이,
-                <br />내 소비 습관엔 어떤 카드가 맞을까?
+                신용점수는 ‘금융 신뢰도’입니다.<br />
+                연체나 과도한 대출은 점수를 낮춥니다.
               </CardTitle>
             </CardBody>
           </KnowledgeCard>

@@ -156,7 +156,7 @@ export const CardTitle = styled.h3`
   color: #2B2B27;
   text-align: center;
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   line-height: 1.2;
   width: 100%;
