@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const UpLine = styled.div`
   display: flex;
@@ -64,28 +64,64 @@ export const RemindingSection = styled.div`
   margin: 0 35px;
 `;
 
-export const PerK = styled.div`
-    font-size: 15px; 
-    margin: 10px;
+export const PerQuiz = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
-export const KTitle = styled.div`
-  margin: 5px 0;
-  color: #848d00;
+export const QuizTitle = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  margin: 8px 0;
 `;
 
-export const GathTitle = styled.div`
-  color: #848d00;
-  margin: 5px;
-  display: flex; 
+export const QuizChoice = styled.div`
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
   justify-content: center;
+  font-weight: 500;
+  font-size: 14px;
 `;
 
-export const GathContent = styled.div`
-    width: 200px;
-    text-align: center;
+const correctAnim = keyframes`
+  0% { transform: scale(1); }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 `;
 
-export const PerGath = styled.div`
-    margin: 10px;
+export const PerChoice = styled.div<{
+  selected?: boolean;
+  correct?: boolean;
+  wrong?: boolean;
+  showAnswer?: boolean;
+  isAnswer?: boolean;
+}>`
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  user-select: none;
+
+  ${({ correct }) =>
+    correct &&
+    css`
+      color: #848d00;
+      animation: ${correctAnim} 0.3s ease forwards;
+      font-weight: 600;
+    `}
+
+  ${({ wrong }) =>
+    wrong &&
+    css`
+      color: #b20808ff;
+      text-decoration: line-through;
+    `}
+
+  ${({ showAnswer, isAnswer }) =>
+    showAnswer &&
+    isAnswer &&
+    css`
+      color: #848d00;
+      font-weight: 600;
+    `}
 `;

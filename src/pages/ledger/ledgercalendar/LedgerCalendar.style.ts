@@ -119,25 +119,39 @@ export const DetailIcons = styled.img`
     height: 20px;
 `;
 
-export const PerDetail = styled.div`
+export const PerDetail = styled.div<{ $active?: boolean; $dimOthers?: boolean }>`
   font-size: 13px;
   font-weight: 500;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
   cursor: pointer;
   height: 40px;
   padding: 5px;
   border-radius: 5px;
-    &:hover {
-      background-color: #e9eab9;
-    }
+  transition: all 0.2s ease;
+  width: 60px;
+  ${({ $active }) =>
+    $active &&
+    `
+    transform: scale(1.1);
+  `}
+
+  ${({ $dimOthers }) =>
+    $dimOthers &&
+    `
+    opacity: 0.5;
+  `}
+  &:hover {
+    background-color: #e9eab9;
+  }
 `;
 
 export const DetailSide = styled.div`
     display: flex;
-    gap: 15px;
+    width: 100%;
+    justify-content: space-between;
 `;
 
 export const InOutcome = styled.div`
@@ -170,6 +184,7 @@ export const SummaryCard = styled.div`
   padding: 25px;
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   align-items: center;
 `;
 
@@ -186,5 +201,20 @@ export const Section = styled.section`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top:10px
+  margin: 10px 0 30px 0;
+`;
+
+export const Perrow = styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 20px;
+    margin: 5px 0;
+    font-size: 24px;
+    font-weight: 500;
+`;
+
+export const CategoryIcon = styled.img`
+    width: 35px;
 `;

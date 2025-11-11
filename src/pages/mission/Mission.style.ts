@@ -3,13 +3,16 @@ import styled from "styled-components";
 export const UpLine = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  position: relative;
   margin: 40px 35px 20px 35px;
   font-size: 22px;
   font-weight: 500;
 `;
 
 export const Icons = styled.img`
+  position: absolute;
+  left: 0;
   height: 20px;
   cursor: pointer;
 `;
