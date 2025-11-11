@@ -15,7 +15,7 @@ import {
     FooterActions,
     TextButton,
 } from "./Mypage.style";
-
+import { useNavigate } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 
 //아이콘
@@ -24,6 +24,7 @@ import settingsIcon from "../../assets/settingsIcon.svg";
 
 
 export default function Mypage() {
+    const navigate = useNavigate();
     return (
         <Page>
             <Header>
@@ -70,7 +71,7 @@ export default function Mypage() {
                         <Label>비밀번호</Label>
                         <Value>연짱이</Value>
                     </LeftCol>
-                    <RightCol>
+                    <RightCol onClick={() => navigate("/mypage/pw")}>
                         <img src={chevronRight} alt="" />
                     </RightCol>
                 </ItemRow>

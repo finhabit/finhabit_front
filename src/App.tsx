@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Home from "./pages/home/Home";
 import Finance from "./pages/finance/Finance";
 import Mypage from "./pages/mypage/Mypage";
+import Mypage_pw from "./pages/mypage/Mypage_pw";
 
 import Notification from "./pages/notification/Notification";
 import Mission from "./pages/mission/Mission";
@@ -40,6 +41,8 @@ function App() {
         <Route path="/consumeplus" element={<ConsumePlus />} />
         <Route path="/setcategory" element={<SetCategory />} />
         <Route path="/ledgercalendar" element={<LedgerCalendar />} />
+        <Route path="/mypage/pw" element={<Mypage_pw />} />
+
         {/* 위와 같이 페이지 만들고 연결해주세요 */}
       </Routes>
     </AppWrapper>
