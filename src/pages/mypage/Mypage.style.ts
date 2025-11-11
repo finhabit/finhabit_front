@@ -149,3 +149,94 @@ export const TextButton = styled.button`
   font-weight: 500;
   line-height: normal;
 `;
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(123, 123, 123, 0.45);
+  display: flex;
+  align-items: flex-end;           /* ✅ 스샷처럼 하단에서 올라오는 느낌 */
+  justify-content: center;
+  z-index: 1000;
+`;
+
+/** ✅ 시안 규격 반영: width 403, height 499, radius 31 */
+export const ModalSheet = styled.div`
+  width: 403px;
+  height: 499px;
+  flex-shrink: 0;
+  border-radius: 31px 31px 0 0;
+  background: #FFF;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 24px 18px;
+  box-sizing: border-box;
+`;
+
+export const ModalHeader = styled.div`
+  position: relative;
+  height: 32px; /* 헤더 높이 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ModalTitle = styled.h3`
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+export const ModalCloseBtn = styled.button`
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  & > img {
+    width: 19px;
+    height: 19px;
+    display: block;
+  }
+`;
+
+export const ModalContent = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px;
+`;
+
+/** ✅ 인풋 규격 반영: width 332, height 70, radius 12, border #5C5C5C, 중앙정렬 */
+export const NickInput = styled.input`
+  width: 332px;
+  height: 70px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid #5C5C5C;
+  color: #000;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  outline: none;
+
+  &::placeholder { color: #BDBDBD; }
+`;
