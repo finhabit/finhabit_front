@@ -43,7 +43,7 @@ export const IconBtn = styled.button`
 `;
 
 export const TopIcon = styled.img`
-  width: 22px;
+  width: 29px;
   height: 22px;
 `;
 
@@ -118,7 +118,7 @@ export const CardQuiz = styled(BaseCard)`
 `;
 
 export const CardArchive = styled(BaseCard)`
-  height: 260px;
+  /* height: 256px; */
   background: #fdfdfd;
   border: 2px solid #dfe678;
 `;
@@ -129,14 +129,40 @@ export const CardBody = styled.div`
   display: flex;
   padding: 16px 18px;
   flex-direction: column;
-  gap: 8px;
+  gap:15px;
+`;
+export const CardBody1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap:30px;
+  padding:45px;
+
+`;
+export const Card1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
+`;
+
+export const CardTop = styled.h3`
+  margin:0 auto; 
+  color: #848D00;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  white-space: nowrap;
 `;
 
 export const CardTitle = styled.h3`
+  margin:0 auto;
   color: #2B2B27;
   text-align: center;
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   line-height: 1.2;
   width: 100%;
@@ -144,7 +170,25 @@ export const CardTitle = styled.h3`
   white-space: nowrap;
 `;
 
+export const Q_CardTitle = styled.h3`
+  margin:0 auto;
+  color: #2B2B27;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 12px;
+  width: 100%; 
+  white-space: nowrap;
+`;
 
+export const A_CardTitle = styled.h3`
+  margin:0 auto;
+  color: #2B2B27;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  width: 100%; 
+  white-space: nowrap;
+`;
 
 export const Gap = styled.div``;
 
