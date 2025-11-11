@@ -2,13 +2,13 @@ import { useState } from "react";
 import * as S from "./SetCategory.style";
 import { useNavigate } from "react-router-dom";
 
-import arrow_left_alt from "../../../assets/arrow_left_alt.png";
-import close from "../../../assets/close.png";
-import categoryeat from "../../../assets/categoryeat.png";
-import categorytran from "../../../assets/categorytran.png";
-import categoryshopping from "../../../assets/categoryshopping.png";
-import categoryrest from "../../../assets/categoryrest.png";
-import save from "../../../assets/save.png";
+import arrow_left_alt from "../../../assets/arrow_left_alt.svg";
+import close from "../../../assets/close.svg";
+import categoryeat from "../../../assets/categoryeat.svg";
+import categorytran from "../../../assets/categorytran.svg";
+import categoryshopping from "../../../assets/categoryshopping.svg";
+import categoryrest from "../../../assets/categoryrest.svg";
+import save from "../../../assets/save.svg";
 
 export default function SetCategory() {
   const navigate = useNavigate();

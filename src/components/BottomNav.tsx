@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import financeIcon from "../assets/financepage.png";
-import homeIcon from "../assets/homepage.png";
-import mypageIcon from "../assets/mypage.png";
+import financeIcon from "../assets/financepage.svg";
+import homeIcon from "../assets/homepage.svg";
+import mypageIcon from "../assets/mypage.svg";
 
 export default function BottomNav() {
   const navigate = useNavigate();
@@ -44,12 +44,14 @@ export default function BottomNav() {
 
 const NavBar = styled.nav`
   position: fixed;
-  bottom: 10px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
   max-width: 414px;
-  height: 64px;
+  height: 74px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-around;
   align-items: center;

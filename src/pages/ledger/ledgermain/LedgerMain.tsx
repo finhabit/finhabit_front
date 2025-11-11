@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import back from "../../../assets/back.png";
-import setting from "../../../assets/setting.png";
-import piggybank from "../../../assets/piggybank.png";
-import plus from "../../../assets/plus.png";
-import percategory from "../../../assets/percategory.png";
-import dumcat from "../../../assets/categoryeat.png";
+import back from "../../../assets/back.svg";
+import setting from "../../../assets/settingsicon.svg";
+import piggybank from "../../../assets/mission.svg";
+import plus from "../../../assets/plus.svg";
+import percategory from "../../../assets/percategory.svg";
+import dumcat from "../../../assets/categoryeat.svg";
 import chartIcon from "../../../assets/chart.svg";
 import Donuts from "../../../components/Donuts";
 import * as S from "./LedgerMain.style";

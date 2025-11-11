@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import back from "../../assets/back.png";
-import checked from "../../assets/checked.png";
+import back from "../../assets/back.svg";
+import checked from "../../assets/checked.svg";
 import * as S from "./Mission.style";
 
 export default function Mission() {

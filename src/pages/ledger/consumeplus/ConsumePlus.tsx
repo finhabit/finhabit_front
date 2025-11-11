@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import close from "../../../assets/close.png";
-import won from "../../../assets/won.png";
-import save from "../../../assets/save.png";
+import close from "../../../assets/close.svg";
+import won from "../../../assets/won.svg";
+import save from "../../../assets/save.svg";
 import * as S from "./ConsumePlus.style";
 
 export default function ConsumePlus() {

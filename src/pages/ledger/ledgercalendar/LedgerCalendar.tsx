@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import back from "../../../assets/back.png";
-import setting from "../../../assets/setting.png";
-import stats from "../../../assets/stats.png";
-import search from "../../../assets/search.png";
-import memo from "../../../assets/memo.png";
-import filter from "../../../assets/filter.png";
+import back from "../../../assets/back.svg";
+import setting from "../../../assets/settingsicon.svg";
+import stats from "../../../assets/stats.svg";
+import search from "../../../assets/docsearch.svg";
+import memo from "../../../assets/memo.svg";
+import filter from "../../../assets/filter.svg";
 import Donuts from "../../../components/Donuts";
-import dumcat from "../../../assets/categoryeat.png";
+import dumcat from "../../../assets/categoryeat.svg";
 
 import * as S from "./LedgerCalendar.style";
 

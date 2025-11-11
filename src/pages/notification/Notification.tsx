@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import back from "../../assets/back.png";
+import back from "../../assets/back.svg";
 import * as S from "./Notification.style";
 
 export default function Notification() {
