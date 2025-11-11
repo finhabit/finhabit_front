@@ -2,12 +2,11 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     Page,
-    HeaderRow,
+    HeaderRow, HeaderSpacer,
     CloseBtn,
     Title,
     SubtitleWrap,
-    Subtitle1,
-    Subtitle2,
+    Subtitle,
     Field,
     Label,
     InputWrap,
@@ -57,12 +56,14 @@ export default function MypagePw() {
                 <CloseBtn aria-label="닫기" onClick={() => nav(-1)}>
                     <img src={closeIcon} alt="" />
                 </CloseBtn>
-                <Title>비밀번호 설정</Title>
             </HeaderRow>
+            <HeaderSpacer />
+
 
             <SubtitleWrap>
-                <Subtitle1>비밀번호가 설정되어 있지 않습니다.</Subtitle1>
-                <Subtitle2>비밀번호 설정 시 이메일을 통해 로그인할 수 있습니다.</Subtitle2>
+                <Title>비밀번호 설정</Title>
+                <Subtitle>비밀번호가 설정되어 있지 않습니다.</Subtitle>
+                <Subtitle>비밀번호 설정 시 이메일을 통해 로그인할 수 있습니다.</Subtitle>
             </SubtitleWrap>
 
             {/* 비밀번호 */}

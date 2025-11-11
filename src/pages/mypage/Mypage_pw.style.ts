@@ -17,7 +17,6 @@ export const Page = styled.main`
 /** 상단: 닫기(X) + 타이틀 */
 export const HeaderRow = styled.header`
   display: flex;
-  align-items: center;
   gap: 8px;
   margin-bottom: 8px;
 `;
@@ -32,23 +31,23 @@ export const CloseBtn = styled.button`
   cursor: pointer;
 
   & > img {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     display: block;
   }
 `;
-
+export const HeaderSpacer = styled.div`
+  height: 31px;
+`;
 /** 타이틀 / 서브타이틀 */
 export const Title = styled.h1`
   margin: 0;
   color: #2B2B27;
-  text-align: center;
+  text-align: left;
   font-family: Pretendard;
   font-size: 22px;
   font-style: normal;
   font-weight: 600;
-  line-height: normal;
-  flex: 1; /* 가운데 정렬 */
 `;
 
 export const SubtitleWrap = styled.div`
@@ -56,36 +55,29 @@ export const SubtitleWrap = styled.div`
   margin-bottom: 24px;
 `;
 
-export const Subtitle1 = styled.p`
+export const Subtitle = styled.p`
   margin: 0;
   color: #CCC;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-`;
-
-export const Subtitle2 = styled.p`
-  margin: 6px 0 0 0;
-  color: #7B7B7B;
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: normal;
+  line-height: 1.4;   
+  white-space: nowrap;
 `;
+
 
 /** 입력 폼 */
 export const Field = styled.div`
-  margin-bottom: 16px;
+  margin-bottom: 33px;
+  margin-top: 33px;
 `;
 
 export const Label = styled.label`
   display: block;
-  margin-bottom: 10px;
-  color: #2B2B27;
-  font-size: 16px;
+  margin-bottom: 5px;
+  color: #7B7B7B;
+  font-size: 14px;
   font-weight: 600;
 `;
 
@@ -107,9 +99,9 @@ export const Input = styled.input`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  text-align: center;               /* 요청사항 */
+  text-align: left;             
   box-sizing: border-box;
-  padding: 0 44px;                  /* 우측 아이콘 공간 */
+  padding: 10px;              
   &::placeholder {
     color: #CCC;
   }
