@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import back from "../../assets/back.svg";
-import * as S from "./Notification.style";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import back from '@/assets/back.svg';
+import * as S from './Notification.style';
 
 export default function Notification() {
   const navigate = useNavigate();
@@ -17,8 +17,9 @@ export default function Notification() {
       {/* 알림 토글 */}
       <S.ToggleSection>
         <span>알림</span>
-        <S.ToggleWrapper onClick={() => setIsOn(!isOn)} isOn={isOn}>
-          <S.ToggleCircle isOn={isOn} />
+        {/* isOn 속성을 $isOn으로 변경 */}
+        <S.ToggleWrapper onClick={() => setIsOn(!isOn)} $isOn={isOn}>
+          <S.ToggleCircle $isOn={isOn} />
         </S.ToggleWrapper>
       </S.ToggleSection>
 

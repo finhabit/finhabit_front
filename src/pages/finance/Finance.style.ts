@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SCREEN_MAX = 414;
 export const CARD_MAX = 321;
@@ -14,7 +14,7 @@ export const Screen = styled.div`
 
 export const SafeArea = styled.main`
   width: 100%;
-  max-width: ${SCREEN_MAX}px;  
+  max-width: ${SCREEN_MAX}px;
   padding: 35px;
   box-sizing: border-box;
 `;
@@ -27,7 +27,7 @@ export const Header = styled.header`
 `;
 
 export const HeaderSpacer = styled.div`
-  width: 28px;  
+  width: 28px;
 `;
 
 export const HeaderIcons = styled.div`
@@ -51,19 +51,19 @@ export const TopIcon = styled.img`
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  align-items: center;      
+  align-items: center;
   width: 100%;
 `;
 
 /* 제목줄은 카드 폭과 동일하게 가운데 */
 export const TitleRow = styled.div`
-  position: relative;               
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: ${CARD_MAX}px;           
-  margin-bottom: 10px;                
+  max-width: ${CARD_MAX}px;
+  margin-bottom: 10px;
 `;
 
 export const Left = styled.div`
@@ -82,13 +82,14 @@ export const TinyIcon = styled.img`
 export const TinyPlus = styled.img`
   width: 12px;
   height: 12px;
+  cursor: pointer;
 `;
 
 export const TitleText = styled.span`
-  position: absolute;          
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  pointer-events: none;          
+  pointer-events: none;
   color: #000;
   font-family: Pretendard;
   font-size: 14px;
@@ -129,25 +130,24 @@ export const CardBody = styled.div`
   display: flex;
   padding: 16px 18px;
   flex-direction: column;
-  gap:15px;
+  gap: 15px;
 `;
 export const CardBody1 = styled.div`
   display: flex;
   flex-direction: column;
-  gap:30px;
-  padding:45px;
-
+  gap: 30px;
+  padding: 45px;
 `;
 export const Card1 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap:10px;
+  gap: 10px;
 `;
 
 export const CardTop = styled.h3`
-  margin:0 auto; 
-  color: #848D00;
+  margin: 0 auto;
+  color: #848d00;
   text-align: center;
   font-family: Pretendard;
   font-size: 14px;
@@ -158,35 +158,35 @@ export const CardTop = styled.h3`
 `;
 
 export const CardTitle = styled.h3`
-  margin:0 auto;
-  color: #2B2B27;
+  margin: 0 auto;
+  color: #2b2b27;
   text-align: center;
   font-family: Pretendard;
   font-size: 17px;
   font-weight: 600;
   line-height: 1.2;
   width: 100%;
-  max-width: 277px;  
+  max-width: 277px;
   white-space: nowrap;
 `;
 
 export const Q_CardTitle = styled.h3`
-  margin:0 auto;
-  color: #2B2B27;
+  margin: 0 auto;
+  color: #2b2b27;
   text-align: center;
   font-family: Pretendard;
   font-size: 12px;
-  width: 100%; 
+  width: 100%;
   white-space: nowrap;
 `;
 
 export const A_CardTitle = styled.h3`
-  margin:0 auto;
-  color: #2B2B27;
+  margin: 0 auto;
+  color: #2b2b27;
   text-align: center;
   font-family: Pretendard;
   font-size: 14px;
-  width: 100%; 
+  width: 100%;
   white-space: nowrap;
 `;
 

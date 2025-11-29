@@ -1,21 +1,21 @@
-import { useNavigate } from "react-router-dom";
-import back from "../../../assets/back.svg";
-import setting from "../../../assets/settingsicon.svg";
-import piggybank from "../../../assets/mission.svg";
-import plus from "../../../assets/plus.svg";
-import percategory from "../../../assets/percategory.svg";
-import dumcat from "../../../assets/categoryeat.svg";
-import chartIcon from "../../../assets/chart.svg";
-import Donuts from "../../../components/Donuts";
-import * as S from "./LedgerMain.style";
+import { useNavigate } from 'react-router-dom';
+import back from '@/assets/back.svg';
+import setting from '@/assets/settingsicon.svg';
+import piggybank from '@/assets/mission.svg';
+import plus from '@/assets/plus.svg';
+import percategory from '@/assets/percategory.svg';
+import dumcat from '@/assets/categoryeat.svg';
+import chartIcon from '@/assets/chart.svg';
+import Donuts from '@/components/Donuts';
+import * as S from './LedgerMain.style';
 
-export default function LedgerMain(){
+export default function LedgerMain() {
   const navigate = useNavigate();
 
   return (
     <>
       <S.UpLine>
-        <S.Icons src={back} alt="이전으로" onClick={() => navigate(-1)} />
+        <S.Icons src={back} alt="이전으로" onClick={() => navigate('/')} />
         가계부
         <S.Icons src={setting} alt="설정아이콘" />
       </S.UpLine>
@@ -24,11 +24,7 @@ export default function LedgerMain(){
           <S.L_Header>
             <S.MiniIcons src={piggybank} alt="저금통 아이콘" />
             오늘의 소비
-            <S.PlusIcons
-              src={plus}
-              alt="추가버튼"
-              onClick={() => navigate("/consumeplus")}
-            />
+            <S.PlusIcons src={plus} alt="추가버튼" onClick={() => navigate('/consumeplus')} />
           </S.L_Header>
           <S.ContentBox_1>
             <S.Perrow>
@@ -41,11 +37,7 @@ export default function LedgerMain(){
           <S.L_Header>
             <S.MiniIcons src={percategory} alt="카테고리 아이콘" />
             카테고리별 소비
-            <S.PlusIcons
-              src={plus}
-              alt="추가버튼"
-              onClick={() => navigate("/ledgercalendar")}
-            />
+            <S.PlusIcons src={plus} alt="추가버튼" onClick={() => navigate('/ledgercalendar')} />
           </S.L_Header>
           <S.ContentBox>
             <S.Perrow>
@@ -64,11 +56,7 @@ export default function LedgerMain(){
             <S.TitleText>간단 소비 요약</S.TitleText>
           </S.Left>
           <S.Right>
-            <S.PlusIcons
-              src={plus}
-              alt="추가버튼"
-              onClick={() => navigate("/ledgercalendar")}
-            />
+            <S.PlusIcons src={plus} alt="추가버튼" onClick={() => navigate('/ledgercalendar')} />
           </S.Right>
         </S.TitleRow>
         <S.SummaryCard>
