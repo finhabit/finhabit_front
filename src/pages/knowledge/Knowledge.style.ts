@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const UpLine = styled.div`
   display: flex;
@@ -65,8 +65,8 @@ export const RemindingSection = styled.div`
 `;
 
 export const PerK = styled.div`
-    font-size: 15px; 
-    margin: 10px;
+  font-size: 15px;
+  margin: 10px;
 `;
 
 export const KTitle = styled.div`
@@ -77,15 +77,42 @@ export const KTitle = styled.div`
 export const GathTitle = styled.div`
   color: #848d00;
   margin: 5px;
-  display: flex; 
+  display: flex;
   justify-content: center;
 `;
 
 export const GathContent = styled.div`
-    width: 200px;
-    text-align: center;
+  width: 200px;
+  text-align: center;
 `;
 
 export const PerGath = styled.div`
-    margin: 10px;
+  margin: 10px;
+`;
+
+export const TabWrapper = styled.div`
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+`;
+
+export const TabButton = styled.button<{ $active?: boolean }>`
+  background: ${(props) => (props.$active ? '#dfe678' : 'transparent')};
+  border: none;
+  padding: 3px 13px;
+  border-radius: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  color: ${(props) => (props.$active ? 'black' : '#666')};
+  transition: 0.2s;
+`;
+
+export const TabHugger = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
 `;

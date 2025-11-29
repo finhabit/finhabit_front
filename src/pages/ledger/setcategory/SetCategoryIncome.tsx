@@ -4,40 +4,48 @@ import { useNavigate } from 'react-router-dom';
 
 import arrow_left_alt from '@/assets/arrow_left_alt.svg';
 import close from '@/assets/close.svg';
-import categoryeat from '@/assets/categoryeat.svg';
-import categorytran from '@/assets/categorytran.svg';
-import categoryshopping from '@/assets/categoryshopping.svg';
-import categoryrest from '@/assets/categoryrest.svg';
+import categorysalary from '@/assets/salarybtn.svg';
+import categoryallow from '@/assets/allowancebtn.svg';
+import categoryetc from '@/assets/etcbtn.svg';
 import save from '@/assets/save.svg';
 
-export default function SetCategory() {
+export default function SetCategoryIncome() {
   const navigate = useNavigate();
   const [desc, setDesc] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedMethod, setSelectedMethod] = useState<'cash' | 'card' | null>(null);
 
   const categories = [
-    { src: categoryeat, alt: '식비' },
-    { src: categoryshopping, alt: '쇼핑' },
-    { src: categoryrest, alt: '여가' },
-    { src: categorytran, alt: '교통' },
+    { src: categorysalary, alt: '급여' },
+    { src: categoryallow, alt: '용돈' },
+    { src: categoryetc, alt: '기타' },
   ];
 
+  // 카테고리 클릭 시
   // 카테고리 클릭 시
   const handleCategoryClick = (altText: string) => {
     if (selectedCategory === altText) {
       setSelectedCategory(null);
       setDesc('');
-    } else {
-      setSelectedCategory(altText);
-      setDesc(altText);
+      return;
     }
+
+    setSelectedCategory(altText);
+
+    if (altText === '기타') {
+      if (desc.trim() !== '') {
+        navigate('/ledgercalendar');
+      }
+      return;
+    }
+
+    setDesc(altText);
+    navigate('/ledgercalendar');
   };
 
-  // 결제수단 클릭 시
   const handleMethodClick = (method: 'cash' | 'card') => {
     setSelectedMethod(method);
-    navigate('/ledgercalendar'); // ledgercalendar 페이지로 이동
+    navigate('/ledgercalendar');
   };
 
   return (
@@ -45,12 +53,14 @@ export default function SetCategory() {
       <S.TopBar>
         <div>
           <S.Icon src={arrow_left_alt} alt="arrow" onClick={() => navigate(-1)} />
-          <S.Amount>2,000원</S.Amount>
+          <S.Amount_I>2,000원</S.Amount_I>
         </div>
         <S.Icon src={close} alt="close" onClick={() => navigate('/ledger')} />
       </S.TopBar>
 
-      <S.DescDisplay $isPlaceholder={!desc}>{desc || '내역'}</S.DescDisplay>
+      <S.DescDisplay $isPlaceholder={!desc}>
+        <S.DescInput placeholder="내역" value={desc} onChange={(e) => setDesc(e.target.value)} />
+      </S.DescDisplay>
 
       <S.CategoryContainer $hasSelected={!!selectedCategory}>
         {categories.map((c) => (
@@ -64,15 +74,6 @@ export default function SetCategory() {
           />
         ))}
       </S.CategoryContainer>
-
-      <S.MethodContainer>
-        <S.MethodButton $active={selectedMethod === 'cash'} onClick={() => handleMethodClick('cash')}>
-          현금
-        </S.MethodButton>
-        <S.MethodButton $active={selectedMethod === 'card'} onClick={() => handleMethodClick('card')}>
-          카드
-        </S.MethodButton>
-      </S.MethodContainer>
 
       <S.SaveBtn src={save} alt="메모버튼" />
     </S.Container>

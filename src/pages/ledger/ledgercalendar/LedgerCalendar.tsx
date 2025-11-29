@@ -11,6 +11,9 @@ import filter from '@/assets/filter.svg';
 import Donuts from '@/components/Donuts';
 import dumcat from '@/assets/categoryeat.svg';
 
+import modifyIcon from '@/assets/modification.svg';
+import deleteIcon from '@/assets/delete.svg';
+
 import * as S from './LedgerCalendar.style';
 
 const weekDays: string[] = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -18,7 +21,7 @@ const weekDays: string[] = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 const LedgerCalendar: React.FC = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState<Date>(new Date());
-  const [selectedTab, setSelectedTab] = useState<string | null>(null); // 어떤 버튼이 눌렸는지
+  const [selectedTab, setSelectedTab] = useState<string | null>(null);
 
   const onDateChange = (value: Date | Date[]) => {
     if (value instanceof Date) {
@@ -26,9 +29,16 @@ const LedgerCalendar: React.FC = () => {
     }
   };
 
-  // 버튼 클릭 시
   const handleTabClick = (tabName: string) => {
-    setSelectedTab((prev) => (prev === tabName ? null : tabName)); // 다시 누르면 해제
+    setSelectedTab((prev) => (prev === tabName ? null : tabName));
+  };
+
+  const handleEdit = () => {
+    // 이후 수정기능 구현
+  };
+
+  const handleDelete = () => {
+    // 이후 api연동해서 삭제기능 구현
   };
 
   return (
@@ -93,7 +103,6 @@ const LedgerCalendar: React.FC = () => {
         </S.DetailSide>
       </S.Details>
 
-      {/* --- 수입/지출 요약 --- */}
       <S.Details>
         <S.InOutcome>
           <div>수입</div>
@@ -110,14 +119,35 @@ const LedgerCalendar: React.FC = () => {
           {selectedTab === 'stats' && <Donuts />}
           {selectedTab === 'memo' && <div>메모 내용</div>}
           {selectedTab === 'search' && <div>내역 검색 내용</div>}
+
           {selectedTab === 'category' && (
-            <S.Perrow>
-              <S.CategoryIcon src={dumcat} alt="더미 카테고리 아이콘" />
-              <div>음료</div>
-              <div>2,000원</div>
-            </S.Perrow>
+            <>
+              <S.CategoryContentWrapper>
+                <S.Perrow>
+                  <S.CategoryIcon src={dumcat} alt="더미 카테고리 아이콘" />
+                  <div>음료</div>
+                  <div>2,000원</div>
+                </S.Perrow>
+              </S.CategoryContentWrapper>
+
+              <S.ActionContainer>
+                <S.ActionButton onClick={handleEdit}>
+                  <S.ActionIcon src={modifyIcon} alt="수정" />
+                  수정
+                </S.ActionButton>
+                <S.ActionButton onClick={handleDelete}>
+                  <S.ActionIcon src={deleteIcon} alt="삭제" />
+                  삭제
+                </S.ActionButton>
+              </S.ActionContainer>
+            </>
           )}
-          {!selectedTab && <div style={{ color: '#aaa' }}>버튼을 눌러 소비를 분석해보세요!</div>}
+
+          {!selectedTab && (
+            <div style={{ color: '#aaa', marginTop: 'auto', marginBottom: 'auto' }}>
+              버튼을 눌러 소비를 분석해보세요!
+            </div>
+          )}
         </S.SummaryCard>
       </S.Section>
     </>

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const UpLine = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ export const StyledCalendarWrapper = styled.div`
     background-color: #dfe67880;
     padding: 20px 10px;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
@@ -38,13 +38,13 @@ export const StyledCalendarWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 160px;
-    height:10px;
+    height: 10px;
 
     .react-calendar__navigation__label {
       font-size: 13px;
       font-weight: 600;
-      width:100px;
-      text-align:center;
+      width: 100px;
+      text-align: center;
       &:hover {
         background-color: transparent;
       }
@@ -107,16 +107,14 @@ export const StyledCalendarWrapper = styled.div`
   }
 `;
 
-
 export const Details = styled.div`
-    display:flex;
-    justify-content: space-between;
-    margin: 10px  40px;
-
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 40px;
 `;
 
 export const DetailIcons = styled.img`
-    height: 20px;
+  height: 20px;
 `;
 
 export const PerDetail = styled.div<{ $active?: boolean; $dimOthers?: boolean }>`
@@ -149,9 +147,9 @@ export const PerDetail = styled.div<{ $active?: boolean; $dimOthers?: boolean }>
 `;
 
 export const DetailSide = styled.div`
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 `;
 
 export const InOutcome = styled.div`
@@ -169,7 +167,6 @@ export const IncomeWon = styled.div`
 export const OutcomeWon = styled.div`
   color: #dc6d6d;
 `;
-
 
 export const SummaryCard = styled.div`
   width: 100%;
@@ -194,8 +191,6 @@ export const BottomSpacer = styled.div`
   height: 84px;
 `;
 
-
-
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
@@ -205,16 +200,52 @@ export const Section = styled.section`
 `;
 
 export const Perrow = styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-    font-size: 20px;
-    margin: 5px 0;
-    font-size: 24px;
-    font-weight: 500;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 20px;
+  margin: 5px 0;
+  font-size: 20px;
+  font-weight: 500;
 `;
 
 export const CategoryIcon = styled.img`
-    width: 35px;
+  width: 35px;
+`;
+
+export const ActionContainer = styled.div`
+  width: 100%;
+  margin-top: auto; /* 위쪽 콘텐츠를 밀어내고 바닥에 붙음 */
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* 수정과 삭제 버튼 사이 간격 */
+  padding-bottom: 10px;
+`;
+
+export const ActionButton = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #000;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+export const ActionIcon = styled.img`
+  width: 18px;
+  height: 18px;
+`;
+
+export const CategoryContentWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;

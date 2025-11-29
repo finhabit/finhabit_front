@@ -8,17 +8,21 @@ import * as S from './ConsumePlus.style';
 export default function ConsumePlus() {
   const navigate = useNavigate();
 
-  const [amount, setAmount] = useState<string>(''); // 금액 상태
-  const [selected, setSelected] = useState<'income' | 'expense' | ''>(''); // 수입/지출 선택 상태
+  const [amount, setAmount] = useState<string>('');
+  const [selected, setSelected] = useState<'income' | 'outcome' | ''>('');
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(e.target.value);
   };
 
-  // 버튼 클릭 핸들러
-  const handleTypeSelect = (type: 'income' | 'expense') => {
+  const handleTypeSelect = (type: 'income' | 'outcome') => {
     setSelected(type);
-    navigate('/setcategory'); // setcategory 페이지로 이동
+
+    if (type === 'income') {
+      navigate('/setcategoryincome');
+    } else {
+      navigate('/setcategoryoutcome');
+    }
   };
 
   return (
@@ -37,7 +41,7 @@ export default function ConsumePlus() {
         <S.TypeButton $active={selected === 'income'} color="#68B6F3" onClick={() => handleTypeSelect('income')}>
           수입
         </S.TypeButton>
-        <S.TypeButton $active={selected === 'expense'} color="#F87171" onClick={() => handleTypeSelect('expense')}>
+        <S.TypeButton $active={selected === 'outcome'} color="#F87171" onClick={() => handleTypeSelect('outcome')}>
           지출
         </S.TypeButton>
       </S.ButtonSection>
