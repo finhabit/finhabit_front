@@ -13,5 +13,5 @@ npm run dev
 
 # Branch Name Convention
 이유 : PR시 한글이 포함된 브랜치명의 경우 경고를 띄움 / 이동의 원활을 위해<br>
-[이슈번호]-[작업간단설명]<br>
-ex)17-quizpage_modification
+[이슈번호]-[작업유형]_[작업간단설명]<br>
+ex)17-feature_quizpage
