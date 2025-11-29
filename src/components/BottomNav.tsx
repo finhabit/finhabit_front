@@ -1,41 +1,27 @@
-import styled from "styled-components";
-import { useNavigate, useLocation } from "react-router-dom";
-import financeIcon from "../assets/financepage.svg";
-import homeIcon from "../assets/homepage.svg";
-import mypageIcon from "../assets/mypage.svg";
+import styled from 'styled-components';
+import { useNavigate, useLocation } from 'react-router-dom';
+import financeIcon from '@/assets/financepage.svg';
+import homeIcon from '@/assets/homepage.svg';
+import mypageIcon from '@/assets/mypage.svg';
 
 export default function BottomNav() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const currentPath = location.pathname;
-  const currentActive =
-    currentPath === "/finance"
-      ? "finance"
-      : currentPath === "/mypage"
-        ? "mypage"
-        : "home";
+  const currentActive = currentPath === '/finance' ? 'finance' : currentPath === '/mypage' ? 'mypage' : 'home';
 
   return (
     <NavBar>
-      <NavItem
-        $active={currentActive === "finance"}
-        onClick={() => navigate("/finance")}
-      >
+      <NavItem $active={currentActive === 'finance'} onClick={() => navigate('/finance')}>
         <Icon src={financeIcon} alt="finance" />
       </NavItem>
 
-      <NavItem
-        $active={currentActive === "home"}
-        onClick={() => navigate("/")}
-      >
+      <NavItem $active={currentActive === 'home'} onClick={() => navigate('/')}>
         <Icon src={homeIcon} alt="home" />
       </NavItem>
 
-      <NavItem
-        $active={currentActive === "mypage"}
-        onClick={() => navigate("/mypage")}
-      >
+      <NavItem $active={currentActive === 'mypage'} onClick={() => navigate('/mypage')}>
         <Icon src={mypageIcon} alt="mypage" />
       </NavItem>
     </NavBar>

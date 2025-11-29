@@ -1,5 +1,4 @@
-import styled from "styled-components";
-
+import styled from 'styled-components';
 
 export const SCREEN_MAX = 414;
 export const LINE_MAX = 332;
@@ -10,7 +9,7 @@ export const Page = styled.main`
   width: 100%;
   max-width: ${SCREEN_MAX}px;
   min-height: 100dvh;
-  padding: 55px 31px 31px 31px; 
+  padding: 55px 31px 31px 31px;
   box-sizing: border-box;
   background: #fff;
   font-family: Pretendard;
@@ -55,11 +54,9 @@ export const IconButton = styled.button`
   }
 `;
 
-
 export const FirstSectionSpacer = styled.div`
   height: 51px;
 `;
-
 
 export const ItemSection = styled.section`
   width: ${LINE_MAX}px;
@@ -100,14 +97,14 @@ export const RightCol = styled.div`
   height: 24px;
   display: grid;
   place-items: center;
+  cursor: pointer;
 
   & > img {
     width: 6px;
-    height: 12px; 
+    height: 12px;
     display: block;
   }
 `;
-
 
 export const Divider = styled.hr`
   width: ${LINE_MAX}px;
@@ -125,7 +122,6 @@ export const SectionTitle = styled.h2`
   line-height: normal;
 `;
 
-
 export const FooterActions = styled.div`
   position: fixed;
   left: 50%;
@@ -135,7 +131,7 @@ export const FooterActions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 53px;      
+  gap: 53px;
 `;
 
 export const TextButton = styled.button`
@@ -155,7 +151,7 @@ export const ModalOverlay = styled.div`
   inset: 0;
   background: rgba(123, 123, 123, 0.45);
   display: flex;
-  align-items: flex-end;           /* ✅ 스샷처럼 하단에서 올라오는 느낌 */
+  align-items: flex-end; /* ✅ 스샷처럼 하단에서 올라오는 느낌 */
   justify-content: center;
   z-index: 1000;
 `;
@@ -166,7 +162,7 @@ export const ModalSheet = styled.div`
   height: 499px;
   flex-shrink: 0;
   border-radius: 31px 31px 0 0;
-  background: #FFF;
+  background: #fff;
   color: #000;
   font-family: Pretendard;
   font-size: 18px;
@@ -228,7 +224,7 @@ export const NickInput = styled.input`
   height: 70px;
   flex-shrink: 0;
   border-radius: 12px;
-  border: 1px solid #5C5C5C;
+  border: 1px solid #5c5c5c;
   color: #000;
   text-align: center;
   font-family: Pretendard;
@@ -238,5 +234,7 @@ export const NickInput = styled.input`
   line-height: normal;
   outline: none;
 
-  &::placeholder { color: #BDBDBD; }
+  &::placeholder {
+    color: #bdbdbd;
+  }
 `;

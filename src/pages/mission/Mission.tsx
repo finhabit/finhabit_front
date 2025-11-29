@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import back from "../../assets/back.svg";
-import checked from "../../assets/checked.svg";
-import * as S from "./Mission.style";
+import { useNavigate } from 'react-router-dom';
+import back from '@/assets/back.svg';
+import checked from '@/assets/checked.svg';
+import * as S from './Mission.style';
 
 export default function Mission() {
   const navigate = useNavigate();
-  
+
   return (
     <>
       <S.UpLine>
@@ -24,9 +24,7 @@ export default function Mission() {
           미션 진행 상황
           <S.ContentBox>
             <S.ProgressItem>
-              <S.ProgressTitle>
-                이번 주 배운 금융 용어 3개 복습하기
-              </S.ProgressTitle>
+              <S.ProgressTitle>이번 주 배운 금융 용어 3개 복습하기</S.ProgressTitle>
               <S.ProgressBar>
                 <S.ProgressFill percent={30} />
               </S.ProgressBar>
@@ -34,9 +32,7 @@ export default function Mission() {
             </S.ProgressItem>
 
             <S.ProgressItem>
-              <S.ProgressTitle>
-                이번 주 목표 저축금액 5천원 달성하기
-              </S.ProgressTitle>
+              <S.ProgressTitle>이번 주 목표 저축금액 5천원 달성하기</S.ProgressTitle>
               <S.ProgressBar>
                 <S.ProgressFill percent={20} />
               </S.ProgressBar>

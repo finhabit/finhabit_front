@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SCREEN_MAX = 414;
 export const CARD_MAX = 321;
@@ -80,6 +80,7 @@ export const TinyIcon = styled.img`
 export const TinyPlus = styled.img`
   width: 12px;
   height: 12px;
+  cursor: pointer;
 `;
 
 export const TitleText = styled.span`
@@ -88,7 +89,6 @@ export const TitleText = styled.span`
   transform: translateX(-50%);
   pointer-events: none;
   color: #000;
-  font-family: Pretendard;
   font-size: 14px;
   font-weight: 600;
 `;
@@ -101,8 +101,8 @@ export const MissionCard = styled.div`
   max-width: ${CARD_MAX}px;
   height: 114px;
   border-radius: 23px;
-  background: #DFE678;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.10);
+  background: #dfe678;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
 `;
 
 export const DecorLeft = styled.img`
@@ -122,17 +122,15 @@ export const DecorRight = styled.img`
 `;
 
 export const MissionText = styled.div`
-  color: #2B2B27;
+  color: #2b2b27;
   text-align: center;
-  font-family: Pretendard;
   font-size: 18px;
   font-weight: 600;
   line-height: 1.2;
   width: 100%;
-  max-width: 277px;  
+  max-width: 277px;
   white-space: nowrap;
 `;
-
 
 /* ======= 오늘의 지식 카드 ======= */
 export const KnowledgeCard = styled.div`
@@ -153,17 +151,15 @@ export const CardBody = styled.div`
 `;
 
 export const CardTitle = styled.h3`
-  color: #2B2B27;
+  color: #2b2b27;
   text-align: center;
-  font-family: Pretendard;
   font-size: 17px;
   font-weight: 600;
   line-height: 1.2;
   width: 100%;
-  max-width: 277px;  
+  max-width: 277px;
   white-space: nowrap;
 `;
-
 
 /* ======= 간단 소비 요약 카드 ======= */
 export const SummaryCard = styled.div`

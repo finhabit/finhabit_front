@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import back from "../../assets/back.svg";
-import * as S from "./Knowledge.style";
+import { useNavigate } from 'react-router-dom';
+import back from '@/assets/back.svg';
+import * as S from './Knowledge.style';
 
 export default function Knowledge() {
   const navigate = useNavigate();
@@ -36,16 +36,11 @@ export default function Knowledge() {
           <S.ContentBox1>
             <S.PerGath>
               <S.GathTitle>보험의 역할</S.GathTitle>
-              <S.GathContent>
-                보험은 사고나 질병 등 예상치 못한 위험에 대비하는
-                '보호장치'입니다.
-              </S.GathContent>
+              <S.GathContent>보험은 사고나 질병 등 예상치 못한 위험에 대비하는 '보호장치'입니다.</S.GathContent>
             </S.PerGath>
             <S.PerGath>
               <S.GathTitle>분산투자의 의미</S.GathTitle>
-              <S.GathContent>
-                자산을 여러 종목에 나눠 투자해 위험을 줄이는 방법입니다.
-              </S.GathContent>
+              <S.GathContent>자산을 여러 종목에 나눠 투자해 위험을 줄이는 방법입니다.</S.GathContent>
             </S.PerGath>
           </S.ContentBox1>
         </S.N_Section>

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import back from "../../assets/back.svg";
-import * as S from "./Quiz.style";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import back from '@/assets/back.svg';
+import * as S from './Quiz.style';
 
 export default function Quiz() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function Quiz() {
     setIsCorrect(index === correctAnswer);
   };
 
-  const choices = ["① 연체하지 않기", "② 카드 많이 만들기", "③ 대출 자주 받기"];
+  const choices = ['① 연체하지 않기', '② 카드 많이 만들기', '③ 대출 자주 받기'];
 
   return (
     <>
@@ -29,9 +29,7 @@ export default function Quiz() {
           오늘의 퀴즈
           <S.ContentBox>
             <S.PerQuiz>
-              <S.QuizTitle>
-                Q. 신용점수를 올리려면 어떻게 해야 할까요?
-              </S.QuizTitle>
+              <S.QuizTitle>Q. 신용점수를 올리려면 어떻게 해야 할까요?</S.QuizTitle>
               <S.QuizChoice>
                 {choices.map((choice, index) => (
                   <S.PerChoice
@@ -39,14 +37,9 @@ export default function Quiz() {
                     onClick={() => handleChoice(index)}
                     selected={selected === index}
                     correct={isCorrect && index === correctAnswer}
-                    wrong={
-                      selected === index &&
-                      isCorrect === false &&
-                      index !== correctAnswer
-                    }
+                    wrong={selected === index && isCorrect === false && index !== correctAnswer}
                     showAnswer={isCorrect === false}
-                    isAnswer={index === correctAnswer}
-                  >
+                    isAnswer={index === correctAnswer}>
                     {choice}
                   </S.PerChoice>
                 ))}

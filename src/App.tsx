@@ -1,3 +1,5 @@
+import { Routes, Route } from "react-router-dom";
+import GlobalStyle from "./GlobalStyle";
 import styled from "styled-components";
 
 import Home from "./pages/home/Home";
@@ -15,8 +17,6 @@ import ConsumePlus from "./pages/ledger/consumeplus/ConsumePlus";
 import SetCategory from "./pages/ledger/setcategory/SetCategory";
 import LedgerCalendar from "./pages/ledger/ledgercalendar/LedgerCalendar";
 
-import { Routes, Route } from "react-router-dom";
-
 const AppWrapper = styled.div`
   width: 100%;
   max-width: 414px;
@@ -31,9 +31,10 @@ const AppWrapper = styled.div`
 function App() {
   return (
     <AppWrapper>
+      <GlobalStyle />
       <Routes>
-        <Route path="/finance" element={<Finance />} />
         <Route path="/" element={<Home />} />
+        <Route path="/finance" element={<Finance />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/notification" element={<Notification />} />
         <Route path="/mission" element={<Mission />} />

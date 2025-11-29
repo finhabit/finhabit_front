@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import back from "../../../assets/back.svg";
-import setting from "../../../assets/settingsicon.svg";
-import stats from "../../../assets/stats.svg";
-import search from "../../../assets/docsearch.svg";
-import memo from "../../../assets/memo.svg";
-import filter from "../../../assets/filter.svg";
-import Donuts from "../../../components/Donuts";
-import dumcat from "../../../assets/categoryeat.svg";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import back from '@/assets/back.svg';
+import setting from '@/assets/settingsicon.svg';
+import stats from '@/assets/stats.svg';
+import search from '@/assets/docsearch.svg';
+import memo from '@/assets/memo.svg';
+import filter from '@/assets/filter.svg';
+import Donuts from '@/components/Donuts';
+import dumcat from '@/assets/categoryeat.svg';
 
-import * as S from "./LedgerCalendar.style";
+import * as S from './LedgerCalendar.style';
 
-const weekDays: string[] = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const weekDays: string[] = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 const LedgerCalendar: React.FC = () => {
   const navigate = useNavigate();
@@ -50,9 +50,7 @@ const LedgerCalendar: React.FC = () => {
             next2Label={null}
             prev2Label={null}
             navigationLabel={({ date, view }) =>
-              view === "month"
-                ? date.toLocaleString("en-US", { month: "long" })
-                : null
+              view === 'month' ? date.toLocaleString('en-US', { month: 'long' }) : null
             }
           />
         </S.StyledCalendarWrapper>
@@ -62,37 +60,33 @@ const LedgerCalendar: React.FC = () => {
       <S.Details>
         <S.DetailSide>
           <S.PerDetail
-            onClick={() => handleTabClick("stats")}
-            $active={selectedTab === "stats"}
-            $dimOthers={!!selectedTab && selectedTab !== "stats"}
-          >
+            onClick={() => handleTabClick('stats')}
+            $active={selectedTab === 'stats'}
+            $dimOthers={!!selectedTab && selectedTab !== 'stats'}>
             <S.DetailIcons src={stats} alt="통계" />
             통계
           </S.PerDetail>
 
           <S.PerDetail
-            onClick={() => handleTabClick("memo")}
-            $active={selectedTab === "memo"}
-            $dimOthers={!!selectedTab && selectedTab !== "memo"}
-          >
+            onClick={() => handleTabClick('memo')}
+            $active={selectedTab === 'memo'}
+            $dimOthers={!!selectedTab && selectedTab !== 'memo'}>
             <S.DetailIcons src={memo} alt="메모" />
             메모
           </S.PerDetail>
 
           <S.PerDetail
-            onClick={() => handleTabClick("search")}
-            $active={selectedTab === "search"}
-            $dimOthers={!!selectedTab && selectedTab !== "search"}
-          >
+            onClick={() => handleTabClick('search')}
+            $active={selectedTab === 'search'}
+            $dimOthers={!!selectedTab && selectedTab !== 'search'}>
             <S.DetailIcons src={search} alt="검색" />
             내역 검색
           </S.PerDetail>
 
           <S.PerDetail
-            onClick={() => handleTabClick("category")}
-            $active={selectedTab === "category"}
-            $dimOthers={!!selectedTab && selectedTab !== "category"}
-          >
+            onClick={() => handleTabClick('category')}
+            $active={selectedTab === 'category'}
+            $dimOthers={!!selectedTab && selectedTab !== 'category'}>
             <S.DetailIcons src={filter} alt="필터" />
             카테고리
           </S.PerDetail>
@@ -113,17 +107,17 @@ const LedgerCalendar: React.FC = () => {
 
       <S.Section>
         <S.SummaryCard>
-          {selectedTab === "stats" && <Donuts />}
-          {selectedTab === "memo" && <div>메모 내용</div>}
-          {selectedTab === "search" && <div>내역 검색 내용</div>}
-          {selectedTab === "category" && (
+          {selectedTab === 'stats' && <Donuts />}
+          {selectedTab === 'memo' && <div>메모 내용</div>}
+          {selectedTab === 'search' && <div>내역 검색 내용</div>}
+          {selectedTab === 'category' && (
             <S.Perrow>
               <S.CategoryIcon src={dumcat} alt="더미 카테고리 아이콘" />
               <div>음료</div>
               <div>2,000원</div>
             </S.Perrow>
           )}
-          {!selectedTab && <div style={{ color: "#aaa" }}>버튼을 눌러 소비를 분석해보세요!</div>}
+          {!selectedTab && <div style={{ color: '#aaa' }}>버튼을 눌러 소비를 분석해보세요!</div>}
         </S.SummaryCard>
       </S.Section>
     </>
