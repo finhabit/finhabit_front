@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const UpLine = styled.div`
   display: flex;
@@ -26,11 +26,11 @@ export const ToggleSection = styled.div`
   font-weight: 500;
 `;
 
-export const ToggleWrapper = styled.div<{ isOn: boolean }>`
+export const ToggleWrapper = styled.div<{ $isOn: boolean }>`
   width: 45px;
   height: 24px;
   border-radius: 30px;
-  background-color: ${({ isOn }) => (isOn ? "#D4DE47" : "#ccc")};
+  background-color: ${({ $isOn }) => ($isOn ? '#D4DE47' : '#ccc')};
   display: flex;
   align-items: center;
   padding: 2px;
@@ -38,12 +38,12 @@ export const ToggleWrapper = styled.div<{ isOn: boolean }>`
   transition: all 0.3s ease;
 `;
 
-export const ToggleCircle = styled.div<{ isOn: boolean }>`
+export const ToggleCircle = styled.div<{ $isOn: boolean }>`
   width: 20px;
   height: 20px;
   border-radius: 50%;
   background-color: white;
-  transform: ${({ isOn }) => (isOn ? "translateX(23px)" : "translateX(2px)")};
+  transform: ${({ $isOn }) => ($isOn ? 'translateX(23px)' : 'translateX(2px)')};
   transition: all 0.3s ease;
 `;
 

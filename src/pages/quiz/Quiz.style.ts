@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { css, keyframes } from 'styled-components';
 
 export const UpLine = styled.div`
   display: flex;
@@ -91,35 +91,35 @@ const correctAnim = keyframes`
 `;
 
 export const PerChoice = styled.div<{
-  selected?: boolean;
-  correct?: boolean;
-  wrong?: boolean;
-  showAnswer?: boolean;
-  isAnswer?: boolean;
+  $selected?: boolean;
+  $correct?: boolean;
+  $wrong?: boolean;
+  $showAnswer?: boolean;
+  $isAnswer?: boolean;
 }>`
   cursor: pointer;
   border-radius: 10px;
   transition: all 0.3s ease;
   user-select: none;
 
-  ${({ correct }) =>
-    correct &&
+  ${({ $correct }) =>
+    $correct &&
     css`
       color: #848d00;
       animation: ${correctAnim} 0.3s ease forwards;
       font-weight: 600;
     `}
 
-  ${({ wrong }) =>
-    wrong &&
+  ${({ $wrong }) =>
+    $wrong &&
     css`
       color: #b20808ff;
       text-decoration: line-through;
     `}
 
-  ${({ showAnswer, isAnswer }) =>
-    showAnswer &&
-    isAnswer &&
+  ${({ $showAnswer, $isAnswer }) =>
+    $showAnswer &&
+    $isAnswer &&
     css`
       color: #848d00;
       font-weight: 600;

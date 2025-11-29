@@ -35,11 +35,11 @@ export default function Quiz() {
                   <S.PerChoice
                     key={index}
                     onClick={() => handleChoice(index)}
-                    selected={selected === index}
-                    correct={isCorrect && index === correctAnswer}
-                    wrong={selected === index && isCorrect === false && index !== correctAnswer}
-                    showAnswer={isCorrect === false}
-                    isAnswer={index === correctAnswer}>
+                    $selected={selected === index}
+                    $correct={isCorrect && index === correctAnswer}
+                    $wrong={selected === index && isCorrect === false && index !== correctAnswer}
+                    $showAnswer={isCorrect === false}
+                    $isAnswer={index === correctAnswer}>
                     {choice}
                   </S.PerChoice>
                 ))}

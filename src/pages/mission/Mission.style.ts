@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const UpLine = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ export const N_Section = styled.div`
 
 export const ContentBox = styled.div`
   width: 321px;
-  min-height:114px;
+  min-height: 114px;
   max-height: 213px;
   overflow: hidden;
   display: flex;
@@ -47,11 +47,11 @@ export const RemindingSection = styled.div`
 export const PerMission = styled.div`
   font-size: 15px;
   font-weight: 500;
-  margin:2px;
+  margin: 2px;
 `;
 
 export const PerCheck = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   width: 280px;
@@ -62,8 +62,6 @@ export const Checked = styled.img`
   width: 14px;
   height: 14px;
 `;
-
-
 
 export const ProgressItem = styled.div`
   display: flex;
@@ -87,8 +85,8 @@ export const ProgressBar = styled.div`
   overflow: hidden;
 `;
 
-export const ProgressFill = styled.div<{ percent: number }>`
-  width: ${({ percent }) => percent}%;
+export const ProgressFill = styled.div<{ $percent: number }>`
+  width: ${({ $percent }) => $percent}%;
   height: 100%;
   background-color: #bec372;
   border-radius: 10px;

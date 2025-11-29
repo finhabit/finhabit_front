@@ -17,8 +17,9 @@ export default function Notification() {
       {/* 알림 토글 */}
       <S.ToggleSection>
         <span>알림</span>
-        <S.ToggleWrapper onClick={() => setIsOn(!isOn)} isOn={isOn}>
-          <S.ToggleCircle isOn={isOn} />
+        {/* isOn 속성을 $isOn으로 변경 */}
+        <S.ToggleWrapper onClick={() => setIsOn(!isOn)} $isOn={isOn}>
+          <S.ToggleCircle $isOn={isOn} />
         </S.ToggleWrapper>
       </S.ToggleSection>
 
