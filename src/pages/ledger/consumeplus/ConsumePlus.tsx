@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import close from '@/assets/close.svg';
 import won from '@/assets/won.svg';
-import save from '@/assets/save.svg';
 import * as S from './ConsumePlus.style';
 
 export default function ConsumePlus() {
@@ -29,7 +28,7 @@ export default function ConsumePlus() {
     <>
       <S.Header>
         <S.DateText>2025.04.06</S.DateText>
-        <S.CloseBtn src={close} alt="취소아이콘" onClick={() => navigate('/ledger')} />
+        <S.CloseBtn src={close} alt="취소아이콘" onClick={() => navigate(-1)} />
       </S.Header>
 
       <S.AmountBox>
@@ -45,8 +44,6 @@ export default function ConsumePlus() {
           지출
         </S.TypeButton>
       </S.ButtonSection>
-
-      <S.SaveBtn src={save} alt="메모버튼" />
     </>
   );
 }

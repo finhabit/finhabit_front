@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Header = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ export const Input = styled.input`
 export const ButtonSection = styled.div`
   display: flex;
   justify-content: center;
-  margin-top:20px;
+  margin-top: 20px;
   gap: 10px;
 `;
 
@@ -59,7 +59,7 @@ export const TypeButton = styled.button<TypeButtonProps>`
   width: 144px;
   height: 61px;
   border-radius: 8px;
-  background: ${({ $active, color }) => ($active ? color + "33" : "#DFE67880")};
+  background: ${({ $active, color }) => ($active ? color + '33' : '#DFE67880')};
   border: none;
   font-size: 24px;
   font-weight: 500;
@@ -69,15 +69,5 @@ export const TypeButton = styled.button<TypeButtonProps>`
 `;
 
 export const WonImg = styled.img`
-    width: 55px;
-`;
-
-export const SaveBtn = styled.img`
-  width: 26px;
-  position: absolute;
-  bottom: 30px;
-  right: 20px;
-  left: 50%;
-  transform: translateX(150px);
-  cursor: pointer;
+  width: 55px;
 `;

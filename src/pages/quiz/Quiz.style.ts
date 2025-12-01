@@ -32,6 +32,7 @@ export const N_Section = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
+  position: relative; /* 모달 위치 기준점 */
 `;
 
 export const ContentBox = styled.div`
@@ -59,15 +60,15 @@ export const QuizTitle = styled.div`
   word-break: keep-all;
 `;
 
-export const QuizChoicesText = styled.div<{ $isCorrect?: boolean }>`
+export const QuizChoicesText = styled.div<{ $isResultMode?: boolean }>`
   width: 100%;
   transition: all 0.5s ease;
   & > div {
     transition: all 0.5s ease;
   }
 
-  ${({ $isCorrect }) =>
-    $isCorrect
+  ${({ $isResultMode }) =>
+    $isResultMode
       ? css`
           display: flex;
           justify-content: center;
@@ -78,7 +79,6 @@ export const QuizChoicesText = styled.div<{ $isCorrect?: boolean }>`
           text-align: center;
           line-height: 1.5;
           letter-spacing: -0.5px;
-
           & > div {
             white-space: nowrap;
           }
@@ -90,7 +90,6 @@ export const QuizChoicesText = styled.div<{ $isCorrect?: boolean }>`
           text-align: left;
           padding-left: 10px;
           line-height: 1.6;
-
           & > div {
             display: block;
             margin-bottom: 8px;
@@ -113,7 +112,6 @@ export const ExplanationBox = styled.div`
   flex-direction: column;
   align-items: center;
   animation: fadeIn 0.5s ease;
-
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -158,7 +156,6 @@ export const NumberBtn = styled.button`
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.1s;
-
   &:hover {
     transform: scale(1.05);
   }
@@ -173,31 +170,43 @@ export const FeedbackRow = styled.div`
   margin-top: 20px;
   justify-content: center;
   align-items: center;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  @keyframes popIn {
+    from {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
 `;
 
-export const BigCircle = styled.div`
+export const BigCircle = styled.div<{ $isActive: boolean }>`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 8px solid #d9d9d9;
+  border: 8px solid ${({ $isActive }) => ($isActive ? '#17a1fa' : '#e0e0e0')};
   box-sizing: border-box;
+  transition: border-color 0.3s;
 `;
 
-export const BigX = styled.div`
+export const BigX = styled.div<{ $isActive: boolean }>`
   width: 60px;
   height: 60px;
   position: relative;
-
   &::before,
   &::after {
     content: '';
     position: absolute;
     width: 8px;
     height: 70px;
-    background-color: #dc6d6d;
+    background-color: ${({ $isActive }) => ($isActive ? '#dc6d6d' : '#e0e0e0')};
     border-radius: 5px;
     top: 50%;
     left: 50%;
+    transition: background-color 0.3s;
   }
   &::before {
     transform: translate(-50%, -50%) rotate(45deg);
@@ -214,6 +223,7 @@ export const MoreLink = styled.div`
   font-weight: 600;
   text-decoration: underline;
   cursor: pointer;
+  animation: fadeIn 0.5s ease;
 `;
 
 export const CollectionBox = styled.div`
@@ -231,6 +241,13 @@ export const CollectionBox = styled.div`
   background-color: #fff;
 `;
 
+export const WeekLabel = styled.div`
+  font-size: 12px;
+  color: #aaa;
+  font-weight: 500;
+  margin-bottom: 10px;
+`;
+
 export const HistoryItem = styled.div`
   width: 100%;
   display: flex;
@@ -240,7 +257,6 @@ export const HistoryItem = styled.div`
   font-size: 13px;
   font-weight: 500;
   border-bottom: 1px solid #f0f0f0;
-
   &:last-child {
     border-bottom: none;
   }
@@ -267,4 +283,67 @@ export const HistoryResult = styled.div<{ $isCorrect: boolean }>`
   text-align: right;
   font-weight: 700;
   color: ${({ $isCorrect }) => ($isCorrect ? '#17a1fa' : '#dc6d6d')};
+`;
+
+export const DetailBox = styled.div`
+  width: 321px;
+  min-height: 200px;
+  border-radius: 23px;
+  border: 2px solid #dfe678;
+  background-color: #ffffff;
+  padding: 25px 20px;
+  margin: 10px 0;
+  box-shadow: 0 3px 8px rgba(150, 150, 150, 0.25);
+  box-sizing: border-box;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.6;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  animation: fadeIn 0.5s ease;
+`;
+
+export const FilterHeader = styled.div`
+  width: 321px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  position: relative;
+  font-size: 14px;
+  font-weight: 500;
+`;
+
+export const FilterIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`;
+
+export const FilterModal = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 120px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 10px 0;
+  z-index: 100;
+  animation: fadeIn 0.2s ease;
+`;
+
+export const ModalItem = styled.div<{ $isSelected: boolean }>`
+  padding: 10px 20px;
+  font-size: 13px;
+  color: ${({ $isSelected }) => ($isSelected ? '#333' : '#999')};
+  font-weight: ${({ $isSelected }) => ($isSelected ? '700' : '400')};
+  cursor: pointer;
+  text-align: left;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
 `;

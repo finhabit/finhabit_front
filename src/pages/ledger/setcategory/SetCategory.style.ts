@@ -92,15 +92,6 @@ export const MethodButton = styled.button<{ $active: boolean }>`
   transform: ${({ $active }) => ($active ? 'scale(1.08)' : 'scale(1)')};
 `;
 
-export const SaveBtn = styled.img`
-  width: 26px;
-  position: absolute;
-  bottom: 30px;
-  right: 20px;
-  left: 50%;
-  transform: translateX(150px);
-  cursor: pointer;
-`;
 export const DescInput = styled.input`
   width: 100%;
   margin: 15px 0;

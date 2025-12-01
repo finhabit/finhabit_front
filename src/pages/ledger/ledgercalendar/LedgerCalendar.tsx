@@ -2,26 +2,42 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+
 import back from '@/assets/back.svg';
 import setting from '@/assets/settingsicon.svg';
 import stats from '@/assets/stats.svg';
 import search from '@/assets/docsearch.svg';
 import memo from '@/assets/memo.svg';
 import filter from '@/assets/filter.svg';
-import Donuts from '@/components/Donuts';
 import dumcat from '@/assets/categoryeat.svg';
-
 import modifyIcon from '@/assets/modification.svg';
 import deleteIcon from '@/assets/delete.svg';
 
+import editBlue from '@/assets/editblue.svg';
+import deleteRed from '@/assets/deletered.svg';
+
+import Donuts from '@/components/Donuts';
 import * as S from './LedgerCalendar.style';
 
 const weekDays: string[] = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+interface Expense {
+  id: number;
+  category: string;
+  amount: number;
+}
 
 const LedgerCalendar: React.FC = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState<Date>(new Date());
   const [selectedTab, setSelectedTab] = useState<string | null>(null);
+
+  const [mode, setMode] = useState<'default' | 'edit' | 'delete'>('default');
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [expenses, setExpenses] = useState<Expense[]>([
+    { id: 1, category: '음료', amount: 2000 },
+    { id: 2, category: '음료', amount: 2000 },
+  ]);
 
   const onDateChange = (value: Date | Date[]) => {
     if (value instanceof Date) {
@@ -31,14 +47,54 @@ const LedgerCalendar: React.FC = () => {
 
   const handleTabClick = (tabName: string) => {
     setSelectedTab((prev) => (prev === tabName ? null : tabName));
+    setMode('default');
+    setSelectedIds([]);
   };
 
-  const handleEdit = () => {
-    // 이후 수정기능 구현
+  const startEditMode = () => {
+    setMode('edit');
+    setSelectedIds([]);
   };
 
-  const handleDelete = () => {
-    // 이후 api연동해서 삭제기능 구현
+  const startDeleteMode = () => {
+    setMode('delete');
+    setSelectedIds([]);
+  };
+
+  const handleCancel = () => {
+    setMode('default');
+    setSelectedIds([]);
+  };
+
+  const toggleSelection = (id: number) => {
+    if (mode === 'edit') {
+      if (selectedIds.includes(id)) {
+        setSelectedIds([]);
+      } else {
+        setSelectedIds([id]);
+      }
+    } else if (mode === 'delete') {
+      if (selectedIds.includes(id)) {
+        setSelectedIds(selectedIds.filter((itemId) => itemId !== id));
+      } else {
+        setSelectedIds([...selectedIds, id]);
+      }
+    }
+  };
+
+  const isValidAction = mode === 'delete' ? selectedIds.length > 0 : mode === 'edit' ? selectedIds.length === 1 : false;
+
+  const executeAction = () => {
+    if (!isValidAction) return;
+
+    if (mode === 'delete') {
+      if (confirm(`${selectedIds.length}개의 항목을 삭제하시겠습니까?`)) {
+        setExpenses((prev) => prev.filter((item) => !selectedIds.includes(item.id)));
+        handleCancel();
+      }
+    } else if (mode === 'edit') {
+      navigate('/consumeplus', { state: { id: selectedIds[0] } });
+    }
   };
 
   return (
@@ -66,7 +122,6 @@ const LedgerCalendar: React.FC = () => {
         </S.StyledCalendarWrapper>
       </S.CalendarSection>
 
-      {/* --- 버튼 4개 --- */}
       <S.Details>
         <S.DetailSide>
           <S.PerDetail
@@ -123,22 +178,50 @@ const LedgerCalendar: React.FC = () => {
           {selectedTab === 'category' && (
             <>
               <S.CategoryContentWrapper>
-                <S.Perrow>
-                  <S.CategoryIcon src={dumcat} alt="더미 카테고리 아이콘" />
-                  <div>음료</div>
-                  <div>2,000원</div>
-                </S.Perrow>
+                {expenses.length > 0 ? (
+                  expenses.map((item) => (
+                    <S.Perrow key={item.id} onClick={() => toggleSelection(item.id)} $isMode={mode !== 'default'}>
+                      {mode !== 'default' && <S.SelectCircle $selected={selectedIds.includes(item.id)} />}
+
+                      <S.CategoryIcon src={dumcat} alt="카테고리 아이콘" />
+                      <div style={{ flex: 1, marginLeft: '10px' }}>{item.category}</div>
+                      <div>{item.amount.toLocaleString()}원</div>
+                    </S.Perrow>
+                  ))
+                ) : (
+                  <div style={{ marginTop: '20px', color: '#aaa' }}>내역이 없습니다.</div>
+                )}
               </S.CategoryContentWrapper>
 
               <S.ActionContainer>
-                <S.ActionButton onClick={handleEdit}>
-                  <S.ActionIcon src={modifyIcon} alt="수정" />
-                  수정
-                </S.ActionButton>
-                <S.ActionButton onClick={handleDelete}>
-                  <S.ActionIcon src={deleteIcon} alt="삭제" />
-                  삭제
-                </S.ActionButton>
+                {mode === 'default' ? (
+                  <>
+                    <S.ActionButton onClick={startEditMode} $actionType="initial">
+                      <S.ActionIcon src={modifyIcon} alt="수정" />
+                      수정
+                    </S.ActionButton>
+                    <S.ActionButton onClick={startDeleteMode} $actionType="initial">
+                      <S.ActionIcon src={deleteIcon} alt="삭제" />
+                      삭제
+                    </S.ActionButton>
+                  </>
+                ) : (
+                  <>
+                    <S.ActionButton onClick={handleCancel}>
+                      <span style={{ fontSize: '20px', fontWeight: 'bold', marginRight: '5px' }}>✕</span>
+                      취소
+                    </S.ActionButton>
+
+                    <S.ActionButton
+                      onClick={executeAction}
+                      $actionType={mode}
+                      $useOriginalIconColor={true}
+                      $disabled={!isValidAction}>
+                      <S.ActionIcon src={mode === 'edit' ? editBlue : deleteRed} alt="완료" />
+                      {mode === 'edit' ? '수정' : '삭제'}
+                    </S.ActionButton>
+                  </>
+                )}
               </S.ActionContainer>
             </>
           )}

@@ -7,13 +7,11 @@ import close from '@/assets/close.svg';
 import categorysalary from '@/assets/salarybtn.svg';
 import categoryallow from '@/assets/allowancebtn.svg';
 import categoryetc from '@/assets/etcbtn.svg';
-import save from '@/assets/save.svg';
 
 export default function SetCategoryIncome() {
   const navigate = useNavigate();
   const [desc, setDesc] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedMethod, setSelectedMethod] = useState<'cash' | 'card' | null>(null);
 
   const categories = [
     { src: categorysalary, alt: '급여' },
@@ -21,8 +19,6 @@ export default function SetCategoryIncome() {
     { src: categoryetc, alt: '기타' },
   ];
 
-  // 카테고리 클릭 시
-  // 카테고리 클릭 시
   const handleCategoryClick = (altText: string) => {
     if (selectedCategory === altText) {
       setSelectedCategory(null);
@@ -40,11 +36,6 @@ export default function SetCategoryIncome() {
     }
 
     setDesc(altText);
-    navigate('/ledgercalendar');
-  };
-
-  const handleMethodClick = (method: 'cash' | 'card') => {
-    setSelectedMethod(method);
     navigate('/ledgercalendar');
   };
 
@@ -74,8 +65,6 @@ export default function SetCategoryIncome() {
           />
         ))}
       </S.CategoryContainer>
-
-      <S.SaveBtn src={save} alt="메모버튼" />
     </S.Container>
   );
 }
