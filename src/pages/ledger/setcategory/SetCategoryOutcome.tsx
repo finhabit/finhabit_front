@@ -8,13 +8,12 @@ import categoryeat from '@/assets/categoryeat.svg';
 import categorytran from '@/assets/categorytran.svg';
 import categoryshopping from '@/assets/categoryshopping.svg';
 import categoryrest from '@/assets/categoryrest.svg';
-import save from '@/assets/save.svg';
 
-export default function SetCategory() {
+export default function SetCategoryOutcome() {
   const navigate = useNavigate();
   const [desc, setDesc] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedMethod, setSelectedMethod] = useState<'cash' | 'card' | null>(null);
+  const [selectedMethod, setSelectedMethod] = useState<'cash' | 'card' | 'etc' | null>(null);
 
   const categories = [
     { src: categoryeat, alt: '식비' },
@@ -23,7 +22,6 @@ export default function SetCategory() {
     { src: categorytran, alt: '교통' },
   ];
 
-  // 카테고리 클릭 시
   const handleCategoryClick = (altText: string) => {
     if (selectedCategory === altText) {
       setSelectedCategory(null);
@@ -34,10 +32,9 @@ export default function SetCategory() {
     }
   };
 
-  // 결제수단 클릭 시
   const handleMethodClick = (method: 'cash' | 'card') => {
     setSelectedMethod(method);
-    navigate('/ledgercalendar'); // ledgercalendar 페이지로 이동
+    navigate('/ledgercalendar');
   };
 
   return (
@@ -47,7 +44,7 @@ export default function SetCategory() {
           <S.Icon src={arrow_left_alt} alt="arrow" onClick={() => navigate(-1)} />
           <S.Amount>2,000원</S.Amount>
         </div>
-        <S.Icon src={close} alt="close" onClick={() => navigate('/ledger')} />
+        <S.Icon src={close} alt="close" onClick={() => navigate(-2)} />
       </S.TopBar>
 
       <S.DescDisplay $isPlaceholder={!desc}>{desc || '내역'}</S.DescDisplay>
@@ -72,9 +69,10 @@ export default function SetCategory() {
         <S.MethodButton $active={selectedMethod === 'card'} onClick={() => handleMethodClick('card')}>
           카드
         </S.MethodButton>
+        <S.MethodButton $active={selectedMethod === 'cash'} onClick={() => handleMethodClick('etc')}>
+          기타
+        </S.MethodButton>
       </S.MethodContainer>
-
-      <S.SaveBtn src={save} alt="메모버튼" />
     </S.Container>
   );
 }

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const UpLine = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ export const StyledCalendarWrapper = styled.div`
     background-color: #dfe67880;
     padding: 20px 10px;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
@@ -38,13 +38,13 @@ export const StyledCalendarWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 160px;
-    height:10px;
+    height: 10px;
 
     .react-calendar__navigation__label {
       font-size: 13px;
       font-weight: 600;
-      width:100px;
-      text-align:center;
+      width: 100px;
+      text-align: center;
       &:hover {
         background-color: transparent;
       }
@@ -107,16 +107,14 @@ export const StyledCalendarWrapper = styled.div`
   }
 `;
 
-
 export const Details = styled.div`
-    display:flex;
-    justify-content: space-between;
-    margin: 10px  40px;
-
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 40px;
 `;
 
 export const DetailIcons = styled.img`
-    height: 20px;
+  height: 20px;
 `;
 
 export const PerDetail = styled.div<{ $active?: boolean; $dimOthers?: boolean }>`
@@ -149,9 +147,9 @@ export const PerDetail = styled.div<{ $active?: boolean; $dimOthers?: boolean }>
 `;
 
 export const DetailSide = styled.div`
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 `;
 
 export const InOutcome = styled.div`
@@ -170,7 +168,6 @@ export const OutcomeWon = styled.div`
   color: #dc6d6d;
 `;
 
-
 export const SummaryCard = styled.div`
   width: 100%;
   max-width: 321px;
@@ -180,7 +177,6 @@ export const SummaryCard = styled.div`
   background: #fdfdfd;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
 
-  /* Donuts가 그래프만 렌더 */
   padding: 25px;
   box-sizing: border-box;
   display: flex;
@@ -194,8 +190,6 @@ export const BottomSpacer = styled.div`
   height: 84px;
 `;
 
-
-
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
@@ -204,17 +198,121 @@ export const Section = styled.section`
   margin: 10px 0 30px 0;
 `;
 
-export const Perrow = styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-    font-size: 20px;
-    margin: 5px 0;
-    font-size: 24px;
-    font-weight: 500;
+export const Perrow = styled.div<{ $isMode?: boolean }>`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 20px;
+  margin: 5px 0;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: ${({ $isMode }) => ($isMode ? 'pointer' : 'not-allowed')};
+
+  &:hover {
+    opacity: ${({ $isMode }) => ($isMode ? 0.7 : 1)};
+  }
+`;
+
+export const SelectCircle = styled.div<{ $selected?: boolean }>`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  margin-right: 15px;
+  box-sizing: border-box;
+  background-color: ${({ $selected }) => ($selected ? '#000' : 'transparent')};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: ${({ $selected }) => ($selected ? '#fff' : 'transparent')};
+  }
 `;
 
 export const CategoryIcon = styled.img`
-    width: 35px;
+  width: 35px;
+`;
+
+export const ActionContainer = styled.div`
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding-bottom: 10px;
+`;
+
+export const ActionButton = styled.div<{ $actionType?: string; $useOriginalIconColor?: boolean; $disabled?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  transition: opacity 0.2s;
+
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${({ $disabled }) => ($disabled ? 0.3 : 1)};
+
+  color: ${({ $actionType }) => {
+    if ($actionType === 'edit') return '#17a1fa';
+    if ($actionType === 'delete') return '#dc6d6d';
+    return '#000';
+  }};
+
+  &:hover {
+    opacity: ${({ $disabled }) => ($disabled ? 0.3 : 0.7)};
+  }
+
+  & > img {
+    ${({ $actionType, $useOriginalIconColor }) => {
+      if ($useOriginalIconColor) {
+        return css`
+          filter: none;
+        `;
+      }
+
+      if ($actionType === 'initial') {
+        return css`
+          filter: invert(53%) sepia(28%) saturate(928%) hue-rotate(28deg) brightness(92%) contrast(88%);
+        `;
+      }
+
+      if ($actionType === 'edit') {
+        return css`
+          filter: invert(54%) sepia(64%) saturate(4164%) hue-rotate(187deg) brightness(100%) contrast(97%);
+        `;
+      }
+      if ($actionType === 'delete') {
+        return css`
+          filter: invert(56%) sepia(61%) saturate(543%) hue-rotate(314deg) brightness(92%) contrast(92%);
+        `;
+      }
+
+      return css`
+        filter: none;
+      `;
+    }}
+  }
+`;
+
+export const ActionIcon = styled.img`
+  width: 18px;
+  height: 18px;
+`;
+
+export const CategoryContentWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
