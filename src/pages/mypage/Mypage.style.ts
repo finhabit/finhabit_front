@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const SCREEN_MAX = 414;
 export const LINE_MAX = 332;
 
-/** 페이지 */
 export const Page = styled.main`
   margin: 0;
   width: 100%;
@@ -230,7 +229,7 @@ export const Input = styled.input`
   border-radius: 12px;
   border: 1px solid #5c5c5c;
   
-  /* ✅ 수정된 부분: 입력 텍스트 색상 검정 */
+  
   color: #000; 
   text-align: center;
   font-family: Pretendard;
@@ -247,14 +246,14 @@ export const Input = styled.input`
 `;
 
 /* ------------------------------------------- */
-/* 팝업 (로그아웃 / 탈퇴용) - Center Align */
+/* 팝업 (로그아웃 / 탈퇴용) */
 /* ------------------------------------------- */
 export const PopupOverlay = styled.div`
   position: fixed;
   inset: 0;
   background: rgba(123, 123, 123, 0.45);
   display: flex;
-  align-items: center; /* 중앙 정렬 */
+  align-items: center; 
   justify-content: center;
   z-index: 1001;
 `;

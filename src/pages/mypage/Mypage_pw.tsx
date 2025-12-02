@@ -31,7 +31,7 @@ export default function MypagePw() {
   const onSubmit = () => {
     if (!canSubmit) return;
 
-    // ✅ [수정] 변경된 비밀번호를 LocalStorage에 저장하여 Mypage에 반영
+    // 변경된 비밀번호 LocalStorage에 저장하여 Mypage에 반영
     const savedData = localStorage.getItem('userProfile');
     let userInfo = {};
 

@@ -14,7 +14,7 @@ import close2Icon from '@/assets/close2.svg';
 // 팝업 타입 정의
 type OverlayType = 'comingSoon' | 'withdraw' | 'logout' | null;
 
-// 초기 데이터
+// 초기 더미 데이터
 const INITIAL_USER = {
   nickname: '연짱이',
   email: 'rladusd@naver.com',
@@ -38,7 +38,7 @@ export default function Mypage() {
   // 팝업/오버레이 상태
   const [overlayType, setOverlayType] = useState<OverlayType>(null);
 
-  // ✅ 페이지 로드 시 로컬 스토리지 데이터 로드
+  // 페이지 로드 시 로컬 스토리지 데이터 로드
   useEffect(() => {
     const savedData = localStorage.getItem('userProfile');
     if (savedData) {
@@ -131,11 +131,10 @@ export default function Mypage() {
     }
   }, [isNickModalOpen, isEmailModalOpen]);
 
-  // ✅ 비밀번호 마스킹 처리 수정 (뒤 4자리만 ****)
+  // 비밀번호 마스킹 처리 (뒤 4자리만 ****)
   const getMaskedPassword = () => {
     const pw = userInfo.password;
     if (pw.length <= 4) return '****'; // 4자리 이하는 전부 마스킹
-    // 전체 길이에서 뒤의 4자리를 제외한 앞부분 + ****
     return pw.slice(0, -4) + '****';
   };
 
@@ -209,7 +208,7 @@ export default function Mypage() {
 
       <BottomNav />
 
-      {/* ✅ 1. 닉네임 수정 모달 */}
+      {/* 1. 닉네임 수정 모달 */}
       {isNickModalOpen && (
         <S.ModalOverlay role="dialog" onClick={closeModals}>
           <S.EditModalSheet onClick={handleContentClick}>
@@ -233,7 +232,7 @@ export default function Mypage() {
         </S.ModalOverlay>
       )}
 
-      {/* ✅ 2. 이메일 수정 모달 */}
+      {/*  2. 이메일 수정 모달 */}
       {isEmailModalOpen && (
         <S.ModalOverlay role="dialog" onClick={closeModals}>
           <S.EditModalSheet onClick={handleContentClick}>
@@ -257,12 +256,12 @@ export default function Mypage() {
         </S.ModalOverlay>
       )}
 
-      {/* ✅ 3. ComingSoon */}
+      {/* 3. ComingSoon */}
       {overlayType === 'comingSoon' && (
         <ComingSoon onClick={closeOverlay} />
       )}
 
-      {/* ✅ 4. 탈퇴/로그아웃 팝업 */}
+      {/* 4. 탈퇴/로그아웃 팝업 */}
       {(overlayType === 'withdraw' || overlayType === 'logout') && (
         <S.PopupOverlay onClick={closeOverlay}>
           <S.ConfirmPopup onClick={handleContentClick}>
