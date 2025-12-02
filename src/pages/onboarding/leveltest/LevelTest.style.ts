@@ -39,7 +39,7 @@ export const QuestionList = styled.div`
 `;
 
 interface SubmitButtonProps {
-    $active: boolean;
+  $active: boolean;
 }
 
 export const SubmitButton = styled.button<SubmitButtonProps>`
@@ -56,4 +56,78 @@ export const SubmitButton = styled.button<SubmitButtonProps>`
   line-height: normal;
   cursor: ${({ $active }) => ($active ? "pointer" : "default")};
   transition: background 0.15s ease;
+`;
+
+// 팝업창
+export const PopupOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(97, 97, 97, 0.40);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const PopupContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 314px;
+  height: 514px;
+  padding: 34px 12px;
+  border-radius: 30px;
+  background: #fff;
+  color: #848d00;
+  text-align: center;
+  font-family: "Pretendard";
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 121.374%;  
+`;
+export const PopupText = styled.p` 
+  text-align: center;
+`;
+
+export const PopupTitle = styled.h2`
+  margin: 0;
+  color: #848D00;
+  font-family: "Pretendard";
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 121.374%;
+`;
+
+export const PopupMessage = styled.p`
+  margin: 0;
+  color: #000;
+  font-family: "Pretendard";
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 121.374%;
+  white-space: nowrap;
+`;
+
+export const PopupImage = styled.img`
+  width: 183.798px;
+  height: 303.502px;
+  margin: 27px 0;
+`;
+
+export const PopupButton = styled.button`
+  width: 266px;
+  height: 42.045px;
+  border-radius: 11px;
+  border:none;
+  background: #BEC372;
+  color: #fff;
+  font-family: "Inter";
+  font-size: 15px;
+  font-weight: 600;
+  line-height: normal;
+  cursor: pointer;
 `;
