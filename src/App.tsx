@@ -18,6 +18,11 @@ import SetCategoryOutcome from './pages/ledger/setcategory/SetCategoryOutcome';
 import SetCategoryIncome from './pages/ledger/setcategory/SetCategoryIncome';
 import LedgerCalendar from './pages/ledger/ledgercalendar/LedgerCalendar';
 
+import Main from './pages/onboarding/main/Main';
+import Login from './pages/onboarding/login/Login';
+import Signup from './pages/onboarding/signup/signup';
+import LevelTest from './pages/onboarding/leveltest/LevelTest';
+
 const AppWrapper = styled.div`
   width: 100%;
   max-width: 414px;
@@ -34,7 +39,7 @@ function App() {
     <AppWrapper>
       <GlobalStyle />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/finance" element={<Finance />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/notification" element={<Notification />} />
@@ -47,6 +52,10 @@ function App() {
         <Route path="/setcategoryincome" element={<SetCategoryIncome />} />
         <Route path="/ledgercalendar" element={<LedgerCalendar />} />
         <Route path="/mypage/pw" element={<Mypage_pw />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/leveltest" element={<LevelTest />} />
 
         {/* 위와 같이 페이지 만들고 연결해주세요 */}
       </Routes>

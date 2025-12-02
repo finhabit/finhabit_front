@@ -1,0 +1,59 @@
+import styled from "styled-components";
+
+export const Container = styled.div`
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  background: #f5f5f5; 
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 71px 30px 71px 30px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 393px;
+  background: #ffffff;
+`;
+
+export const Title = styled.h1`
+  margin: 0 0 40px 0;
+  color: #000;
+  font-family: "Pretendard";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+`;
+
+export const QuestionList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 22px; /* 각 질문 카드 간격 22px */
+  margin-bottom: 22px;
+`;
+
+interface SubmitButtonProps {
+    $active: boolean;
+}
+
+export const SubmitButton = styled.button<SubmitButtonProps>`
+  width: 310px;
+  height: 49px;
+  border-radius: 11px;
+  border: none;
+  background: ${({ $active }) => ($active ? "#BEC372" : "#D9D9D9")};
+  color: #fff;
+  font-family: "Inter";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor: ${({ $active }) => ($active ? "pointer" : "default")};
+  transition: background 0.15s ease;
+`;
