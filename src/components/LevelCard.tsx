@@ -43,7 +43,7 @@ export default LevelCard;
 const Card = styled.div`
   display: flex;
   width: 330px;
-  height: 150px;          /* ⬅️ 고정 높이 */
+  height: 150px;        
   padding: 16px 12px;
   flex-direction: column;
   align-items: flex-start;
@@ -52,21 +52,21 @@ const Card = styled.div`
   border: 1px solid #d9d9d9;
   box-sizing: border-box;
   background: #ffffff;
-  overflow: hidden;        /* 내용이 살짝 넘쳐도 카드 밖으로 안 튀어나오게 (원치 않으면 빼도 됨) */
+  overflow: hidden;       
 `;
 
 
 const Title = styled.p`
   margin: 0;
   color: #848d00;
-  font-family: "Pretendard", sans-serif;
+  font-family: "Pretendard";
   font-size: 17px;
   font-style: normal;
   font-weight: 500;
   line-height: 1.3;
   text-align: left;
   word-break: keep-all;
-  white-space: pre-line; /* \n 을 줄바꿈으로 처리 */
+  white-space: pre-line; 
 `;
 
 const OptionsWrapper = styled.div`
@@ -93,7 +93,7 @@ interface OptionTextProps {
 
 const OptionText = styled.span<OptionTextProps>`
   color: ${({ $selected }) => ($selected ? "#BEC372" : "#2B2B27")};
-  font-family: "Pretendard", sans-serif;
+  font-family: "Pretendard";
   font-size:17px;
   font-style: normal;
   font-weight: 500;
