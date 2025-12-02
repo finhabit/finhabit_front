@@ -6,7 +6,7 @@ const Main: React.FC = () => {
     const navigate = useNavigate();
 
     const handleStartClick = () => {
-        navigate("/signup"); // 원하는 경로로 수정
+        navigate("/signup");
     };
 
     const handleLoginClick = () => {
