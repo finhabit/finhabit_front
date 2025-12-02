@@ -17,6 +17,7 @@ import editBlue from '@/assets/editblue.svg';
 import deleteRed from '@/assets/deletered.svg';
 
 import Donuts from '@/components/Donuts';
+import ComingSoon from '@/components/ComingSoon';
 import * as S from './LedgerCalendar.style';
 
 const weekDays: string[] = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -96,13 +97,15 @@ const LedgerCalendar: React.FC = () => {
       navigate('/consumeplus', { state: { id: selectedIds[0] } });
     }
   };
-
+  const closeOverlay = () => {
+    setSelectedTab(null);
+  };
   return (
     <>
       <S.UpLine>
         <S.Icons src={back} alt="이전으로" onClick={() => navigate(-1)} />
         가계부
-        <S.Icons src={setting} alt="설정아이콘" />
+        <S.Icons src={setting} alt="설정아이콘" onClick={() => handleTabClick('settings')} />
       </S.UpLine>
 
       <S.CalendarSection>
@@ -233,6 +236,9 @@ const LedgerCalendar: React.FC = () => {
           )}
         </S.SummaryCard>
       </S.Section>
+      {(selectedTab === 'memo' || selectedTab === 'search' || selectedTab === 'settings') && (
+        <ComingSoon onClick={closeOverlay} />
+      )}
     </>
   );
 };

@@ -56,7 +56,7 @@ export default function Home() {
               <TopIcon src={bellIcon} alt="bell" onClick={() => navigate('/notification')} />
             </IconBtn>
             <IconBtn aria-label="검색">
-              <TopIcon src={searchIcon} alt="search" />
+              <TopIcon src={searchIcon} alt="search" onClick={() => navigate('/search')} />
             </IconBtn>
           </HeaderIcons>
         </Header>

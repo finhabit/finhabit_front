@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import back from '@/assets/back.svg';
 import weekFilterIcon from '@/assets/weekfilter.svg';
+import ComingSoon from '@/components/ComingSoon';
 import * as S from './Quiz.style';
 
 export default function Quiz() {
@@ -63,6 +64,14 @@ export default function Quiz() {
 
   const filteredHistory = quizHistory.filter((item) => item.week === currentWeek);
 
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const openOverlay = () => {
+    setIsOverlayOpen(true);
+  };
+  const closeOverlay = () => {
+    setIsOverlayOpen(false);
+  };
+
   return (
     <>
       <S.UpLine>
@@ -109,7 +118,7 @@ export default function Quiz() {
               <S.BigX $isActive={isCorrect === false} />
             </S.FeedbackRow>
           )}
-          {showResult && <S.MoreLink>관련 내용 더 알아보기</S.MoreLink>}
+          {showResult && <S.MoreLink onClick={openOverlay}>관련 내용 더 알아보기</S.MoreLink>}
         </S.N_Section>
 
         <S.N_Section>
@@ -156,6 +165,7 @@ export default function Quiz() {
           )}
         </S.N_Section>
       </S.RemindingSection>
+      {isOverlayOpen && <ComingSoon onClick={closeOverlay} />}
     </>
   );
 }
