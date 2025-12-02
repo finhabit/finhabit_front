@@ -120,6 +120,7 @@ export const SectionTitle = styled.h2`
   font-size: 18px;
   font-weight: 600;
   line-height: normal;
+  cursor: pointer;
 `;
 
 export const FooterActions = styled.div`

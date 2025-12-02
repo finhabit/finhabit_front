@@ -26,6 +26,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import BottomNav from '@/components/BottomNav';
+import ComingSoon from '@/components/ComingSoon';
 
 // 아이콘
 import chevronRight from '@/assets/chevronRight.svg';
@@ -60,11 +61,19 @@ export default function Mypage() {
     }
   }, [isModalOpen]);
 
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const openOverlay = () => {
+    setIsOverlayOpen(true);
+  };
+  const closeOverlay = () => {
+    setIsOverlayOpen(false);
+  };
+
   return (
     <Page>
       <Header>
         <Title>마이페이지</Title>
-        <IconButton aria-label="설정">
+        <IconButton aria-label="설정" onClick={openOverlay}>
           <img src={settingsIcon} alt="" />
         </IconButton>
       </Header>
@@ -115,7 +124,7 @@ export default function Mypage() {
 
       {/* 성취 현황 */}
       <ItemSection>
-        <SectionTitle>성취 현황</SectionTitle>
+        <SectionTitle onClick={openOverlay}>성취 현황</SectionTitle>
         <Divider />
       </ItemSection>
 
@@ -159,6 +168,7 @@ export default function Mypage() {
           </ModalSheet>
         </ModalOverlay>
       )}
+      {isOverlayOpen && <ComingSoon onClick={closeOverlay} />}
     </Page>
   );
 }

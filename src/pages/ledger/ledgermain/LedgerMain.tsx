@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import back from '@/assets/back.svg';
 import setting from '@/assets/settingsicon.svg';
@@ -6,18 +7,27 @@ import plus from '@/assets/plus.svg';
 import percategory from '@/assets/percategory.svg';
 import dumcat from '@/assets/categoryeat.svg';
 import chartIcon from '@/assets/chart.svg';
+import ComingSoon from '@/components/ComingSoon';
 import Donuts from '@/components/Donuts';
 import * as S from './LedgerMain.style';
 
 export default function LedgerMain() {
   const navigate = useNavigate();
 
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const openOverlay = () => {
+    setIsOverlayOpen(true);
+  };
+  const closeOverlay = () => {
+    setIsOverlayOpen(false);
+  };
+
   return (
     <>
       <S.UpLine>
         <S.Icons src={back} alt="이전으로" onClick={() => navigate('/home')} />
         가계부
-        <S.Icons src={setting} alt="설정아이콘" />
+        <S.Icons src={setting} alt="설정아이콘" onClick={openOverlay} />
       </S.UpLine>
       <S.ConsumeSection>
         <S.L_Section>
@@ -48,7 +58,6 @@ export default function LedgerMain() {
           </S.ContentBox>
         </S.L_Section>
       </S.ConsumeSection>
-
       <S.Section>
         <S.TitleRow>
           <S.Left>
@@ -63,6 +72,7 @@ export default function LedgerMain() {
           <Donuts />
         </S.SummaryCard>
       </S.Section>
+      {isOverlayOpen && <ComingSoon onClick={closeOverlay} />}
     </>
   );
 }

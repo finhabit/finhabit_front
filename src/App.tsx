@@ -3,6 +3,7 @@ import GlobalStyle from './GlobalStyle';
 import styled from 'styled-components';
 
 import Home from './pages/home/Home';
+import Search from './pages/search/Search';
 import Finance from './pages/finance/Finance';
 import Mypage from './pages/mypage/Mypage';
 import Mypage_pw from './pages/mypage/Mypage_pw';
@@ -56,6 +57,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/leveltest" element={<LevelTest />} />
+        <Route path="/search" element={<Search />} />
 
         {/* 위와 같이 페이지 만들고 연결해주세요 */}
       </Routes>
