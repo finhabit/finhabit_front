@@ -20,7 +20,7 @@ import LedgerCalendar from './pages/ledger/ledgercalendar/LedgerCalendar';
 
 import Main from './pages/onboarding/main/Main';
 import Login from './pages/onboarding/login/Login';
-import Signup from './pages/onboarding/signup/signup';
+import Signup from './pages/onboarding/signup/Signup';
 import LevelTest from './pages/onboarding/leveltest/LevelTest';
 
 const AppWrapper = styled.div`
