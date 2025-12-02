@@ -64,6 +64,7 @@ export const Subtitle = styled.p`
   font-weight: 600;
   line-height: 1.4;   
   white-space: nowrap;
+  text-align: left;
 `;
 
 
@@ -79,6 +80,7 @@ export const Label = styled.label`
   color: #7B7B7B;
   font-size: 14px;
   font-weight: 600;
+  text-align: left;
 `;
 
 export const InputWrap = styled.div`

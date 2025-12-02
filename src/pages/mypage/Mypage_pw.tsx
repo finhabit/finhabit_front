@@ -1,22 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Page,
-  HeaderRow,
-  HeaderSpacer,
-  CloseBtn,
-  Title,
-  SubtitleWrap,
-  Subtitle,
-  Field,
-  Label,
-  InputWrap,
-  Input,
-  EyeBtn,
-  Help,
-  BottomBar,
-  SubmitBtn,
-} from './Mypage_pw.style';
+import * as S from './Mypage_pw.style';
 
 // 아이콘
 import closeIcon from '@/assets/close.svg';
@@ -46,69 +30,89 @@ export default function MypagePw() {
 
   const onSubmit = () => {
     if (!canSubmit) return;
-    // TODO: API 요청으로 비밀번호 저장
-    // 성공 후 뒤로가기 또는 완료 화면
+
+    // ✅ [수정] 변경된 비밀번호를 LocalStorage에 저장하여 Mypage에 반영
+    const savedData = localStorage.getItem('userProfile');
+    let userInfo = {};
+
+    if (savedData) {
+      userInfo = JSON.parse(savedData);
+    }
+
+    // 비밀번호 업데이트
+    const updatedUser = { ...userInfo, password: pw };
+    localStorage.setItem('userProfile', JSON.stringify(updatedUser));
+
+    // 성공 후 뒤로가기
     nav(-1);
   };
 
-  return (
-    <Page>
-      <HeaderRow>
-        <CloseBtn aria-label="닫기" onClick={() => nav(-1)}>
-          <img src={closeIcon} alt="" />
-        </CloseBtn>
-      </HeaderRow>
-      <HeaderSpacer />
+  const handlePwChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPw(e.target.value);
+  };
 
-      <SubtitleWrap>
-        <Title>비밀번호 설정</Title>
-        <Subtitle>비밀번호가 설정되어 있지 않습니다.</Subtitle>
-        <Subtitle>비밀번호 설정 시 이메일을 통해 로그인할 수 있습니다.</Subtitle>
-      </SubtitleWrap>
+  const handlePw2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPw2(e.target.value);
+  };
+
+  return (
+    <S.Page>
+      <S.HeaderRow>
+        <S.CloseBtn aria-label="닫기" onClick={() => nav(-1)}>
+          <img src={closeIcon} alt="" />
+        </S.CloseBtn>
+      </S.HeaderRow>
+      <S.HeaderSpacer />
+
+      <S.SubtitleWrap>
+        <S.Title>비밀번호 설정</S.Title>
+        <S.Subtitle>비밀번호가 설정되어 있지 않습니다.</S.Subtitle>
+        <S.Subtitle>비밀번호 설정 시 이메일을 통해 로그인할 수 있습니다.</S.Subtitle>
+      </S.SubtitleWrap>
 
       {/* 비밀번호 */}
-      <Field>
-        <Label htmlFor="pw1">비밀번호</Label>
-        <InputWrap>
-          <Input
+      <S.Field>
+        <S.Label htmlFor="pw1">비밀번호</S.Label>
+        <S.InputWrap>
+          <S.Input
             id="pw1"
             placeholder={PW_PLACEHOLDER}
             type={show1 ? 'text' : 'password'}
             value={pw}
-            onChange={(e) => setPw(e.target.value)}
+            onChange={handlePwChange}
             autoComplete="new-password"
           />
-          <EyeBtn aria-label={show1 ? '비밀번호 숨기기' : '비밀번호 보기'} onClick={() => setShow1((v) => !v)}>
+          <S.EyeBtn aria-label={show1 ? '비밀번호 숨기기' : '비밀번호 보기'} onClick={() => setShow1((v) => !v)}>
             <img src={eye} alt="" />
-          </EyeBtn>
-        </InputWrap>
-        {!isValid && pw.length > 0 && <Help>영문/숫자/특수문자 포함 8~16자로 입력해 주세요.</Help>}
-      </Field>
+          </S.EyeBtn>
+        </S.InputWrap>
+        {!isValid && pw.length > 0 && <S.Help>영문/숫자/특수문자 포함 8~16자로 입력해 주세요.</S.Help>}
+      </S.Field>
 
       {/* 비밀번호 확인 */}
-      <Field>
-        <Label htmlFor="pw2">비밀번호 확인</Label>
-        <InputWrap>
-          <Input
+      <S.Field>
+        <S.Label htmlFor="pw2">비밀번호 확인</S.Label>
+        <S.InputWrap>
+          <S.Input
             id="pw2"
             placeholder="비밀번호 확인"
             type={show2 ? 'text' : 'password'}
             value={pw2}
-            onChange={(e) => setPw2(e.target.value)}
+            onChange={handlePw2Change}
             autoComplete="new-password"
           />
-          <EyeBtn aria-label={show2 ? '비밀번호 숨기기' : '비밀번호 보기'} onClick={() => setShow2((v) => !v)}>
+          <S.EyeBtn aria-label={show2 ? '비밀번호 숨기기' : '비밀번호 보기'} onClick={() => setShow2((v) => !v)}>
             <img src={eye} alt="" />
-          </EyeBtn>
-        </InputWrap>
-        {pw2.length > 0 && !same && <Help>비밀번호가 일치하지 않습니다.</Help>}
-      </Field>
+          </S.EyeBtn>
+        </S.InputWrap>
+        {pw2.length > 0 && !same && <S.Help>비밀번호가 일치하지 않습니다.</S.Help>}
+      </S.Field>
 
-      <BottomBar>
-        <SubmitBtn disabled={!canSubmit} onClick={onSubmit}>
+      <S.BottomBar>
+        <S.SubmitBtn disabled={!canSubmit} onClick={onSubmit}>
           비밀번호 설정 완료
-        </SubmitBtn>
-      </BottomBar>
-    </Page>
+        </S.SubmitBtn>
+      </S.BottomBar>
+    </S.Page>
   );
 }
