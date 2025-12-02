@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const SCREEN_MAX = 414;
 export const LINE_MAX = 332;
 
-/** 페이지 */
 export const Page = styled.main`
   margin: 0;
   width: 100%;
@@ -54,10 +53,7 @@ export const IconButton = styled.button`
   }
 `;
 
-export const FirstSectionSpacer = styled.div`
-  height: 51px;
-`;
-
+/** 섹션 스타일 */
 export const ItemSection = styled.section`
   width: ${LINE_MAX}px;
   margin: 0 auto;
@@ -76,6 +72,7 @@ export const LeftCol = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
+  text-align: left;
 `;
 
 export const Label = styled.span`
@@ -114,6 +111,7 @@ export const Divider = styled.hr`
   margin: 0;
 `;
 
+/** 성취 현황 스타일 */
 export const SectionTitle = styled.h2`
   width: ${LINE_MAX}px;
   color: #000;
@@ -121,6 +119,9 @@ export const SectionTitle = styled.h2`
   font-weight: 600;
   line-height: normal;
   cursor: pointer;
+  text-align: left;
+  margin-top: 21px;
+  margin-bottom: 21px;
 `;
 
 export const FooterActions = styled.div`
@@ -147,18 +148,21 @@ export const TextButton = styled.button`
   line-height: normal;
 `;
 
+/* ------------------------------------------- */
+/* 모달 (오버레이 공통) */
+/* ------------------------------------------- */
 export const ModalOverlay = styled.div`
   position: fixed;
   inset: 0;
   background: rgba(123, 123, 123, 0.45);
   display: flex;
-  align-items: flex-end; /* ✅ 스샷처럼 하단에서 올라오는 느낌 */
+  align-items: flex-end; /* Bottom Sheet용 */
   justify-content: center;
   z-index: 1000;
 `;
 
-/** ✅ 시안 규격 반영: width 403, height 499, radius 31 */
-export const ModalSheet = styled.div`
+/* 이메일/닉네임 수정용 Bottom Sheet */
+export const EditModalSheet = styled.div`
   width: 403px;
   height: 499px;
   flex-shrink: 0;
@@ -167,7 +171,6 @@ export const ModalSheet = styled.div`
   color: #000;
   font-family: Pretendard;
   font-size: 18px;
-  font-style: normal;
   font-weight: 500;
   line-height: normal;
 
@@ -179,7 +182,7 @@ export const ModalSheet = styled.div`
 
 export const ModalHeader = styled.div`
   position: relative;
-  height: 32px; /* 헤더 높이 */
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -219,23 +222,94 @@ export const ModalContent = styled.div`
   padding-top: 60px;
 `;
 
-/** ✅ 인풋 규격 반영: width 332, height 70, radius 12, border #5C5C5C, 중앙정렬 */
-export const NickInput = styled.input`
+export const Input = styled.input`
   width: 332px;
   height: 70px;
   flex-shrink: 0;
   border-radius: 12px;
   border: 1px solid #5c5c5c;
-  color: #000;
+  
+  
+  color: #000; 
   text-align: center;
   font-family: Pretendard;
   font-size: 18px;
-  font-style: normal;
   font-weight: 500;
   line-height: normal;
   outline: none;
 
   &::placeholder {
-    color: #bdbdbd;
+    color: #ccc;
+    text-align: center;
+    font-size: 17px;
   }
+`;
+
+/* ------------------------------------------- */
+/* 팝업 (로그아웃 / 탈퇴용) */
+/* ------------------------------------------- */
+export const PopupOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(123, 123, 123, 0.45);
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  z-index: 1001;
+`;
+
+export const ConfirmPopup = styled.div`
+  width: 358px;
+  height: 186px;
+  flex-shrink: 0;
+  border-radius: 70px;
+  background: #FFF;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+`;
+
+export const PopupText = styled.div`
+  color: #000;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 31px;
+`;
+
+export const PopupButtonGroup = styled.div`
+  display: flex;
+  gap: 24px;
+`;
+
+const BasePopupButton = styled.button`
+  display: flex;
+  width: 133px;
+  height: 69px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 70px;
+  border: 0;
+  cursor: pointer;
+  
+  color: #000;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: normal;
+`;
+
+export const PopupYesButton = styled(BasePopupButton)`
+  background: #DFE678;
+`;
+
+export const PopupNoButton = styled(BasePopupButton)`
+  background: #D9D9D9;
 `;

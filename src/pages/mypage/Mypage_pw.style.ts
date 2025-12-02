@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const SCREEN_MAX = 414;
 
-/** 페이지 래퍼 */
 export const Page = styled.main`
   margin: 0 auto;
   width: 100%;
@@ -14,7 +13,6 @@ export const Page = styled.main`
   font-family: Pretendard;
 `;
 
-/** 상단: 닫기(X) + 타이틀 */
 export const HeaderRow = styled.header`
   display: flex;
   gap: 8px;
@@ -39,7 +37,7 @@ export const CloseBtn = styled.button`
 export const HeaderSpacer = styled.div`
   height: 31px;
 `;
-/** 타이틀 / 서브타이틀 */
+
 export const Title = styled.h1`
   margin: 0;
   color: #2B2B27;
@@ -64,6 +62,7 @@ export const Subtitle = styled.p`
   font-weight: 600;
   line-height: 1.4;   
   white-space: nowrap;
+  text-align: left;
 `;
 
 
@@ -79,6 +78,7 @@ export const Label = styled.label`
   color: #7B7B7B;
   font-size: 14px;
   font-weight: 600;
+  text-align: left;
 `;
 
 export const InputWrap = styled.div`

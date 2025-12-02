@@ -14,119 +14,94 @@ import decoLeft from '@/assets/deco-left.svg';
 import decoRight from '@/assets/deco-right.svg';
 
 // 스타일 import
-import {
-  Screen,
-  SafeArea,
-  Header,
-  HeaderSpacer,
-  HeaderIcons,
-  IconBtn,
-  TopIcon,
-  Section,
-  TitleRow,
-  Left,
-  Right,
-  TinyIcon,
-  TinyPlus,
-  TitleText,
-  MissionCard,
-  DecorLeft,
-  DecorRight,
-  MissionText,
-  KnowledgeCard,
-  CardBody,
-  CardTitle,
-  SummaryCard,
-  Gap,
-  BottomSpacer,
-} from './Home.style';
+import * as S from './Home.style';
 
 export default function Home() {
   const gaps = useMemo(() => ({ afterFirst: 33, afterSecond: 27 }), []);
   const navigate = useNavigate();
 
   return (
-    <Screen>
-      <SafeArea>
+    <S.Screen>
+      <S.SafeArea>
         {/* 상단 헤더 */}
-        <Header>
-          <HeaderSpacer />
-          <HeaderIcons>
-            <IconBtn aria-label="알림">
-              <TopIcon src={bellIcon} alt="bell" onClick={() => navigate('/notification')} />
-            </IconBtn>
-            <IconBtn aria-label="검색">
-              <TopIcon src={searchIcon} alt="search" onClick={() => navigate('/search')} />
-            </IconBtn>
-          </HeaderIcons>
-        </Header>
+        <S.Header>
+          <S.HeaderSpacer />
+          <S.HeaderIcons>
+            <S.IconBtn aria-label="알림">
+              <S.TopIcon src={bellIcon} alt="bell" onClick={() => navigate('/notification')} />
+            </S.IconBtn>
+            <S.IconBtn aria-label="검색">
+              <S.TopIcon src={searchIcon} alt="search" onClick={() => navigate('/search')} />
+            </S.IconBtn>
+          </S.HeaderIcons>
+        </S.Header>
 
         {/* 오늘의 미션 */}
-        <Section>
-          <TitleRow>
-            <Left>
-              <TinyIcon src={missionIcon} alt="미션" />
-              <TitleText>오늘의 미션</TitleText>
-            </Left>
-            <Right>
-              <TinyPlus src={plusIcon} alt="추가" onClick={() => navigate('/mission')} />
-            </Right>
-          </TitleRow>
+        <S.Section>
+          <S.TitleRow>
+            <S.Left>
+              <S.TinyIcon src={missionIcon} alt="미션" />
+              <S.TitleText>오늘의 미션</S.TitleText>
+            </S.Left>
+            <S.Right>
+              <S.TinyPlus src={plusIcon} alt="추가" onClick={() => navigate('/mission')} />
+            </S.Right>
+          </S.TitleRow>
 
-          <MissionCard>
-            <DecorLeft src={decoLeft || missionIcon} alt="장식 아이콘 왼쪽" />
-            <DecorRight src={decoRight || missionIcon} alt="장식 아이콘 오른쪽" />
-            <MissionText>커피값 2000원 이상 사용하지 않기</MissionText>
-          </MissionCard>
+          <S.MissionCard>
+            <S.DecorLeft src={decoLeft || missionIcon} alt="장식 아이콘 왼쪽" />
+            <S.DecorRight src={decoRight || missionIcon} alt="장식 아이콘 오른쪽" />
+            <S.MissionText>커피값 2000원 이상 사용하지 않기</S.MissionText>
+          </S.MissionCard>
 
-          <Gap style={{ height: gaps.afterFirst }} />
-        </Section>
+          <S.Gap style={{ height: gaps.afterFirst }} />
+        </S.Section>
 
         {/* 오늘의 지식 */}
-        <Section>
-          <TitleRow>
-            <Left>
-              <TinyIcon src={bulbIcon} alt="지식" />
-              <TitleText>오늘의 지식</TitleText>
-            </Left>
-            <Right>
-              <TinyPlus src={plusIcon} alt="추가" onClick={() => navigate('/knowledge')} />
-            </Right>
-          </TitleRow>
+        <S.Section>
+          <S.TitleRow>
+            <S.Left>
+              <S.TinyIcon src={bulbIcon} alt="지식" />
+              <S.TitleText>오늘의 지식</S.TitleText>
+            </S.Left>
+            <S.Right>
+              <S.TinyPlus src={plusIcon} alt="추가" onClick={() => navigate('/knowledge')} />
+            </S.Right>
+          </S.TitleRow>
 
-          <KnowledgeCard>
-            <CardBody>
-              <CardTitle>
+          <S.KnowledgeCard>
+            <S.CardBody>
+              <S.CardTitle>
                 신용점수는 ‘금융 신뢰도’입니다.
                 <br />
                 연체나 과도한 대출은 점수를 낮춥니다.
-              </CardTitle>
-            </CardBody>
-          </KnowledgeCard>
+              </S.CardTitle>
+            </S.CardBody>
+          </S.KnowledgeCard>
 
-          <Gap style={{ height: gaps.afterSecond }} />
-        </Section>
+          <S.Gap style={{ height: gaps.afterSecond }} />
+        </S.Section>
 
         {/* 간단 소비 요약 */}
-        <Section>
-          <TitleRow>
-            <Left>
-              <TinyIcon src={chartIcon} alt="소비 요약" />
-              <TitleText>간단 소비 요약</TitleText>
-            </Left>
-            <Right>
-              <TinyPlus src={plusIcon} alt="추가" onClick={() => navigate('/ledger')} />
-            </Right>
-          </TitleRow>
-          <SummaryCard>
+        <S.Section>
+          <S.TitleRow>
+            <S.Left>
+              <S.TinyIcon src={chartIcon} alt="소비 요약" />
+              <S.TitleText>간단 소비 요약</S.TitleText>
+            </S.Left>
+            <S.Right>
+              <S.TinyPlus src={plusIcon} alt="추가" onClick={() => navigate('/ledger')} />
+            </S.Right>
+          </S.TitleRow>
+          <S.SummaryCard>
             <Donuts />
-          </SummaryCard>
-        </Section>
+          </S.SummaryCard>
+        </S.Section>
 
-        <BottomSpacer />
-      </SafeArea>
+        <S.BottomSpacer />
+      </S.SafeArea>
 
       <BottomNav />
-    </Screen>
+    </S.Screen>
   );
 }
