@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
+
 import * as S from "./Login.style";
 
 const Login: React.FC = () => {
@@ -9,21 +10,23 @@ const Login: React.FC = () => {
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
 
-    // 비밀번호 검증 함수
+    // 비밀번호 검증 함수 
     const isPasswordValid = (password: string) => {
-        const hasMinLength = password.length >= 8;        // 8자 이상
-        const hasLetter = /[A-Za-z]/.test(password);      // 영문 포함
-        const hasNumber = /[0-9]/.test(password);         // 숫자 포함
-        return hasMinLength && hasLetter && hasNumber;
+        const lenOk = password.length >= 8 && password.length <= 16; // 8~16자
+        const hasNum = /\d/.test(password);                          // 숫자 포함
+        const hasEng = /[A-Za-z]/.test(password);                    // 영문 포함
+        const hasSpec = /[^A-Za-z0-9]/.test(password);               // 특수문자 포함
+
+        return lenOk && hasNum && hasEng && hasSpec;
     };
 
     const isFormValid = id.trim() !== "" && isPasswordValid(password);
 
     const handleLogin = () => {
-        if (!isFormValid) return; // 기준 충족 안 하면 막기
+        if (!isFormValid) return;
 
         // TODO: 로그인 로직
-        const isSuccess = true; // 실제론 API 응답 결과로 판단
+        const isSuccess = true;
 
         if (isSuccess) {
             navigate("/leveltest"); // 레벨테스트 페이지로 이동

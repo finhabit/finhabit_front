@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+
 import * as S from "./Signup.style";
 
 const Signup: React.FC = () => {
@@ -12,12 +13,13 @@ const Signup: React.FC = () => {
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
 
-    // 비밀번호 기준: 8자 이상 + 영문 + 숫자
+    // 비밀번호 기준: 8~16자 + 영문 + 숫자 + 특수문자
     const isPasswordValid = (pw: string) => {
-        const hasMinLength = pw.length >= 8;
-        const hasLetter = /[A-Za-z]/.test(pw);
-        const hasNumber = /[0-9]/.test(pw);
-        return hasMinLength && hasLetter && hasNumber;
+        const lenOk = pw.length >= 8 && pw.length <= 16;
+        const hasNum = /\d/.test(pw);
+        const hasEng = /[A-Za-z]/.test(pw);
+        const hasSpec = /[^A-Za-z0-9]/.test(pw);
+        return lenOk && hasNum && hasEng && hasSpec;
     };
 
     const isFormValid =
@@ -33,8 +35,18 @@ const Signup: React.FC = () => {
         e.preventDefault();
         if (!isFormValid) return;
 
-        // TODO: 회원가입 API 연결
+        // ✅ 회원가입 정보 LocalStorage에 저장 (Mypage와 연동)
+        const newUserProfile = {
+            nickname: nickname,
+            email: email,
+            password: password,
+        };
+
+        localStorage.setItem("userProfile", JSON.stringify(newUserProfile));
+
         alert("회원가입이 완료되었습니다.");
+
+
         navigate("/leveltest");
     };
 
