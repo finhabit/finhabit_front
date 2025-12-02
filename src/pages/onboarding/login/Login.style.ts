@@ -64,20 +64,25 @@ export const Input = styled.input`
   }
 `;
 
-export const LoginButton = styled.button`
+interface LoginButtonProps {
+    $active: boolean;
+}
+
+export const LoginButton = styled.button<LoginButtonProps>`
   width: 310px;
   height: 49px;
   margin-top: 16px;
   border-radius: 11px;
   border: none;
-  background: #d9d9d9;
+  background: ${({ $active }) => ($active ? "#DFE678" : "#D9D9D9")};
   color: #fff;
   font-family: "Inter", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  cursor: pointer;
+  cursor: ${({ $active }) => ($active ? "pointer" : "default")};
+  transition: background 0.15s ease;
 `;
 
 export const HelperRow = styled.div`
