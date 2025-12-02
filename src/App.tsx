@@ -18,6 +18,8 @@ import SetCategoryOutcome from './pages/ledger/setcategory/SetCategoryOutcome';
 import SetCategoryIncome from './pages/ledger/setcategory/SetCategoryIncome';
 import LedgerCalendar from './pages/ledger/ledgercalendar/LedgerCalendar';
 
+import Main from './pages/onboarding/main/Main';
+
 const AppWrapper = styled.div`
   width: 100%;
   max-width: 414px;
@@ -47,6 +49,7 @@ function App() {
         <Route path="/setcategoryincome" element={<SetCategoryIncome />} />
         <Route path="/ledgercalendar" element={<LedgerCalendar />} />
         <Route path="/mypage/pw" element={<Mypage_pw />} />
+        <Route path="/main" element={<Main />} />
 
         {/* 위와 같이 페이지 만들고 연결해주세요 */}
       </Routes>
