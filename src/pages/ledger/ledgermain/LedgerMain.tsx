@@ -15,7 +15,7 @@ export default function LedgerMain() {
   return (
     <>
       <S.UpLine>
-        <S.Icons src={back} alt="이전으로" onClick={() => navigate('/')} />
+        <S.Icons src={back} alt="이전으로" onClick={() => navigate('/home')} />
         가계부
         <S.Icons src={setting} alt="설정아이콘" />
       </S.UpLine>

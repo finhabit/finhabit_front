@@ -17,7 +17,7 @@ export default function BottomNav() {
         <Icon src={financeIcon} alt="finance" />
       </NavItem>
 
-      <NavItem $active={currentActive === 'home'} onClick={() => navigate('/')}>
+      <NavItem $active={currentActive === 'home'} onClick={() => navigate('/home')}>
         <Icon src={homeIcon} alt="home" />
       </NavItem>
 
