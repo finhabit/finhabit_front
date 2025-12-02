@@ -21,7 +21,7 @@ import LedgerCalendar from './pages/ledger/ledgercalendar/LedgerCalendar';
 import Main from './pages/onboarding/main/Main';
 import Login from './pages/onboarding/login/Login';
 import Signup from './pages/onboarding/signup/signup';
-// import LevelTest from './pages/onboarding/leveltest/LevelTest';
+import LevelTest from './pages/onboarding/leveltest/LevelTest';
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -55,7 +55,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/leveltest" element={<LevelTest />} /> */}
+        <Route path="/leveltest" element={<LevelTest />} />
 
         {/* 위와 같이 페이지 만들고 연결해주세요 */}
       </Routes>

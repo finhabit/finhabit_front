@@ -56,7 +56,7 @@ export const Input = styled.input`
   background: transparent;
 
   color: #000;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -64,7 +64,7 @@ export const Input = styled.input`
 
   ::placeholder {
     color: #ccc;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-size: 15px;
     font-style: normal;
     font-weight: 500;
@@ -83,7 +83,7 @@ export const SignupButton = styled.button<SignupButtonProps>`
   border: none;
   background: ${({ $active }) => ($active ? "#DFE678" : "#D9D9D9")};
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
