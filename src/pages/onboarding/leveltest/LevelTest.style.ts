@@ -89,7 +89,9 @@ export const PopupContent = styled.div`
   font-weight: 500;
   line-height: 121.374%;  
 `;
-export const PopupText = styled.p` 
+
+
+export const PopupText = styled.div` 
   text-align: center;
 `;
 
