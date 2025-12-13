@@ -8,6 +8,7 @@ import categoryeat from '@/assets/categoryeat.svg';
 import categorytran from '@/assets/categorytran.svg';
 import categoryshopping from '@/assets/categoryshopping.svg';
 import categoryrest from '@/assets/categoryrest.svg';
+import categoryetc from '@/assets/etcbtn.svg';
 
 export default function SetCategoryOutcome() {
   const navigate = useNavigate();
@@ -20,19 +21,28 @@ export default function SetCategoryOutcome() {
     { src: categoryshopping, alt: '쇼핑' },
     { src: categoryrest, alt: '여가' },
     { src: categorytran, alt: '교통' },
+    { src: categoryetc, alt: '기타' },
   ];
 
   const handleCategoryClick = (altText: string) => {
     if (selectedCategory === altText) {
       setSelectedCategory(null);
       setDesc('');
+      return;
+    }
+
+    setSelectedCategory(altText);
+
+    if (altText === '기타') {
+      if (categories.some((c) => c.alt === desc && c.alt !== '기타')) {
+        setDesc('');
+      }
     } else {
-      setSelectedCategory(altText);
       setDesc(altText);
     }
   };
 
-  const handleMethodClick = (method: 'cash' | 'card') => {
+  const handleMethodClick = (method: 'cash' | 'card' | 'etc') => {
     setSelectedMethod(method);
     navigate('/ledgercalendar');
   };
@@ -47,7 +57,10 @@ export default function SetCategoryOutcome() {
         <S.Icon src={close} alt="close" onClick={() => navigate(-2)} />
       </S.TopBar>
 
-      <S.DescDisplay $isPlaceholder={!desc}>{desc || '내역'}</S.DescDisplay>
+      {/* Income 컴포넌트처럼 입력 가능한 Input 형태로 변경 */}
+      <S.DescDisplay $isPlaceholder={!desc}>
+        <S.DescInput placeholder="내역" value={desc} onChange={(e) => setDesc(e.target.value)} />
+      </S.DescDisplay>
 
       <S.CategoryContainer $hasSelected={!!selectedCategory}>
         {categories.map((c) => (
@@ -69,7 +82,8 @@ export default function SetCategoryOutcome() {
         <S.MethodButton $active={selectedMethod === 'card'} onClick={() => handleMethodClick('card')}>
           카드
         </S.MethodButton>
-        <S.MethodButton $active={selectedMethod === 'cash'} onClick={() => handleMethodClick('etc')}>
+        {/* 기존 코드의 오타 수정 ($active 조건: 'cash' -> 'etc') */}
+        <S.MethodButton $active={selectedMethod === 'etc'} onClick={() => handleMethodClick('etc')}>
           기타
         </S.MethodButton>
       </S.MethodContainer>
