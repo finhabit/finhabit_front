@@ -97,9 +97,19 @@ const LedgerCalendar: React.FC = () => {
       navigate('/consumeplus', { state: { id: selectedIds[0] } });
     }
   };
+
   const closeOverlay = () => {
     setSelectedTab(null);
   };
+
+  // 다중 카테고리 테스트 데이터, 이후 연동시 다른값으로 바꿔 사용
+  const MultiCategoryData = [
+    { id: 1, label: '식비', ratio: 45, color: '#b6be40ff' }, // 45%
+    { id: 2, label: '교통', ratio: 20, color: '#626b00ff' }, // 20%
+    { id: 3, label: '문화', ratio: 15, color: '#cbd638ff' }, // 15%
+    { id: 4, label: '저축', ratio: 20, color: '#3e4300ff' }, // 20%
+  ];
+
   return (
     <>
       <S.UpLine>
@@ -174,7 +184,7 @@ const LedgerCalendar: React.FC = () => {
 
       <S.Section>
         <S.SummaryCard>
-          {selectedTab === 'stats' && <Donuts />}
+          {selectedTab === 'stats' && <Donuts categories={MultiCategoryData} size={170} />}
           {selectedTab === 'memo' && <div>메모 내용</div>}
           {selectedTab === 'search' && <div>내역 검색 내용</div>}
 

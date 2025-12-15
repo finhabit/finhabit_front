@@ -19,6 +19,13 @@ import * as S from './Home.style';
 export default function Home() {
   const gaps = useMemo(() => ({ afterFirst: 33, afterSecond: 27 }), []);
   const navigate = useNavigate();
+  // 다중 카테고리 테스트 데이터, 이후 연동시 다른값으로 바꿔 사용
+  const MultiCategoryData = [
+    { id: 1, label: '식비', ratio: 45, color: '#b6be40ff' }, // 45%
+    { id: 2, label: '교통', ratio: 20, color: '#626b00ff' }, // 20%
+    { id: 3, label: '문화', ratio: 15, color: '#cbd638ff' }, // 15%
+    { id: 4, label: '저축', ratio: 20, color: '#3e4300ff' }, // 20%
+  ];
 
   return (
     <S.Screen>
@@ -94,7 +101,7 @@ export default function Home() {
             </S.Right>
           </S.TitleRow>
           <S.SummaryCard>
-            <Donuts />
+            <Donuts categories={MultiCategoryData} size={170} />
           </S.SummaryCard>
         </S.Section>
 
