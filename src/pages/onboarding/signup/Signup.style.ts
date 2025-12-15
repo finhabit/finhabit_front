@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: 100vh;               /* 화면 높이 고정 */
-  overflow: hidden;  
+  height: 100vh; /* 화면 높이 고정 */
+  overflow: hidden;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -23,7 +23,7 @@ export const Title = styled.h1`
   width: 100%;
   margin: 0 0 24px 0;
   color: #000;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-size: 21px;
   font-style: normal;
   font-weight: 600;
@@ -56,7 +56,7 @@ export const Input = styled.input`
   background: transparent;
 
   color: #000;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -64,7 +64,7 @@ export const Input = styled.input`
 
   ::placeholder {
     color: #ccc;
-    font-family: "Inter";
+    font-family: 'Inter';
     font-size: 15px;
     font-style: normal;
     font-weight: 500;
@@ -73,7 +73,7 @@ export const Input = styled.input`
 `;
 
 interface SignupButtonProps {
-    $active: boolean;
+  $active: boolean;
 }
 
 export const SignupButton = styled.button<SignupButtonProps>`
@@ -81,13 +81,20 @@ export const SignupButton = styled.button<SignupButtonProps>`
   height: 49px;
   border-radius: 11px;
   border: none;
-  background: ${({ $active }) => ($active ? "#DFE678" : "#D9D9D9")};
+  background: ${({ $active }) => ($active ? '#DFE678' : '#D9D9D9')};
   color: #fff;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  cursor: ${({ $active }) => ($active ? "pointer" : "default")};
+  cursor: ${({ $active }) => ($active ? 'pointer' : 'default')};
   transition: background 0.15s ease;
+`;
+
+export const ErrorMessage = styled.span`
+  color: #ff4d4f;
+  font-size: 11px;
+  display: flex;
+  margin: -5px 5px;
 `;

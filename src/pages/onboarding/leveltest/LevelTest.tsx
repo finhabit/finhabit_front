@@ -1,139 +1,153 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import LevelCard from "@/components/LevelCard";
-import * as S from "./LevelTest.style";
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import LevelCard from '@/components/LevelCard';
+import * as S from './LevelTest.style';
+import levellogo from '@/assets/levellogo.svg';
 
-import levellogo from "@/assets/levellogo.svg";
+import { getLevelTestQuestions } from '@/api/levelTest.api';
+import { signup } from '@/api/auth.api';
+import type { LevelQuestionDto } from '@/api/levelTest.api';
 
 type Question = {
-    id: number;
-    title: string;
-    options: string[];
-    correctAnswer: number;
+  id: number;
+  title: string;
+  options: string[];
+  correctAnswer: number;
 };
 
-const QUESTIONS: Question[] = [
-    {
-        id: 1,
-        title: "‘적금’과 ‘예금’의 차이를 알고 있나요?",
-        options: ["같은 뜻이다", "적금은 일정 금액을 나눠서 낸다", "모르겠다"],
-        correctAnswer: 1, // 정답은 "적금은 일정 금액을 나눠서 낸다"
-    },
-    {
-        id: 2,
-        title: "신용카드와 체크카드의 차이를 알고\n있나요?",
-        options: ["후불 / 선불 차이", "같음", "모르겠다"],
-        correctAnswer: 0, // 정답은 "후불 / 선불 차이"
-    },
-    {
-        id: 3,
-        title: "‘분산 투자’의 의미는?",
-        options: ["한 종목에 집중 투자", "여러 종목에 나눠 투자", "모르겠다"],
-        correctAnswer: 1, // 정답은 "여러 종목에 나눠 투자"
-    },
-    {
-        id: 4,
-        title: "보이스피싱을 예방하기 위한 가장 좋은\n방법은?",
-        options: ["개인정보 공유 금지", "문자 링크 클릭", "모르겠다"],
-        correctAnswer: 0, // 정답은 "개인정보 공유 금지"
-    },
-    {
-        id: 5,
-        title: "보험 가입의 목적은?",
-        options: ["세금 절약", "위험 대비", "모르겠다"],
-        correctAnswer: 1, // 정답은 "위험 대비"
-    },
-];
-
 const LevelTest = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const [answers, setAnswers] = useState<Record<number, number | null>>(() => {
-        const initial: Record<number, number | null> = {};
-        QUESTIONS.forEach((q) => {
-            initial[q.id] = null;
-        });
-        return initial;
-    });
+  const signupData = location.state?.signupData;
 
-    const [score, setScore] = useState<number>(0); // 정답률
-    const [showPopup, setShowPopup] = useState<boolean>(false); // 팝업 상태
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [answers, setAnswers] = useState<Record<number, number | null>>({});
+  const [score, setScore] = useState<number>(0);
+  const [userLevel, setUserLevel] = useState<string>('');
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
-    const handleSelect = (questionId: number, optionIndex: number) => {
-        setAnswers((prev) => ({
-            ...prev,
-            [questionId]: optionIndex,
+  useEffect(() => {
+    if (!signupData) {
+      alert('잘못된 접근입니다. 회원가입 정보를 먼저 입력해주세요.');
+      navigate('/signup');
+    }
+  }, [signupData, navigate]);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const data = await getLevelTestQuestions();
+
+        const formattedQuestions: Question[] = data.map((item: LevelQuestionDto) => ({
+          id: item.testId,
+          title: item.testQuestion,
+          options: [item.testOption1, item.testOption2, item.testOption3],
+          correctAnswer: item.testAnswer - 1,
         }));
+
+        setQuestions(formattedQuestions);
+
+        const initialAnswers: Record<number, number | null> = {};
+        formattedQuestions.forEach((q) => {
+          initialAnswers[q.id] = null;
+        });
+        setAnswers(initialAnswers);
+      } catch (error) {
+        console.error('문제를 불러오는데 실패했습니다:', error);
+        alert('문제를 불러올 수 없습니다.');
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const allAnswered = QUESTIONS.every((q) => answers[q.id] !== null);
+    fetchQuestions();
+  }, []);
 
-    const handleSubmit = () => {
-        if (!allAnswered) return;
+  const handleSelect = (questionId: number, optionIndex: number) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [questionId]: optionIndex,
+    }));
+  };
 
-        // 정답률 계산 (정답 수 / 총 문제 수)
-        const correctAnswers = QUESTIONS.filter(
-            (q) => answers[q.id] === q.correctAnswer
-        ).length;
+  const allAnswered = questions.length > 0 && questions.every((q) => answers[q.id] !== null);
 
-        const calculatedScore = (correctAnswers / QUESTIONS.length) * 100;
-        setScore(Math.round(calculatedScore)); // 정답률 업데이트
+  const handleSubmit = async () => {
+    if (!allAnswered || !signupData) return;
 
-        // 팝업창 띄우기
-        setShowPopup(true);
-    };
+    const correctAnswersCount = questions.filter((q) => answers[q.id] === q.correctAnswer).length;
+    const calculatedScore = Math.round((correctAnswersCount / questions.length) * 100);
+    setScore(calculatedScore);
 
+    const levelTestAnswers = questions.map((q) => ({
+      testId: q.id,
+      userAnswer: (answers[q.id] as number) + 1,
+    }));
 
-    const handleStart = () => {
-        navigate("/home");
-    };
+    try {
+      const response = await signup({
+        ...signupData,
+        levelTestAnswers,
+      });
 
-    return (
-        <S.Container>
-            <S.Content>
-                <S.Title>금융 지식을 얼마나 아는지 확인하기!</S.Title>
+      if (response.level) {
+        setUserLevel(response.level);
+      }
 
-                <S.QuestionList>
-                    {QUESTIONS.map((q) => (
-                        <LevelCard
-                            key={q.id}
-                            title={q.title}
-                            options={q.options}
-                            selectedIndex={answers[q.id]}
-                            onSelect={(index: number) => handleSelect(q.id, index)}
-                        />
-                    ))}
-                </S.QuestionList>
+      setShowPopup(true);
+    } catch (error: any) {
+      console.error('회원가입 및 결과 전송 실패:', error);
+      const errorMessage = error.response?.data?.message || '회원가입 중 오류가 발생했습니다.';
+      alert(errorMessage);
+    }
+  };
 
-                <S.SubmitButton
-                    type="button"
-                    onClick={handleSubmit}
-                    disabled={!allAnswered}
-                    $active={allAnswered}
-                >
-                    제출하기
-                </S.SubmitButton>
-            </S.Content>
+  const handleStart = () => {
+    navigate('/home');
+  };
 
-            {/* 팝업창 */}
-            {showPopup && (
-                <S.PopupOverlay>
-                    <S.PopupContent>
-                        <S.PopupText>
-                            <S.PopupTitle>정답률 {score}%</S.PopupTitle>
-                            <S.PopupMessage>
-                                이제 투자와 자산관리까지 한 단계 더!
-                            </S.PopupMessage>
-                        </S.PopupText>
-                        <S.PopupImage src={levellogo} alt="levellogo" />
-                        <S.PopupButton onClick={handleStart}>
-                            상급형 Finhabit 시작하기
-                        </S.PopupButton>
-                    </S.PopupContent>
-                </S.PopupOverlay>
-            )}
-        </S.Container>
-    );
+  if (loading) return <div>Loading...</div>;
+
+  return (
+    <S.Container>
+      <S.Content>
+        <S.Title>금융 지식을 얼마나 아는지 확인하기!</S.Title>
+
+        <S.QuestionList>
+          {questions.map((q) => (
+            <LevelCard
+              key={q.id}
+              title={q.title}
+              options={q.options}
+              selectedIndex={answers[q.id]}
+              onSelect={(index: number) => handleSelect(q.id, index)}
+            />
+          ))}
+        </S.QuestionList>
+
+        <S.SubmitButton type="button" onClick={handleSubmit} disabled={!allAnswered} $active={allAnswered}>
+          회원가입 완료하기
+        </S.SubmitButton>
+      </S.Content>
+
+      {showPopup && (
+        <S.PopupOverlay>
+          <S.PopupContent>
+            <S.PopupText>
+              <S.PopupTitle>정답률 {score}%</S.PopupTitle>
+              <S.PopupMessage>
+                {userLevel ? `당신의 레벨은 ${userLevel}입니다!` : '이제 투자와 자산관리까지 한 단계 더!'}
+              </S.PopupMessage>
+            </S.PopupText>
+            <S.PopupImage src={levellogo} alt="levellogo" />
+            <S.PopupButton onClick={handleStart}>상급형 Finhabit 시작하기</S.PopupButton>
+          </S.PopupContent>
+        </S.PopupOverlay>
+      )}
+    </S.Container>
+  );
 };
 
 export default LevelTest;

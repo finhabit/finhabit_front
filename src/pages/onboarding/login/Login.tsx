@@ -1,93 +1,86 @@
-import { useState } from "react";
-import type { ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from '@/api/auth.api';
+import ComingSoon from '@/components/ComingSoon';
 
-import * as S from "./Login.style";
+import * as S from './Login.style';
 
 const Login: React.FC = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [id, setId] = useState("");
-    const [password, setPassword] = useState("");
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const openOverlay = () => {
+    setIsOverlayOpen(true);
+  };
+  const closeOverlay = () => {
+    setIsOverlayOpen(false);
+  };
 
-    // 비밀번호 검증 함수 
-    const isPasswordValid = (password: string) => {
-        const lenOk = password.length >= 8 && password.length <= 16; // 8~16자
-        const hasNum = /\d/.test(password);                          // 숫자 포함
-        const hasEng = /[A-Za-z]/.test(password);                    // 영문 포함
-        const hasSpec = /[^A-Za-z0-9]/.test(password);               // 특수문자 포함
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-        return lenOk && hasNum && hasEng && hasSpec;
-    };
+  const isFormValid = email.trim() !== '' && password.length >= 1;
 
-    const isFormValid = id.trim() !== "" && isPasswordValid(password);
+  const handleLogin = async () => {
+    if (!isFormValid || loading) return;
 
-    const handleLogin = () => {
-        if (!isFormValid) return;
+    try {
+      setLoading(true);
 
-        // TODO: 로그인 로직
-        const isSuccess = true;
+      const data = await login(email, password);
 
-        if (isSuccess) {
-            navigate("/leveltest"); // 레벨테스트 페이지로 이동
-        } else {
-            alert("아이디 또는 비밀번호를 확인해주세요.");
-        }
-    };
+      localStorage.setItem('accessToken', data.accessToken);
 
-    const handleSignup = () => {
-        navigate("/signup");
-    };
+      navigate('/home');
+    } catch (err: any) {
+      console.error('로그인 실패:', err);
+      alert('이메일 또는 비밀번호를 확인해주세요.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setId(e.target.value);
-    };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  };
 
-    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
-    };
+  return (
+    <S.Container>
+      <S.Content>
+        <S.Title>이메일로 로그인</S.Title>
 
-    return (
-        <S.Container>
-            <S.Content>
-                <S.Title>아이디로 로그인</S.Title>
+        <S.InputWrapper>
+          <S.Input type="text" placeholder="이메일 입력" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </S.InputWrapper>
 
-                <S.InputWrapper>
-                    <S.Input
-                        type="text"
-                        placeholder="아이디 입력"
-                        value={id}
-                        onChange={handleIdChange}
-                    />
-                </S.InputWrapper>
+        <S.InputWrapper style={{ marginTop: '12px' }}>
+          <S.Input
+            type="password"
+            placeholder="비밀번호 입력"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        </S.InputWrapper>
 
-                <S.InputWrapper style={{ marginTop: "12px" }}>
-                    <S.Input
-                        type="password"
-                        placeholder="비밀번호 입력"
-                        value={password}
-                        onChange={handlePasswordChange}
-                    />
-                </S.InputWrapper>
+        <S.LoginButton onClick={handleLogin} disabled={!isFormValid || loading} $active={isFormValid}>
+          {loading ? '로그인 중...' : '로그인'}
+        </S.LoginButton>
 
-                <S.LoginButton
-                    onClick={handleLogin}
-                    disabled={!isFormValid}
-                    $active={isFormValid}
-                >
-                    로그인
-                </S.LoginButton>
-
-                <S.HelperRow>
-                    <S.HelperText>아이디 찾기</S.HelperText>
-                    <S.Divider />
-                    <S.HelperText>비밀번호 찾기</S.HelperText>
-                    <S.Divider />
-                    <S.SignUpText onClick={handleSignup}>회원가입</S.SignUpText>
-                </S.HelperRow>
-            </S.Content>
-        </S.Container>
-    );
+        <S.HelperRow>
+          <S.HelperText onClick={openOverlay}>이메일 찾기</S.HelperText>
+          <S.Divider />
+          <S.HelperText onClick={openOverlay}>비밀번호 찾기</S.HelperText>
+          <S.Divider />
+          <S.SignUpText onClick={() => navigate('/signup')}>회원가입</S.SignUpText>
+        </S.HelperRow>
+      </S.Content>
+      {isOverlayOpen && <ComingSoon onClick={closeOverlay} />}
+    </S.Container>
+  );
 };
 
 export default Login;

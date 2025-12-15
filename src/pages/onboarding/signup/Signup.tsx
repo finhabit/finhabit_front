@@ -1,133 +1,111 @@
-import { useState } from "react";
-import type { ChangeEvent, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import * as S from "./Signup.style";
+import * as S from './Signup.style';
 
 const Signup: React.FC = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [userId, setUserId] = useState("");
-    const [email, setEmail] = useState("");
-    const [nickname, setNickname] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
-    // 비밀번호 기준: 8~16자 + 영문 + 숫자 + 특수문자
-    const isPasswordValid = (pw: string) => {
-        const lenOk = pw.length >= 8 && pw.length <= 16;
-        const hasNum = /\d/.test(pw);
-        const hasEng = /[A-Za-z]/.test(pw);
-        const hasSpec = /[^A-Za-z0-9]/.test(pw);
-        return lenOk && hasNum && hasEng && hasSpec;
-    };
+  const isPasswordValid = (pw: string) => {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
+    return regex.test(pw);
+  };
 
-    const isFormValid =
-        userId.trim() !== "" &&
-        email.trim() !== "" &&
-        nickname.trim() !== "" &&
-        password.trim() !== "" &&
-        passwordConfirm.trim() !== "" &&
-        isPasswordValid(password) &&
-        password === passwordConfirm;
+  const isNicknameLengthValid = nickname.length <= 15;
+  const isNicknameValid = nickname.trim() !== '' && isNicknameLengthValid;
 
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-        if (!isFormValid) return;
+  const isFormValid =
+    email.trim() !== '' && isNicknameValid && isPasswordValid(password) && password === passwordConfirm;
 
-        // ✅ 회원가입 정보 LocalStorage에 저장 (Mypage와 연동)
-        const newUserProfile = {
-            nickname: nickname,
-            email: email,
-            password: password,
-        };
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!isFormValid) return;
 
-        localStorage.setItem("userProfile", JSON.stringify(newUserProfile));
+    navigate('/leveltest', {
+      state: {
+        signupData: {
+          email,
+          nickname,
+          password,
+          passwordConfirm,
+        },
+      },
+    });
+  };
 
-        alert("회원가입이 완료되었습니다.");
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
 
+  const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
 
-        navigate("/leveltest");
-    };
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
 
-    const handleUserIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setUserId(e.target.value);
-    };
+  const handlePasswordConfirmChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPasswordConfirm(e.target.value);
+  };
 
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
+  return (
+    <S.Container>
+      <S.Content onSubmit={handleSubmit}>
+        <S.Title>회원가입</S.Title>
 
-    const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setNickname(e.target.value);
-    };
+        <S.InputsWrapper>
+          <S.InputWrapper>
+            <S.Input type="email" placeholder="이메일 입력" value={email} onChange={handleEmailChange} />
+          </S.InputWrapper>
 
-    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
-    };
+          <S.InputWrapper>
+            <S.Input
+              type="text"
+              placeholder="닉네임 입력 (최대 15자)"
+              value={nickname}
+              onChange={handleNicknameChange}
+            />
+          </S.InputWrapper>
+          {!isNicknameLengthValid && <S.ErrorMessage>닉네임은 최대 15자까지 입력 가능합니다.</S.ErrorMessage>}
 
-    const handlePasswordConfirmChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setPasswordConfirm(e.target.value);
-    };
+          <S.InputWrapper>
+            <S.Input
+              type="password"
+              placeholder="비밀번호 (8~16자, 영문/숫자/특수문자 포함)"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </S.InputWrapper>
+          {password && !isPasswordValid(password) && (
+            <S.ErrorMessage>8~16자, 영문/숫자/특수문자(@$!%*#?&)를 포함해야 합니다.</S.ErrorMessage>
+          )}
 
-    return (
-        <S.Container>
-            <S.Content onSubmit={handleSubmit}>
-                <S.Title>회원가입</S.Title>
+          <S.InputWrapper>
+            <S.Input
+              type="password"
+              placeholder="비밀번호 확인"
+              value={passwordConfirm}
+              onChange={handlePasswordConfirmChange}
+            />
+          </S.InputWrapper>
+          {passwordConfirm && password !== passwordConfirm && (
+            <S.ErrorMessage>비밀번호가 일치하지 않습니다.</S.ErrorMessage>
+          )}
+        </S.InputsWrapper>
 
-                <S.InputsWrapper>
-                    <S.InputWrapper>
-                        <S.Input
-                            type="text"
-                            placeholder="아이디 입력"
-                            value={userId}
-                            onChange={handleUserIdChange}
-                        />
-                    </S.InputWrapper>
-
-                    <S.InputWrapper>
-                        <S.Input
-                            type="email"
-                            placeholder="이메일 입력"
-                            value={email}
-                            onChange={handleEmailChange}
-                        />
-                    </S.InputWrapper>
-
-                    <S.InputWrapper>
-                        <S.Input
-                            type="text"
-                            placeholder="닉네임 입력"
-                            value={nickname}
-                            onChange={handleNicknameChange}
-                        />
-                    </S.InputWrapper>
-
-                    <S.InputWrapper>
-                        <S.Input
-                            type="password"
-                            placeholder="비밀번호 입력"
-                            value={password}
-                            onChange={handlePasswordChange}
-                        />
-                    </S.InputWrapper>
-
-                    <S.InputWrapper>
-                        <S.Input
-                            type="password"
-                            placeholder="비밀번호 확인"
-                            value={passwordConfirm}
-                            onChange={handlePasswordConfirmChange}
-                        />
-                    </S.InputWrapper>
-                </S.InputsWrapper>
-
-                <S.SignupButton type="submit" disabled={!isFormValid} $active={isFormValid}>
-                    회원가입
-                </S.SignupButton>
-            </S.Content>
-        </S.Container>
-    );
+        <S.SignupButton type="submit" disabled={!isFormValid} $active={isFormValid}>
+          회원가입
+        </S.SignupButton>
+      </S.Content>
+    </S.Container>
+  );
 };
 
 export default Signup;
