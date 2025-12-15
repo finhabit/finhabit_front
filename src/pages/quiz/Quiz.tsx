@@ -15,9 +15,9 @@ export default function Quiz() {
   const [explanationData, setExplanationData] = useState<TodayQuizExplanation | null>(null);
   const [historyData, setHistoryData] = useState<WeeklyQuizHistory[]>([]);
   const [currentWeekLabel, setCurrentWeekLabel] = useState<string>('');
-  const [selected, setSelected] = useState<number | null>(null); // 선택한 답 (0, 1, 2)
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null); // 정답 여부
-  const [showResult, setShowResult] = useState<boolean>(false); // 결과 화면 표시 여부
+  const [selected, setSelected] = useState<number | null>(null);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [showResult, setShowResult] = useState<boolean>(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
@@ -28,10 +28,26 @@ export default function Quiz() {
   const loadPageData = async () => {
     try {
       const listData = await getQuizList();
-      setHistoryData(listData.weeklyHistory);
+      const cleanMonthLabel = listData.monthLabel.replace(/^\d{4}[-.년]\s*/, '');
 
-      if (listData.weeklyHistory.length > 0) {
-        setCurrentWeekLabel(listData.weeklyHistory[0].weekLabel);
+      const formattedHistory = listData.weeklyHistory.map((history) => {
+        if (history.weekLabel.includes('-')) {
+          return {
+            ...history,
+            weekLabel: getFormattedWeek(history.weekLabel),
+          };
+        }
+
+        return {
+          ...history,
+          weekLabel: `${cleanMonthLabel} ${history.weekLabel}`,
+        };
+      });
+
+      setHistoryData(formattedHistory);
+
+      if (formattedHistory.length > 0) {
+        setCurrentWeekLabel(formattedHistory[0].weekLabel);
       }
 
       const quizData = await getTodayQuiz();
@@ -184,4 +200,27 @@ export default function Quiz() {
       {isOverlayOpen && <ComingSoon onClick={closeOverlay} />}
     </>
   );
+}
+
+// M월 n주차 변환 함수
+function getFormattedWeek(dateInput: string | Date): string {
+  let date: Date;
+
+  if (typeof dateInput === 'string') {
+    if (!dateInput.includes('-')) return dateInput;
+
+    const [year, month, day] = dateInput.split('-').map(Number);
+    date = new Date(year, month - 1, day);
+  } else {
+    date = dateInput;
+  }
+
+  if (isNaN(date.getTime())) return typeof dateInput === 'string' ? dateInput : '';
+
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  const week = Math.ceil((day + firstDayOfMonth) / 7);
+
+  return `${month}월 ${week}주차`;
 }

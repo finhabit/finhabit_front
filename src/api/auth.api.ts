@@ -3,6 +3,7 @@ import instance from '@/api/axios';
 // -------------------- 로그인 관련 --------------------
 export interface LoginResponse {
   accessToken: string;
+  [key: string]: any;
 }
 
 export const login = async (email: string, password: string): Promise<LoginResponse> => {
@@ -10,7 +11,14 @@ export const login = async (email: string, password: string): Promise<LoginRespo
     email,
     password,
   });
-  return res.data;
+
+  const headerToken = res.headers['authorization'] || res.headers['Authorization'];
+  const accessToken = headerToken ? headerToken.replace('Bearer ', '').trim() : '';
+
+  return {
+    ...res.data,
+    accessToken,
+  };
 };
 
 // -------------------- 회원가입 관련 --------------------
@@ -42,4 +50,25 @@ export const signup = async (data: SignupRequest): Promise<SignupResponse> => {
 
   const res = await instance.post<SignupResponse>('/auth/signup', payload);
   return res.data;
+};
+
+// -------------------- 마이페이지 관련 --------------------
+export interface UserProfile {
+  nickname: string;
+  email: string;
+  level: number;
+  maskedPassword?: string;
+}
+
+export const getUserProfile = async (): Promise<UserProfile> => {
+  const { data } = await instance.get<UserProfile>('/auth/me/profile');
+  return data;
+};
+
+export const updateUserProfile = async (data: { nickname?: string; email?: string }) => {
+  await instance.patch('/auth/me/profile', data);
+};
+
+export const withdrawUser = async () => {
+  await instance.delete('/auth/me/withdraw');
 };
