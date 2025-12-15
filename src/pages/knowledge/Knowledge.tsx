@@ -1,13 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import back from '@/assets/back.svg';
 import * as S from './Knowledge.style';
+
+// API 함수 및 타입 import (수정된 파일 사용)
+import { getTodayKnowledge, getKnowledgeList } from '@/api/knowledge.api';
+import type { Knowledge as KnowledgeType } from '@/api/knowledge.api'; // 경로 확인 필요
+
+type TabType = 'weekly' | 'monthly';
 
 export default function Knowledge() {
   const navigate = useNavigate();
 
-  // 탭 상태: 'weekly' | 'monthly'
-  const [tab, setTab] = useState('weekly');
+  const [tab, setTab] = useState<TabType>('weekly');
+  const [today, setToday] = useState<KnowledgeType | null>(null);
+  const [list, setList] = useState<KnowledgeType[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getTodayKnowledge().then(setToday).catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    getKnowledgeList(tab === 'weekly' ? 'WEEKLY' : 'MONTHLY')
+      .then(setList)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [tab]);
 
   return (
     <>
@@ -17,21 +38,20 @@ export default function Knowledge() {
       </S.UpLine>
 
       <S.RemindingSection>
-        {/* 오늘의 지식 */}
         <S.N_Section>
           오늘의 지식
           <S.ContentBox>
-            <S.PerK>
-              <S.KTitle>신용점수 관리의 중요성</S.KTitle>
-              <div>
-                신용점수는 '금융 신뢰도'입니다.
-                <br /> 연체나 과도한 대출은 점수를 낮춥니다.
-              </div>
-            </S.PerK>
+            {today ? (
+              <S.PerK>
+                <S.KTitle>{today.cardTitle}</S.KTitle>
+                <div>{today.cardContent}</div>
+              </S.PerK>
+            ) : (
+              <div>오늘의 지식이 없습니다.</div>
+            )}
           </S.ContentBox>
         </S.N_Section>
 
-        {/* 주간 / 월간 버튼 */}
         <S.TabHugger>
           지식 모아보기
           <S.TabWrapper>
@@ -44,34 +64,19 @@ export default function Knowledge() {
             </S.TabButton>
           </S.TabWrapper>
         </S.TabHugger>
-
-        {/* 탭 컨텐츠 */}
         <S.N_Section>
           <S.ContentBox1>
-            {tab === 'weekly' ? (
-              <>
-                <S.PerGath>
-                  <S.GathTitle>보험의 역할</S.GathTitle>
-                  <S.GathContent>보험은 사고나 질병 등 예상치 못한 위험에 대비하는 '보호장치'입니다.</S.GathContent>
+            {loading ? (
+              <div>불러오는 중...</div>
+            ) : list.length > 0 ? (
+              list.map((item, idx) => (
+                <S.PerGath key={item.financeId || idx}>
+                  <S.GathTitle>{item.cardTitle}</S.GathTitle>
+                  <S.GathContent>{item.cardContent}</S.GathContent>
                 </S.PerGath>
-
-                <S.PerGath>
-                  <S.GathTitle>분산투자의 의미</S.GathTitle>
-                  <S.GathContent>자산을 여러 종목에 나눠 투자해 위험을 줄이는 방법입니다.</S.GathContent>
-                </S.PerGath>
-              </>
+              ))
             ) : (
-              <>
-                <S.PerGath>
-                  <S.GathTitle>월간 금융 팁</S.GathTitle>
-                  <S.GathContent>한 달 지출을 점검하고 고정비 절감 포인트를 체크해보세요.</S.GathContent>
-                </S.PerGath>
-
-                <S.PerGath>
-                  <S.GathTitle>신용관리 체크</S.GathTitle>
-                  <S.GathContent>정기적으로 신용점수를 확인해 점수 변화에 대비하는 것이 중요합니다.</S.GathContent>
-                </S.PerGath>
-              </>
+              <div>표시할 지식이 없습니다.</div>
             )}
           </S.ContentBox1>
         </S.N_Section>

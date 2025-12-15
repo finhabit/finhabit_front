@@ -246,6 +246,7 @@ export const WeekLabel = styled.div`
   color: #aaa;
   font-weight: 500;
   margin-bottom: 10px;
+  cursor: default;
 `;
 
 export const HistoryItem = styled.div`
@@ -257,6 +258,7 @@ export const HistoryItem = styled.div`
   font-size: 13px;
   font-weight: 500;
   border-bottom: 1px solid #f0f0f0;
+  cursor: default;
   &:last-child {
     border-bottom: none;
   }
