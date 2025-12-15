@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import back from '@/assets/back.svg';
 import * as S from './Knowledge.style';
 
-// API 함수 및 타입 import (수정된 파일 사용)
 import { getTodayKnowledge, getKnowledgeList } from '@/api/knowledge.api';
-import type { Knowledge as KnowledgeType } from '@/api/knowledge.api'; // 경로 확인 필요
+import type { Knowledge as KnowledgeType } from '@/api/knowledge.api';
 
 type TabType = 'weekly' | 'monthly';
 
