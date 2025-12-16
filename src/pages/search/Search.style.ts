@@ -1,4 +1,8 @@
+// pages/search/Search.style.ts
+
 import styled from 'styled-components';
+
+// ... (기존 UpLine, Icon, RightIcon, Container, SearchInput, KeywordWrap, Keyword 코드는 그대로 유지) ...
 
 export const UpLine = styled.div`
   display: flex;
@@ -57,4 +61,47 @@ export const Keyword = styled.div`
   font-size: 13px;
   color: #b0b0b0;
   cursor: pointer;
+`;
+
+/* 👇 여기서부터 새로 추가된 스타일입니다 👇 */
+
+export const ResultList = styled.ul`
+  width: 100%;
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+export const ResultItem = styled.li`
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &:hover {
+    background-color: #fafafa;
+  }
+`;
+
+export const ResultTitle = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+`;
+
+export const ResultPath = styled.div`
+  font-size: 12px;
+  color: #999;
+`;
+
+export const NoResult = styled.div`
+  margin-top: 50px;
+  color: #c5c5c5;
+  font-size: 14px;
+  text-align: center;
 `;
