@@ -40,6 +40,32 @@ export const ContentBox = styled.div`
   box-sizing: border-box;
 `;
 
+export const ScrollableContentBox = styled.div`
+  width: 321px;
+  min-height: 114px;
+  max-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  border-radius: 23px;
+  background: #dfe67880;
+  padding: 20px;
+  margin: 10px 0;
+  box-shadow: 0 3px 8px rgba(150, 150, 150, 0.25);
+  box-sizing: border-box;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+`;
+
 export const RemindingSection = styled.div`
   display: flex;
   align-items: center;

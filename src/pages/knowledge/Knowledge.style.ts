@@ -29,11 +29,12 @@ export const N_Section = styled.div`
 
 export const ContentBox = styled.div`
   width: 321px;
-  min-height: 213px;
+  min-height: 193px;
   max-height: 263px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
   border-radius: 23px;
   background: #dfe67880;
@@ -45,17 +46,22 @@ export const ContentBox = styled.div`
 export const ContentBox1 = styled.div`
   width: 321px;
   min-height: 253px;
-  max-height: 303px;
+  max-height: 293px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  overflow: hidden;
+  overflow-y: auto;
   border-radius: 23px;
   border: 2px solid #dfe678;
   padding: 16px 8px;
   margin: 10px 0;
   box-shadow: 0 3px 8px rgba(150, 150, 150, 0.25);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 export const RemindingSection = styled.div`

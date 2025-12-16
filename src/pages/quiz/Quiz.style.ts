@@ -229,8 +229,10 @@ export const MoreLink = styled.div`
 export const CollectionBox = styled.div`
   width: 321px;
   min-height: 260px;
+  max-height: 293px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   border-radius: 23px;
   border: 2px solid #dfe67875;
@@ -239,6 +241,12 @@ export const CollectionBox = styled.div`
   box-shadow: 0 3px 8px rgba(150, 150, 150, 0.25);
   box-sizing: border-box;
   background-color: #fff;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 export const WeekLabel = styled.div`
