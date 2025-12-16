@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const SCREEN_MAX = 414;
 export const CARD_MAX = 321;
+const HORIZONTAL_PADDING = 20;
 
 export const Screen = styled.div`
   width: 100%;
@@ -15,7 +16,7 @@ export const Screen = styled.div`
 export const SafeArea = styled.main`
   width: 100%;
   max-width: ${SCREEN_MAX}px;
-  padding: 35px;
+  padding: 35px ${HORIZONTAL_PADDING}px;
   box-sizing: border-box;
 `;
 
@@ -27,7 +28,7 @@ export const Header = styled.header`
 `;
 
 export const HeaderSpacer = styled.div`
-  width: 28px;
+  width: 29px;
 `;
 
 export const HeaderIcons = styled.div`
@@ -47,7 +48,6 @@ export const TopIcon = styled.img`
   height: 22px;
 `;
 
-/* 섹션(제목줄 + 카드)만 중앙 정렬 */
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
@@ -55,7 +55,6 @@ export const Section = styled.section`
   width: 100%;
 `;
 
-/* 제목줄은 카드 폭과 동일하게 가운데 */
 export const TitleRow = styled.div`
   position: relative;
   display: flex;
@@ -64,12 +63,13 @@ export const TitleRow = styled.div`
   width: 100%;
   max-width: ${CARD_MAX}px;
   margin-bottom: 10px;
+  box-sizing: border-box;
 `;
 
 export const Left = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-around;
 `;
 
 export const Right = styled.div``;
@@ -86,28 +86,27 @@ export const TinyPlus = styled.img`
 `;
 
 export const TitleText = styled.span`
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
   color: #000;
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
 `;
 
-/* 카드 베이스: 중앙 + 공통 그림자 */
 export const BaseCard = styled.div`
   width: 100%;
   max-width: ${CARD_MAX}px;
   border-radius: 23px;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
   margin: 0 auto;
+  cursor: pointer;
 `;
 
-/* 각 카드 스타일 */
 export const CardKnowledge = styled(BaseCard)`
   height: 114px;
   background: #dfe678;
@@ -119,34 +118,36 @@ export const CardQuiz = styled(BaseCard)`
 `;
 
 export const CardArchive = styled(BaseCard)`
-  /* height: 256px; */
   background: #fdfdfd;
   border: 2px solid #dfe678;
+  padding: 10px 0;
 `;
 
-/* 카드 내부 컨텐츠 레이아웃 */
 export const CardBody = styled.div`
   height: 100%;
-  display: flex;
-  padding: 16px 18px;
+  padding: 16px 10px;
   flex-direction: column;
-  gap: 15px;
+  gap: 13px;
+  justify-content: center;
 `;
+
 export const CardBody1 = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 45px;
+  gap: 20px;
+  padding: 20px 18px;
 `;
+
 export const Card1 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
+  padding: 0;
 `;
 
 export const CardTop = styled.h3`
-  margin: 0 auto;
+  margin: 0;
   color: #848d00;
   text-align: center;
   font-family: Pretendard;
@@ -154,11 +155,11 @@ export const CardTop = styled.h3`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  white-space: nowrap;
+  white-space: pre-wrap;
 `;
 
 export const CardTitle = styled.h3`
-  margin: 0 auto;
+  margin: 0;
   color: #2b2b27;
   text-align: center;
   font-family: Pretendard;
@@ -166,33 +167,34 @@ export const CardTitle = styled.h3`
   font-weight: 600;
   line-height: 1.2;
   width: 100%;
-  max-width: 277px;
-  white-space: nowrap;
+  white-space: pre-wrap;
 `;
 
 export const Q_CardTitle = styled.h3`
-  margin: 0 auto;
+  margin: 0;
   color: #2b2b27;
   text-align: center;
   font-family: Pretendard;
   font-size: 12px;
   width: 100%;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const A_CardTitle = styled.h3`
-  margin: 0 auto;
+  margin: 0;
   color: #2b2b27;
   text-align: center;
   font-family: Pretendard;
   font-size: 14px;
+  line-height: 1.3;
   width: 100%;
-  white-space: nowrap;
+  white-space: pre-wrap;
 `;
 
 export const Gap = styled.div``;
 
-/* 하단 고정 네비 공간 확보 */
 export const BottomSpacer = styled.div`
-  height: 84px; /* 하단 고정 네비(64px) + 여유 */
+  height: 84px;
 `;

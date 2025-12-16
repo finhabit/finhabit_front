@@ -8,26 +8,35 @@ export default function ConsumePlus() {
   const navigate = useNavigate();
 
   const [amount, setAmount] = useState<string>('');
-  const [selected, setSelected] = useState<'income' | 'outcome' | ''>('');
+
+  const today = new Date();
+  const displayDate = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+  const apiDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(e.target.value);
   };
 
   const handleTypeSelect = (type: 'income' | 'outcome') => {
-    setSelected(type);
-
-    if (type === 'income') {
-      navigate('/setcategoryincome');
-    } else {
-      navigate('/setcategoryoutcome');
+    if (!amount || parseInt(amount) <= 0) {
+      alert('금액을 입력해주세요.');
+      return;
     }
+
+    const targetPath = type === 'income' ? '/setcategoryincome' : '/setcategoryoutcome';
+
+    navigate(targetPath, {
+      state: {
+        amount: parseInt(amount),
+        date: apiDate,
+      },
+    });
   };
 
   return (
     <>
       <S.Header>
-        <S.DateText>2025.04.06</S.DateText>
+        <S.DateText>{displayDate}</S.DateText>
         <S.CloseBtn src={close} alt="취소아이콘" onClick={() => navigate(-1)} />
       </S.Header>
 
@@ -37,10 +46,10 @@ export default function ConsumePlus() {
       </S.AmountBox>
 
       <S.ButtonSection>
-        <S.TypeButton $active={selected === 'income'} color="#68B6F3" onClick={() => handleTypeSelect('income')}>
+        <S.TypeButton $active={false} color="#68B6F3" onClick={() => handleTypeSelect('income')}>
           수입
         </S.TypeButton>
-        <S.TypeButton $active={selected === 'outcome'} color="#F87171" onClick={() => handleTypeSelect('outcome')}>
+        <S.TypeButton $active={false} color="#F87171" onClick={() => handleTypeSelect('outcome')}>
           지출
         </S.TypeButton>
       </S.ButtonSection>

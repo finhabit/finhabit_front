@@ -8,7 +8,7 @@ export default defineConfig({
       '/api': {
         target: 'https://www.finhabit.shop',
         changeOrigin: true,
-        secure: true,
+        secure: false,
       },
     },
   },
