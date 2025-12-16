@@ -27,7 +27,7 @@ export default function SetCategoryOutcome() {
 
   const { mode, ledgerId, initialData } = location.state || {};
 
-  const amountData = mode === 'edit' ? initialData?.amount : location.state?.amount;
+  const amountData = location.state?.amount ?? (mode === 'edit' ? initialData?.amount : 0);
   const dateData = mode === 'edit' ? initialData?.date : location.state?.date || new Date().toISOString().split('T')[0];
 
   const [desc, setDesc] = useState('');

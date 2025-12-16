@@ -195,10 +195,7 @@ const LedgerCalendar: React.FC = () => {
       const itemToEdit = dailyExpenses.find((item) => item.ledgerId === selectedIds[0]);
 
       if (itemToEdit) {
-        const isIncome = itemToEdit.amount > 0;
-        const targetPath = isIncome ? '/setcategoryincome' : '/setcategoryoutcome';
-
-        navigate(targetPath, {
+        navigate('/consumeplus', {
           state: {
             mode: 'edit',
             ledgerId: itemToEdit.ledgerId,
@@ -324,11 +321,7 @@ const LedgerCalendar: React.FC = () => {
 
                         <S.CategoryName>
                           <span>{item.categoryName}</span>
-                          {item.merchant && item.merchant !== item.categoryName && (
-                            <span style={{ fontSize: '0.85em', color: '#888', marginLeft: '6px' }}>
-                              | {item.merchant}
-                            </span>
-                          )}
+                          {item.merchant && item.merchant !== item.categoryName}
                         </S.CategoryName>
                         <S.Costs style={{ color: isIncome ? '#68B6F3' : '#F87171' }}>
                           {Math.abs(item.amount).toLocaleString()}원

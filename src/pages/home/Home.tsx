@@ -47,9 +47,7 @@ export default function Home() {
     const fetchHomeData = async () => {
       setIsLoading(true);
       try {
-        const today = new Date().toISOString().split('T')[0];
-
-        const response: LedgerHomeResponse = await getLedgerHome(today);
+        const response: LedgerHomeResponse = await getLedgerHome();
 
         if (response.todayCategories && response.todayCategories.length > 0) {
           const formattedData = response.todayCategories.map((cat, index) => ({
@@ -132,6 +130,7 @@ export default function Home() {
         </S.Section>
 
         {/* 간단 소비 요약 */}
+        {/* 아래 부분은 이미 연동된 상태입니다! 위에 오늘의 미션 & 오늘의 지식 부분만 연동해 주세요! */}
         <S.Section>
           <S.TitleRow>
             <S.Left>
