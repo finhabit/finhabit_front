@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const UpLine = styled.div`
   display: flex;
@@ -55,12 +55,12 @@ export const L_Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left:10px;
+  margin-left: 10px;
   font-size: 14px;
 `;
 
 export const MiniIcons = styled.img`
-    width: 25px;
+  width: 25px;
 `;
 
 export const PlusIcons = styled.img`
@@ -69,17 +69,16 @@ export const PlusIcons = styled.img`
 `;
 
 export const Perrow = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 20px;
-    margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  margin: 5px 0;
 `;
 
 export const CategoryIcon = styled.img`
-    width: 35px;
+  width: 35px;
 `;
-
 
 export const SummaryCard = styled.div`
   width: 100%;
@@ -103,7 +102,6 @@ export const BottomSpacer = styled.div`
   height: 84px;
 `;
 
-
 export const TitleText = styled.span`
   position: absolute;
   left: 50%;
@@ -115,12 +113,12 @@ export const TitleText = styled.span`
   font-weight: 600;
 `;
 
-
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-bottom: 30px;
 `;
 
 export const TitleRow = styled.div`
@@ -132,7 +130,6 @@ export const TitleRow = styled.div`
   max-width: 321px;
   margin-bottom: 10px;
 `;
-
 
 export const Left = styled.div`
   display: flex;

@@ -127,7 +127,7 @@ export default function Mission() {
             )}
           </S.FilterHeader>
 
-          <S.ContentBox>
+          <S.ScrollableContentBox>
             <div style={{ fontSize: '12px', color: '#888', marginBottom: '5px' }}>
               {currentWeekLabel || '기간 선택'}
             </div>
@@ -144,7 +144,7 @@ export default function Mission() {
                 해당 주차에 완료한 미션이 없습니다.
               </div>
             )}
-          </S.ContentBox>
+          </S.ScrollableContentBox>
         </S.N_Section>
       </S.RemindingSection>
     </>

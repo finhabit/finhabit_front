@@ -40,6 +40,35 @@ export const ContentBox = styled.div`
   box-sizing: border-box;
 `;
 
+// ✨ [추가] 스크롤이 가능한 박스 (완료한 미션용)
+export const ScrollableContentBox = styled.div`
+  width: 321px;
+  min-height: 114px;
+  max-height: 300px; /* 최대 높이 제한 (넘치면 스크롤) */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 내용이 위에서부터 쌓이도록 설정 */
+  align-items: center;
+
+  border-radius: 23px;
+  background: #dfe67880;
+  padding: 20px;
+  margin: 10px 0;
+  box-shadow: 0 3px 8px rgba(150, 150, 150, 0.25);
+  box-sizing: border-box;
+
+  /* 세로 스크롤 활성화 */
+  overflow-y: auto;
+
+  /* 스크롤바 숨기기 (선택사항) */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+`;
+
 export const RemindingSection = styled.div`
   display: flex;
   align-items: center;
