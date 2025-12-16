@@ -1,9 +1,11 @@
-import { useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from '@/components/BottomNav';
 import Donuts from '@/components/Donuts';
 
-// 아이콘
+import { getLedgerHome } from '@/api/ledger.api';
+import type { LedgerHomeResponse } from '@/types/ledger';
+
 import bellIcon from '@/assets/bell.svg';
 import searchIcon from '@/assets/search.svg';
 import bulbIcon from '@/assets/bulb.svg';
@@ -13,24 +15,64 @@ import chartIcon from '@/assets/chart.svg';
 import decoLeft from '@/assets/deco-left.svg';
 import decoRight from '@/assets/deco-right.svg';
 
-// 스타일 import
 import * as S from './Home.style';
+
+const CHART_COLORS = [
+  '#b6be40ff',
+  '#626b00ff',
+  '#cbd638ff',
+  '#3e4300ff',
+  '#FFADAD',
+  '#FFD6A5',
+  '#FDFFB6',
+  '#CAFFBF',
+  '#9BF6FF',
+];
+
+interface ChartData {
+  id: number;
+  label: string;
+  ratio: number;
+  color: string;
+}
 
 export default function Home() {
   const gaps = useMemo(() => ({ afterFirst: 33, afterSecond: 27 }), []);
   const navigate = useNavigate();
-  // 다중 카테고리 테스트 데이터, 이후 연동시 다른값으로 바꿔 사용
-  const MultiCategoryData = [
-    { id: 1, label: '식비', ratio: 45, color: '#b6be40ff' }, // 45%
-    { id: 2, label: '교통', ratio: 20, color: '#626b00ff' }, // 20%
-    { id: 3, label: '문화', ratio: 15, color: '#cbd638ff' }, // 15%
-    { id: 4, label: '저축', ratio: 20, color: '#3e4300ff' }, // 20%
-  ];
+
+  const [chartData, setChartData] = useState<ChartData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchHomeData = async () => {
+      setIsLoading(true);
+      try {
+        const response: LedgerHomeResponse = await getLedgerHome();
+
+        if (response.todayCategories && response.todayCategories.length > 0) {
+          const formattedData = response.todayCategories.map((cat, index) => ({
+            id: cat.categoryId,
+            label: cat.categoryName,
+            ratio: cat.percent,
+            color: CHART_COLORS[index % CHART_COLORS.length],
+          }));
+          setChartData(formattedData);
+        } else {
+          setChartData([]);
+        }
+      } catch (error) {
+        console.error('홈 데이터 로드 실패:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchHomeData();
+  }, []);
 
   return (
     <S.Screen>
       <S.SafeArea>
-        {/* 상단 헤더 */}
         <S.Header>
           <S.HeaderSpacer />
           <S.HeaderIcons>
@@ -43,7 +85,6 @@ export default function Home() {
           </S.HeaderIcons>
         </S.Header>
 
-        {/* 오늘의 미션 */}
         <S.Section>
           <S.TitleRow>
             <S.Left>
@@ -64,7 +105,6 @@ export default function Home() {
           <S.Gap style={{ height: gaps.afterFirst }} />
         </S.Section>
 
-        {/* 오늘의 지식 */}
         <S.Section>
           <S.TitleRow>
             <S.Left>
@@ -90,18 +130,30 @@ export default function Home() {
         </S.Section>
 
         {/* 간단 소비 요약 */}
+        {/* 아래 부분은 이미 연동된 상태입니다! 위에 오늘의 미션 & 오늘의 지식 부분만 연동해 주세요! */}
         <S.Section>
           <S.TitleRow>
             <S.Left>
               <S.TinyIcon src={chartIcon} alt="소비 요약" />
-              <S.TitleText>간단 소비 요약</S.TitleText>
+              <S.TitleText>오늘의 소비 요약</S.TitleText>
             </S.Left>
             <S.Right>
               <S.TinyPlus src={plusIcon} alt="추가" onClick={() => navigate('/ledger')} />
             </S.Right>
           </S.TitleRow>
+
           <S.SummaryCard>
-            <Donuts categories={MultiCategoryData} size={170} />
+            {isLoading ? (
+              <div style={{ color: '#aaa', margin: 'auto' }}>로딩 중...</div>
+            ) : chartData.length > 0 ? (
+              <Donuts categories={chartData} size={170} />
+            ) : (
+              <div style={{ color: '#aaa', margin: 'auto', textAlign: 'center', fontSize: '14px' }}>
+                오늘의 소비 내역이 없습니다.
+                <br />
+                지출을 기록해보세요!
+              </div>
+            )}
           </S.SummaryCard>
         </S.Section>
 

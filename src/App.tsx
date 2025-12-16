@@ -46,7 +46,9 @@ function App() {
         <Route path="/notification" element={<Notification />} />
         <Route path="/mission" element={<Mission />} />
         <Route path="/knowledge" element={<Knowledge />} />
+        <Route path="/knowledge/:id" element={<Knowledge />} />
         <Route path="/quiz" element={<Quiz />} />
+        <Route path="/quiz/:id" element={<Quiz />} />
         <Route path="/ledger" element={<LedgerMain />} />
         <Route path="/consumeplus" element={<ConsumePlus />} />
         <Route path="/setcategoryoutcome" element={<SetCategoryOutcome />} />

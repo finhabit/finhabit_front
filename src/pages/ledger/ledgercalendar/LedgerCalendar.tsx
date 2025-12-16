@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+
+import { getLedgerCalendar, deleteLedger } from '@/api/ledger.api';
+import type { LedgerHomeResponse, LedgerItem, CategoryStat } from '@/types/ledger';
 
 import back from '@/assets/back.svg';
 import setting from '@/assets/settingsicon.svg';
@@ -9,12 +12,18 @@ import stats from '@/assets/stats.svg';
 import search from '@/assets/docsearch.svg';
 import memo from '@/assets/memo.svg';
 import filter from '@/assets/filter.svg';
-import dumcat from '@/assets/categoryeat.svg';
 import modifyIcon from '@/assets/modification.svg';
 import deleteIcon from '@/assets/delete.svg';
-
 import editBlue from '@/assets/editblue.svg';
 import deleteRed from '@/assets/deletered.svg';
+
+import categoryeat from '@/assets/categoryeat.svg';
+import categoryshopping from '@/assets/categoryshopping.svg';
+import categoryrest from '@/assets/categoryrest.svg';
+import categorytran from '@/assets/categorytran.svg';
+import categoryetc from '@/assets/etcbtn.svg';
+import categorysalary from '@/assets/salarybtn.svg';
+import categoryallow from '@/assets/allowancebtn.svg';
 
 import Donuts from '@/components/Donuts';
 import ComingSoon from '@/components/ComingSoon';
@@ -22,29 +31,108 @@ import * as S from './LedgerCalendar.style';
 
 const weekDays: string[] = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-interface Expense {
+interface Expense extends LedgerItem {}
+
+interface DonutCategory {
   id: number;
-  category: string;
-  amount: number;
+  label: string;
+  ratio: number;
+  color: string;
 }
+
+const CHART_COLORS = [
+  '#b6be40ff',
+  '#626b00ff',
+  '#cbd638ff',
+  '#3e4300ff',
+  '#FFADAD',
+  '#FFD6A5',
+  '#FDFFB6',
+  '#CAFFBF',
+  '#9BF6FF',
+];
+
+const CATEGORY_ICONS: Record<string, string> = {
+  식비: categoryeat,
+  쇼핑: categoryshopping,
+  여가: categoryrest,
+  교통: categorytran,
+  기타: categoryetc,
+  급여: categorysalary,
+  용돈: categoryallow,
+};
+
+import type { LedgerCalendarResponse } from '@/types/ledger';
 
 const LedgerCalendar: React.FC = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState<Date>(new Date());
-  const [selectedTab, setSelectedTab] = useState<string | null>(null);
+  const [selectedTab, setSelectedTab] = useState<string | null>('category');
+
+  const [dailyExpenses, setDailyExpenses] = useState<Expense[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalOutcome, setTotalOutcome] = useState(0);
+  const [categoryStats, setCategoryStats] = useState<CategoryStat[]>([]);
 
   const [mode, setMode] = useState<'default' | 'edit' | 'delete'>('default');
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [expenses, setExpenses] = useState<Expense[]>([
-    { id: 1, category: '음료', amount: 2000 },
-    { id: 2, category: '음료', amount: 2000 },
-  ]);
+
+  const currentYear = useMemo(() => date.getFullYear().toString(), [date]);
+  const currentMonth = useMemo(() => (date.getMonth() + 1).toString().padStart(2, '0'), [date]);
+
+  const getCategoryIcon = (name: string) => {
+    return CATEGORY_ICONS[name] || categoryetc;
+  };
+
+  const fetchCalendarData = async () => {
+    setIsLoading(true);
+    try {
+      const responseData: LedgerCalendarResponse = await getLedgerCalendar(currentYear, currentMonth);
+
+      setTotalIncome(responseData.totalIncome || 0);
+      setTotalOutcome(responseData.totalExpense || 0);
+
+      setDailyExpenses(responseData.ledgers || []);
+      setCategoryStats(responseData.categories || []);
+    } catch (error) {
+      console.error('가계부 캘린더 데이터 로드 실패:', error);
+      alert('데이터 로드에 실패했습니다.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const donutChartData: DonutCategory[] = useMemo(() => {
+    if (categoryStats.length === 0) return [];
+
+    return categoryStats.map((stat, index) => ({
+      id: stat.categoryId,
+      label: stat.categoryName,
+      ratio: stat.percent,
+      color: CHART_COLORS[index % CHART_COLORS.length],
+    }));
+  }, [categoryStats]);
+
+  useEffect(() => {
+    fetchCalendarData();
+  }, [currentYear, currentMonth]);
 
   const onDateChange = (value: Date | Date[]) => {
     if (value instanceof Date) {
       setDate(value);
+      setSelectedTab('category');
     }
   };
+
+  const filteredDailyExpenses = useMemo(() => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const selectedDateStr = `${year}-${month}-${day}`;
+
+    return dailyExpenses.filter((item) => item.date === selectedDateStr);
+  }, [dailyExpenses, date]);
 
   const handleTabClick = (tabName: string) => {
     setSelectedTab((prev) => (prev === tabName ? null : tabName));
@@ -85,16 +173,39 @@ const LedgerCalendar: React.FC = () => {
 
   const isValidAction = mode === 'delete' ? selectedIds.length > 0 : mode === 'edit' ? selectedIds.length === 1 : false;
 
-  const executeAction = () => {
+  const executeAction = async () => {
     if (!isValidAction) return;
 
     if (mode === 'delete') {
       if (confirm(`${selectedIds.length}개의 항목을 삭제하시겠습니까?`)) {
-        setExpenses((prev) => prev.filter((item) => !selectedIds.includes(item.id)));
-        handleCancel();
+        try {
+          console.log('삭제 요청 ID 목록:', selectedIds);
+
+          await Promise.all(selectedIds.map((id) => deleteLedger(id)));
+
+          alert('성공적으로 삭제되었습니다.');
+          handleCancel();
+          await fetchCalendarData();
+        } catch (error) {
+          console.error('삭제 실패:', error);
+          alert('삭제에 실패했습니다. 다시 시도해 주세요.');
+        }
       }
     } else if (mode === 'edit') {
-      navigate('/consumeplus', { state: { id: selectedIds[0] } });
+      const itemToEdit = dailyExpenses.find((item) => item.ledgerId === selectedIds[0]);
+
+      if (itemToEdit) {
+        navigate('/consumeplus', {
+          state: {
+            mode: 'edit',
+            ledgerId: itemToEdit.ledgerId,
+            initialData: {
+              ...itemToEdit,
+              amount: Math.abs(itemToEdit.amount),
+            },
+          },
+        });
+      }
     }
   };
 
@@ -102,18 +213,10 @@ const LedgerCalendar: React.FC = () => {
     setSelectedTab(null);
   };
 
-  // 다중 카테고리 테스트 데이터, 이후 연동시 다른값으로 바꿔 사용
-  const MultiCategoryData = [
-    { id: 1, label: '식비', ratio: 45, color: '#b6be40ff' }, // 45%
-    { id: 2, label: '교통', ratio: 20, color: '#626b00ff' }, // 20%
-    { id: 3, label: '문화', ratio: 15, color: '#cbd638ff' }, // 15%
-    { id: 4, label: '저축', ratio: 20, color: '#3e4300ff' }, // 20%
-  ];
-
   return (
     <>
       <S.UpLine>
-        <S.Icons src={back} alt="이전으로" onClick={() => navigate(-1)} />
+        <S.Icons src={back} alt="이전으로" onClick={() => navigate('/ledger')} />
         가계부
         <S.Icons src={setting} alt="설정아이콘" onClick={() => handleTabClick('settings')} />
       </S.UpLine>
@@ -173,36 +276,61 @@ const LedgerCalendar: React.FC = () => {
 
       <S.Details>
         <S.InOutcome>
-          <div>수입</div>
-          <S.IncomeWon>0원</S.IncomeWon>
+          <S.InOutComeTitle>수입</S.InOutComeTitle>
+          <S.IncomeWon>{totalIncome.toLocaleString()}원</S.IncomeWon>
         </S.InOutcome>
         <S.InOutcome>
-          <div>지출</div>
-          <S.OutcomeWon>2000원</S.OutcomeWon>
+          <S.InOutComeTitle>지출</S.InOutComeTitle>
+          <S.OutcomeWon>{Math.abs(totalOutcome).toLocaleString()}원</S.OutcomeWon>
         </S.InOutcome>
       </S.Details>
 
       <S.Section>
         <S.SummaryCard>
-          {selectedTab === 'stats' && <Donuts categories={MultiCategoryData} size={170} />}
-          {selectedTab === 'memo' && <div>메모 내용</div>}
-          {selectedTab === 'search' && <div>내역 검색 내용</div>}
+          {selectedTab === 'stats' && (
+            <>
+              {donutChartData.length > 0 ? (
+                <Donuts categories={donutChartData} size={170} />
+              ) : (
+                <div style={{ color: '#aaa', marginTop: 'auto', marginBottom: 'auto' }}>
+                  조회 기간의 내역이 없어 통계를 표시할 수 없습니다.
+                </div>
+              )}
+            </>
+          )}
+          {selectedTab === 'memo' && <ComingSoon onClick={closeOverlay} />}
+          {selectedTab === 'search' && <ComingSoon onClick={closeOverlay} />}
 
           {selectedTab === 'category' && (
             <>
               <S.CategoryContentWrapper>
-                {expenses.length > 0 ? (
-                  expenses.map((item) => (
-                    <S.Perrow key={item.id} onClick={() => toggleSelection(item.id)} $isMode={mode !== 'default'}>
-                      {mode !== 'default' && <S.SelectCircle $selected={selectedIds.includes(item.id)} />}
+                {isLoading ? (
+                  <div style={{ marginTop: '20px', color: '#aaa' }}>데이터 로딩 중...</div>
+                ) : filteredDailyExpenses.length > 0 ? (
+                  filteredDailyExpenses.map((item) => {
+                    const isIncome = item.amount > 0;
 
-                      <S.CategoryIcon src={dumcat} alt="카테고리 아이콘" />
-                      <div style={{ flex: 1, marginLeft: '10px' }}>{item.category}</div>
-                      <div>{item.amount.toLocaleString()}원</div>
-                    </S.Perrow>
-                  ))
+                    return (
+                      <S.Perrow
+                        key={item.ledgerId}
+                        onClick={() => toggleSelection(item.ledgerId)}
+                        $isMode={mode !== 'default'}>
+                        {mode !== 'default' && <S.SelectCircle $selected={selectedIds.includes(item.ledgerId)} />}
+
+                        <S.CategoryIcon src={getCategoryIcon(item.categoryName)} alt="카테고리 아이콘" />
+
+                        <S.CategoryName>
+                          <span>{item.categoryName}</span>
+                          {item.merchant && item.merchant !== item.categoryName}
+                        </S.CategoryName>
+                        <S.Costs style={{ color: isIncome ? '#68B6F3' : '#F87171' }}>
+                          {Math.abs(item.amount).toLocaleString()}원
+                        </S.Costs>
+                      </S.Perrow>
+                    );
+                  })
                 ) : (
-                  <div style={{ marginTop: '20px', color: '#aaa' }}>내역이 없습니다.</div>
+                  <div style={{ marginTop: '20px', color: '#aaa' }}>선택된 날짜의 내역이 없습니다.</div>
                 )}
               </S.CategoryContentWrapper>
 
@@ -246,9 +374,7 @@ const LedgerCalendar: React.FC = () => {
           )}
         </S.SummaryCard>
       </S.Section>
-      {(selectedTab === 'memo' || selectedTab === 'search' || selectedTab === 'settings') && (
-        <ComingSoon onClick={closeOverlay} />
-      )}
+      {selectedTab === 'settings' && <ComingSoon onClick={closeOverlay} />}
     </>
   );
 };

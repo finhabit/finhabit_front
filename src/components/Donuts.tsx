@@ -58,6 +58,7 @@ const LegendLabel = styled.div<{ $color: string }>`
   display: flex;
   align-items: center;
   font-weight: 500;
+  width: 50px;
 
   &:before {
     content: '';

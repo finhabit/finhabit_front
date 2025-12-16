@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './SetCategory.style';
-import { useNavigate } from 'react-router-dom';
+
+import { createLedger, modifyLedger } from '@/api/ledger.api';
+import type { CreateLedgerRequest, PaymentType } from '@/types/ledger';
 
 import arrow_left_alt from '@/assets/arrow_left_alt.svg';
 import close from '@/assets/close.svg';
@@ -10,11 +13,48 @@ import categoryshopping from '@/assets/categoryshopping.svg';
 import categoryrest from '@/assets/categoryrest.svg';
 import categoryetc from '@/assets/etcbtn.svg';
 
+const ID_TO_CATEGORY: Record<number, string> = {
+  4: '식비',
+  5: '교통',
+  6: '여가',
+  7: '쇼핑',
+  8: '기타',
+};
+
 export default function SetCategoryOutcome() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { mode, ledgerId, initialData } = location.state || {};
+
+  const amountData = location.state?.amount ?? (mode === 'edit' ? initialData?.amount : 0);
+  const dateData = mode === 'edit' ? initialData?.date : location.state?.date || new Date().toISOString().split('T')[0];
+
   const [desc, setDesc] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedMethod, setSelectedMethod] = useState<'cash' | 'card' | 'etc' | null>(null);
+
+  useEffect(() => {
+    if (mode === 'edit' && initialData) {
+      const categoryName = ID_TO_CATEGORY[initialData.categoryId] || '기타';
+      setSelectedCategory(categoryName);
+
+      setDesc(initialData.merchant || '');
+
+      const paymentLower = initialData.payment?.toLowerCase();
+      if (['cash', 'card', 'etc'].includes(paymentLower)) {
+        setSelectedMethod(paymentLower as 'cash' | 'card' | 'etc');
+      }
+    }
+  }, [mode, initialData]);
+
+  const CATEGORY_MAP: Record<string, number> = {
+    식비: 4,
+    교통: 5,
+    여가: 6,
+    쇼핑: 7,
+    기타: 8,
+  };
 
   const categories = [
     { src: categoryeat, alt: '식비' },
@@ -28,23 +68,56 @@ export default function SetCategoryOutcome() {
     if (selectedCategory === altText) {
       setSelectedCategory(null);
       setDesc('');
+      setSelectedMethod(null);
       return;
     }
-
     setSelectedCategory(altText);
 
     if (altText === '기타') {
-      if (categories.some((c) => c.alt === desc && c.alt !== '기타')) {
-        setDesc('');
-      }
+      if (!desc) setDesc('');
     } else {
       setDesc(altText);
     }
+    setSelectedMethod(null);
   };
 
-  const handleMethodClick = (method: 'cash' | 'card' | 'etc') => {
+  const handleMethodClick = async (method: 'cash' | 'card' | 'etc') => {
+    if (!selectedCategory) {
+      alert('카테고리를 먼저 선택해주세요.');
+      return;
+    }
+
+    if (selectedCategory === '기타' && !desc.trim()) {
+      alert('기타 카테고리는 내역을 입력해야 합니다.');
+      return;
+    }
+
     setSelectedMethod(method);
-    navigate('/ledgercalendar');
+
+    try {
+      const categoryId = CATEGORY_MAP[selectedCategory] || 5;
+      const paymentMethod = method.toUpperCase() as PaymentType;
+
+      const requestData: CreateLedgerRequest = {
+        amount: -Number(amountData),
+        date: dateData,
+        categoryId: categoryId,
+        merchant: desc || selectedCategory,
+        payment: paymentMethod,
+      };
+
+      if (mode === 'edit' && ledgerId) {
+        await modifyLedger(ledgerId, requestData);
+        alert('수정되었습니다.');
+      } else {
+        await createLedger(requestData);
+      }
+
+      navigate('/ledgercalendar');
+    } catch (error) {
+      console.error('지출 내역 저장 실패:', error);
+      alert('저장에 실패했습니다.');
+    }
   };
 
   return (
@@ -52,14 +125,18 @@ export default function SetCategoryOutcome() {
       <S.TopBar>
         <div>
           <S.Icon src={arrow_left_alt} alt="arrow" onClick={() => navigate(-1)} />
-          <S.Amount>2,000원</S.Amount>
+          <S.Amount>{Number(amountData).toLocaleString()}원</S.Amount>
         </div>
-        <S.Icon src={close} alt="close" onClick={() => navigate(-2)} />
+        <S.Icon src={close} alt="close" onClick={() => navigate('/ledger')} />
       </S.TopBar>
 
-      {/* Income 컴포넌트처럼 입력 가능한 Input 형태로 변경 */}
       <S.DescDisplay $isPlaceholder={!desc}>
-        <S.DescInput placeholder="내역" value={desc} onChange={(e) => setDesc(e.target.value)} />
+        <S.DescInput
+          placeholder="내역"
+          value={desc}
+          onChange={(e) => setDesc(e.target.value)}
+          disabled={selectedCategory !== '기타' && selectedCategory !== null && mode !== 'edit'}
+        />
       </S.DescDisplay>
 
       <S.CategoryContainer $hasSelected={!!selectedCategory}>
@@ -82,7 +159,6 @@ export default function SetCategoryOutcome() {
         <S.MethodButton $active={selectedMethod === 'card'} onClick={() => handleMethodClick('card')}>
           카드
         </S.MethodButton>
-        {/* 기존 코드의 오타 수정 ($active 조건: 'cash' -> 'etc') */}
         <S.MethodButton $active={selectedMethod === 'etc'} onClick={() => handleMethodClick('etc')}>
           기타
         </S.MethodButton>

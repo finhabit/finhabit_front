@@ -1,8 +1,11 @@
-import { useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import BottomNav from '@/components/BottomNav';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-// 아이콘
+import { getTodayFinanceQuiz, getWeeklyArchive } from '@/api/finance.api';
+import type { TodayFinance, TodayQuiz, WeeklyArchiveItem } from '@/types/finance';
+
 import bellIcon from '@/assets/bell.svg';
 import bulbIcon from '@/assets/bulb.svg';
 import quizIcon from '@/assets/quiz.svg';
@@ -11,15 +14,107 @@ import plusIcon from '@/assets/plus.svg';
 
 import * as S from './Finance.style';
 
+// 기본 데이터 (로딩 실패 시 표시할 정적 데이터)
+const DEFAULT_FINANCE: TodayFinance = {
+  financeId: 0,
+  cardTitle: '신용점수 관리의 중요성',
+  cardContent: '신용점수는 ‘금융 신뢰도’입니다.\n연체나 과도한 대출은 점수를 낮춥니다.',
+  cardLevel: 1,
+  openDate: '',
+};
+
+const DEFAULT_QUIZ: TodayQuiz = {
+  quizId: 0,
+  question: '신용점수를 올리려면 어떻게 해야 할까요?',
+  option1: '연체하지 않기',
+  option2: '카드 많이 만들기',
+  option3: '대출 자주 받기',
+  isAnswered: false,
+};
+
 export default function Finance() {
-  // 카드 사이 간격: 1→2 = 33px, 2→3 = 27px
-  const gaps = useMemo(() => ({ afterFirst: 33, afterSecond: 27 }), []);
   const navigate = useNavigate();
+  const gaps = useMemo(() => ({ afterFirst: 33, afterSecond: 27 }), []);
+
+  const [finance, setFinance] = useState<TodayFinance>(DEFAULT_FINANCE);
+  const [quiz, setQuiz] = useState<TodayQuiz>(DEFAULT_QUIZ);
+  const [archiveItems, setArchiveItems] = useState<WeeklyArchiveItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const { todayFinance, todayQuiz } = await getTodayFinanceQuiz();
+      setFinance(todayFinance || DEFAULT_FINANCE);
+      setQuiz(todayQuiz || DEFAULT_QUIZ);
+
+      const weeklyData = await getWeeklyArchive();
+      setArchiveItems(weeklyData.slice(0, 2));
+    } catch (err) {
+      console.error('금융 데이터 로딩 실패:', err);
+
+      let errorMessage = '데이터 로딩에 실패했습니다.';
+
+      if (axios.isAxiosError(err) && err.response?.status === 401) {
+        errorMessage = '인증이 필요합니다. 로그인 상태를 확인해 주세요.';
+        setArchiveItems([]);
+      }
+      setError(errorMessage);
+
+      if (!finance.financeId) setFinance(DEFAULT_FINANCE);
+      if (!quiz.quizId) setQuiz(DEFAULT_QUIZ);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [finance.financeId, quiz.quizId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const formatQuizOptions = useMemo(() => {
+    const options = [];
+    if (quiz.option1) options.push(`① ${quiz.option1}`);
+    if (quiz.option2) options.push(`② ${quiz.option2}`);
+    if (quiz.option3) options.push(`③ ${quiz.option3}`);
+    return options.join(' ');
+  }, [quiz.option1, quiz.option2, quiz.option3]);
+
+  const handleKnowledgeClick = (id: number) => {
+    if (id !== 0) navigate(`/knowledge/${id}`);
+  };
+
+  const handleQuizClick = (id: number) => {
+    if (id !== 0) navigate(`/quiz/${id}`);
+  };
+
+  const splitContent = (content: string) => {
+    return content.split('\n').map((line, index) => (
+      <span key={index}>
+        {line}
+        <br />
+      </span>
+    ));
+  };
+
+  if (isLoading) {
+    return (
+      <S.Screen>
+        <S.SafeArea>
+          <S.Section style={{ textAlign: 'center', marginTop: '100px' }}>
+            <S.TitleText>데이터 로딩 중...</S.TitleText>
+          </S.Section>
+        </S.SafeArea>
+        <BottomNav />
+      </S.Screen>
+    );
+  }
 
   return (
     <S.Screen>
       <S.SafeArea>
-        {/* 상단 헤더 (오른쪽 아이콘 고정) */}
         <S.Header>
           <S.HeaderSpacer />
           <S.HeaderIcons>
@@ -41,13 +136,10 @@ export default function Finance() {
             </S.Right>
           </S.TitleRow>
 
-          <S.CardKnowledge>
+          <S.CardKnowledge onClick={() => handleKnowledgeClick(finance.financeId)}>
             <S.CardBody>
-              <S.CardTop>신용점수 관리의 중요성</S.CardTop>
-              <S.CardTitle>
-                신용점수는 ‘금융 신뢰도’입니다. <br />
-                연체나 과도한 대출은 점수를 낮춥니다.
-              </S.CardTitle>
+              <S.CardTop>{finance.cardTitle}</S.CardTop>
+              <S.CardTitle>{splitContent(finance.cardContent)}</S.CardTitle>
             </S.CardBody>
           </S.CardKnowledge>
 
@@ -66,10 +158,10 @@ export default function Finance() {
             </S.Right>
           </S.TitleRow>
 
-          <S.CardQuiz>
+          <S.CardQuiz onClick={() => handleQuizClick(quiz.quizId)}>
             <S.CardBody>
-              <S.CardTop>Q. 신용점수를 올리려면 어떻게 해야 할까요?</S.CardTop>
-              <S.Q_CardTitle>① 연체하지 않기 ② 카드 많이 만들기 ③ 대출 자주 받기</S.Q_CardTitle>
+              <S.CardTop>Q. {quiz.question}</S.CardTop>
+              <S.Q_CardTitle>{formatQuizOptions}</S.Q_CardTitle>
             </S.CardBody>
           </S.CardQuiz>
 
@@ -90,20 +182,19 @@ export default function Finance() {
 
           <S.CardArchive>
             <S.CardBody1>
-              <S.Card1>
-                <S.CardTop>보험의 역할</S.CardTop>
-                <S.A_CardTitle>
-                  보험은 사고나 질병 등 예상치 못한 <br />
-                  위험에 대비하는 ‘보호장치’입니다.
-                </S.A_CardTitle>
-              </S.Card1>
-              <S.Card1>
-                <S.CardTop>분산투자의 의미</S.CardTop>
-                <S.A_CardTitle>
-                  자산을 여러 종목에 나눠 투자해 <br />
-                  위험을 줄이는 방법입니다.
-                </S.A_CardTitle>
-              </S.Card1>
+              {archiveItems.length > 0 ? (
+                archiveItems.map((item) => (
+                  <S.Card1 key={item.financeId} onClick={() => handleKnowledgeClick(item.financeId)}>
+                    <S.CardTop>{item.cardTitle}</S.CardTop>
+                    <S.A_CardTitle>{splitContent(item.cardContent)}</S.A_CardTitle>
+                  </S.Card1>
+                ))
+              ) : (
+                <div style={{ padding: '20px', textAlign: 'center', color: error ? 'red' : '#aaa' }}>
+                  {error || '아직 열어본 주간 금융 지식이 없습니다.'}
+                  {error && <div style={{ marginTop: '10px', fontSize: '14px' }}>로그인 후 다시 시도해주세요.</div>}
+                </div>
+              )}
             </S.CardBody1>
           </S.CardArchive>
         </S.Section>

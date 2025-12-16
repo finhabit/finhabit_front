@@ -1,34 +1,89 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { getLedgerHome } from '@/api/ledger.api';
+import type { LedgerHomeResponse } from '@/types/ledger';
+
 import back from '@/assets/back.svg';
 import setting from '@/assets/settingsicon.svg';
 import piggybank from '@/assets/mission.svg';
 import plus from '@/assets/plus.svg';
 import percategory from '@/assets/percategory.svg';
-import dumcat from '@/assets/categoryeat.svg';
 import chartIcon from '@/assets/chart.svg';
+
+import categoryeat from '@/assets/categoryeat.svg';
+import categoryshopping from '@/assets/categoryshopping.svg';
+import categoryrest from '@/assets/categoryrest.svg';
+import categorytran from '@/assets/categorytran.svg';
+import categoryetc from '@/assets/etcbtn.svg';
+
 import ComingSoon from '@/components/ComingSoon';
-import Donuts from '@/components/Donuts';
+import Donuts, { type CategoryData } from '@/components/Donuts';
 import * as S from './LedgerMain.style';
+
+const CHART_COLORS = [
+  '#b6be40ff',
+  '#626b00ff',
+  '#cbd638ff',
+  '#3e4300ff',
+  '#FFADAD',
+  '#FFD6A5',
+  '#FDFFB6',
+  '#CAFFBF',
+  '#9BF6FF',
+];
+
+const CATEGORY_ICONS: Record<string, string> = {
+  식비: categoryeat,
+  쇼핑: categoryshopping,
+  여가: categoryrest,
+  교통: categorytran,
+  기타: categoryetc,
+};
 
 export default function LedgerMain() {
   const navigate = useNavigate();
 
+  const [ledgerData, setLedgerData] = useState<LedgerHomeResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-  const openOverlay = () => {
-    setIsOverlayOpen(true);
-  };
-  const closeOverlay = () => {
-    setIsOverlayOpen(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getLedgerHome();
+        setLedgerData(data);
+      } catch (error) {
+        console.error('Failed to fetch ledger home:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const openOverlay = () => setIsOverlayOpen(true);
+  const closeOverlay = () => setIsOverlayOpen(false);
+
+  const getChartData = (): CategoryData[] => {
+    if (!ledgerData?.todayCategories) return [];
+
+    return ledgerData.todayCategories.map((cat, index) => ({
+      id: cat.categoryId,
+      label: cat.categoryName,
+      ratio: cat.percent,
+      color: CHART_COLORS[index % CHART_COLORS.length],
+    }));
   };
 
-  // 다중 카테고리 테스트 데이터, 이후 연동시 다른값으로 바꿔 사용
-  const MultiCategoryData = [
-    { id: 1, label: '식비', ratio: 45, color: '#b6be40ff' }, // 45%
-    { id: 2, label: '교통', ratio: 20, color: '#626b00ff' }, // 20%
-    { id: 3, label: '문화', ratio: 15, color: '#cbd638ff' }, // 15%
-    { id: 4, label: '저축', ratio: 20, color: '#3e4300ff' }, // 20%
-  ];
+  const getCategoryIcon = (name: string) => {
+    return CATEGORY_ICONS[name] || categoryetc;
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (!ledgerData) return <div>데이터를 불러오지 못했습니다.</div>;
 
   return (
     <>
@@ -37,6 +92,7 @@ export default function LedgerMain() {
         가계부
         <S.Icons src={setting} alt="설정아이콘" onClick={openOverlay} />
       </S.UpLine>
+
       <S.ConsumeSection>
         <S.L_Section>
           <S.L_Header>
@@ -45,12 +101,28 @@ export default function LedgerMain() {
             <S.PlusIcons src={plus} alt="추가버튼" onClick={() => navigate('/consumeplus')} />
           </S.L_Header>
           <S.ContentBox_1>
-            <S.Perrow>
-              <div>메가커피</div>
-              <div>2,000원</div>
-            </S.Perrow>
+            {ledgerData.today.ledgers.length > 0 ? (
+              ledgerData.today.ledgers.map((item) => (
+                <S.Perrow key={item.ledgerId}>
+                  <div>
+                    {item.merchant}
+                    <span style={{ fontSize: '10px', color: '#999', marginLeft: '6px' }}>
+                      {item.payment === 'CARD' ? '(카드)' : item.payment === 'CASH' ? '(현금)' : ''}
+                    </span>
+                  </div>
+
+                  <div style={{ color: item.amount > 0 ? '#007bff' : 'inherit' }}>
+                    {item.amount > 0 ? '+' : ''}
+                    {Math.abs(item.amount).toLocaleString()}원
+                  </div>
+                </S.Perrow>
+              ))
+            ) : (
+              <div style={{ padding: '10px', color: '#999', fontSize: '14px' }}>오늘 소비 내역이 없습니다.</div>
+            )}
           </S.ContentBox_1>
         </S.L_Section>
+
         <S.L_Section>
           <S.L_Header>
             <S.MiniIcons src={percategory} alt="카테고리 아이콘" />
@@ -58,14 +130,23 @@ export default function LedgerMain() {
             <S.PlusIcons src={plus} alt="추가버튼" onClick={() => navigate('/ledgercalendar')} />
           </S.L_Header>
           <S.ContentBox>
-            <S.Perrow>
-              <S.CategoryIcon src={dumcat} alt="더미 카테고리 아이콘" />
-              <div>음료</div>
-              <div>2,000원</div>
-            </S.Perrow>
+            {ledgerData.todayCategories.length > 0 ? (
+              ledgerData.todayCategories.map((cat) => (
+                <S.Perrow key={cat.categoryId}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <S.CategoryIcon src={getCategoryIcon(cat.categoryName)} alt={cat.categoryName} />
+                    <div>{cat.categoryName}</div>
+                  </div>
+                  <div>{Math.abs(cat.amount).toLocaleString()}원</div>
+                </S.Perrow>
+              ))
+            ) : (
+              <div style={{ padding: '10px', color: '#999', fontSize: '14px' }}>카테고리 내역이 없습니다.</div>
+            )}
           </S.ContentBox>
         </S.L_Section>
       </S.ConsumeSection>
+
       <S.Section>
         <S.TitleRow>
           <S.Left>
@@ -77,9 +158,14 @@ export default function LedgerMain() {
           </S.Right>
         </S.TitleRow>
         <S.SummaryCard>
-          <Donuts categories={MultiCategoryData} size={170} />
+          {getChartData().length > 0 ? (
+            <Donuts categories={getChartData()} size={170} />
+          ) : (
+            <div style={{ padding: '40px 0', color: '#999', textAlign: 'center' }}>표시할 데이터가 없습니다.</div>
+          )}
         </S.SummaryCard>
       </S.Section>
+
       {isOverlayOpen && <ComingSoon onClick={closeOverlay} />}
     </>
   );
