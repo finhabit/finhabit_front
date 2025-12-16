@@ -75,7 +75,10 @@ export default function Mypage() {
 
   const saveEmail = async () => {
     const next = tempInput.trim();
-    if (next && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(next)) {
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (next && emailRegex.test(next)) {
       try {
         await updateUserProfile({ email: next });
 
@@ -84,10 +87,10 @@ export default function Mypage() {
         fetchUserData();
       } catch (error) {
         console.error('이메일 수정 실패:', error);
-        alert('이메일 수정 중 오류가 발생했습니다. (중복 등)');
+        alert('이메일 수정 중 오류가 발생했습니다. (이미 존재하는 이메일 등)');
       }
     } else {
-      alert('올바른 이메일 형식을 입력해주세요.');
+      alert('올바른 이메일 형식을 입력해주세요. (예: example@email.com)');
     }
   };
 

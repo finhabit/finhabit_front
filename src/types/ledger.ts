@@ -37,6 +37,14 @@ export interface LedgerHomeResponse {
   };
 }
 
+export interface LedgerCalendarResponse {
+  date: string;
+  totalIncome: number;
+  totalExpense: number;
+  categories: CategoryStat[];
+  ledgers: LedgerItem[];
+}
+
 export interface CreateLedgerRequest {
   categoryId: number;
   amount: number;

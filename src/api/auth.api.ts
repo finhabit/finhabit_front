@@ -11,10 +11,11 @@ export const login = async (email: string, password: string): Promise<LoginRespo
     email,
     password,
   });
-
   const headerToken = res.headers['authorization'] || res.headers['Authorization'];
   const accessToken = headerToken ? headerToken.replace('Bearer ', '').trim() : '';
-
+  if (accessToken) {
+    localStorage.setItem('accessToken', accessToken);
+  }
   return {
     ...res.data,
     accessToken,
@@ -67,6 +68,17 @@ export const getUserProfile = async (): Promise<UserProfile> => {
 
 export const updateUserProfile = async (data: { nickname?: string; email?: string }) => {
   await instance.patch('/auth/me/profile', data);
+};
+
+export interface PasswordUpdateRequest {
+  currentPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+}
+
+export const updatePassword = async (data: PasswordUpdateRequest) => {
+  const res = await instance.patch('/auth/me/password', data);
+  return res.data;
 };
 
 export const withdrawUser = async () => {

@@ -154,18 +154,24 @@ export const DetailSide = styled.div`
 
 export const InOutcome = styled.div`
   display: flex;
-  gap: 70px;
+  gap: 23px;
   font-size: 17px;
   font-weight: 500;
   cursor: default;
 `;
 
+export const InOutComeTitle = styled.div`
+  width: 50px;
+`;
+
 export const IncomeWon = styled.div`
   color: #17a1fa;
+  width: 100px;
 `;
 
 export const OutcomeWon = styled.div`
   color: #dc6d6d;
+  width: 100px;
 `;
 
 export const SummaryCard = styled.div`
@@ -207,7 +213,7 @@ export const Perrow = styled.div<{ $isMode?: boolean }>`
   margin: 5px 0;
   font-size: 20px;
   font-weight: 500;
-  cursor: ${({ $isMode }) => ($isMode ? 'pointer' : 'not-allowed')};
+  cursor: ${({ $isMode }) => ($isMode ? 'pointer' : 'default')};
 
   &:hover {
     opacity: ${({ $isMode }) => ($isMode ? 0.7 : 1)};
@@ -315,4 +321,14 @@ export const CategoryContentWrapper = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+export const CategoryName = styled.div`
+  width: 100px;
+`;
+
+export const Costs = styled.div`
+  width: 100px;
+  display: flex;
+  justify-content: flex-end;
 `;

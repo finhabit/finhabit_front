@@ -1,8 +1,12 @@
 import instance from '@/api/axios';
-import axios from 'axios';
-import type { LedgerHomeResponse, CreateLedgerRequest, UpdateLedgerRequest, LedgerItem } from '@/types/ledger';
-const ABSOLUTE_LEDGER_URL = 'https://www.finhabit.shop/ledger';
-export type LedgerCalendarResponse = LedgerHomeResponse;
+
+import type {
+  LedgerHomeResponse,
+  LedgerCalendarResponse,
+  LedgerItem,
+  CreateLedgerRequest,
+  UpdateLedgerRequest,
+} from '@/types/ledger';
 
 export const getLedgerHome = async (date?: string): Promise<LedgerHomeResponse> => {
   const params = date ? { date } : {};
@@ -24,12 +28,11 @@ export const createLedger = async (data: CreateLedgerRequest): Promise<LedgerIte
   return response.data;
 };
 
-export const updateLedger = async (ledgerId: number, data: UpdateLedgerRequest): Promise<LedgerItem> => {
+export const modifyLedger = async (ledgerId: number, data: UpdateLedgerRequest): Promise<LedgerItem> => {
   const response = await instance.patch<LedgerItem>(`/ledger/${ledgerId}`, data);
   return response.data;
 };
 
-export const deleteLedger = async (ledgerId: number) => {
-  const response = await instance.delete(`/ledger/${ledgerId}`);
-  return response.data;
+export const deleteLedger = async (ledgerId: number): Promise<void> => {
+  await instance.delete(`/ledger/${ledgerId}`);
 };

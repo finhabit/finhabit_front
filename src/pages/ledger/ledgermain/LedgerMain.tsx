@@ -9,8 +9,13 @@ import setting from '@/assets/settingsicon.svg';
 import piggybank from '@/assets/mission.svg';
 import plus from '@/assets/plus.svg';
 import percategory from '@/assets/percategory.svg';
-import dumcat from '@/assets/categoryeat.svg';
 import chartIcon from '@/assets/chart.svg';
+
+import categoryeat from '@/assets/categoryeat.svg';
+import categoryshopping from '@/assets/categoryshopping.svg';
+import categoryrest from '@/assets/categoryrest.svg';
+import categorytran from '@/assets/categorytran.svg';
+import categoryetc from '@/assets/etcbtn.svg';
 
 import ComingSoon from '@/components/ComingSoon';
 import Donuts, { type CategoryData } from '@/components/Donuts';
@@ -27,6 +32,14 @@ const CHART_COLORS = [
   '#CAFFBF',
   '#9BF6FF',
 ];
+
+const CATEGORY_ICONS: Record<string, string> = {
+  식비: categoryeat,
+  쇼핑: categoryshopping,
+  여가: categoryrest,
+  교통: categorytran,
+  기타: categoryetc,
+};
 
 export default function LedgerMain() {
   const navigate = useNavigate();
@@ -65,6 +78,10 @@ export default function LedgerMain() {
     }));
   };
 
+  const getCategoryIcon = (name: string) => {
+    return CATEGORY_ICONS[name] || categoryetc;
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (!ledgerData) return <div>데이터를 불러오지 못했습니다.</div>;
 
@@ -87,8 +104,17 @@ export default function LedgerMain() {
             {ledgerData.today.ledgers.length > 0 ? (
               ledgerData.today.ledgers.map((item) => (
                 <S.Perrow key={item.ledgerId}>
-                  <div>{item.merchant}</div>
-                  <div>{item.amount.toLocaleString()}원</div>
+                  <div>
+                    {item.merchant}
+                    <span style={{ fontSize: '10px', color: '#999', marginLeft: '6px' }}>
+                      {item.payment === 'CARD' ? '(카드)' : item.payment === 'CASH' ? '(현금)' : ''}
+                    </span>
+                  </div>
+
+                  <div style={{ color: item.amount > 0 ? '#007bff' : 'inherit' }}>
+                    {item.amount > 0 ? '+' : ''}
+                    {Math.abs(item.amount).toLocaleString()}원
+                  </div>
                 </S.Perrow>
               ))
             ) : (
@@ -108,10 +134,10 @@ export default function LedgerMain() {
               ledgerData.todayCategories.map((cat) => (
                 <S.Perrow key={cat.categoryId}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <S.CategoryIcon src={dumcat} alt={cat.categoryName} />
+                    <S.CategoryIcon src={getCategoryIcon(cat.categoryName)} alt={cat.categoryName} />
                     <div>{cat.categoryName}</div>
                   </div>
-                  <div>{cat.amount.toLocaleString()}원</div>
+                  <div>{Math.abs(cat.amount).toLocaleString()}원</div>
                 </S.Perrow>
               ))
             ) : (
