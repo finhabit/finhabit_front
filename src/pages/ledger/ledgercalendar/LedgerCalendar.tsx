@@ -9,7 +9,7 @@ import { getLedgerCalendar, deleteLedger } from '@/api/ledger.api';
 import type { LedgerItem, CategoryStat } from '@/types/ledger';
 
 import back from '@/assets/back.svg';
-import setting from '@/assets/settingsicon.svg';
+import setting from '@/assets/settingsIcon.svg';
 import stats from '@/assets/stats.svg';
 import search from '@/assets/docsearch.svg';
 import memo from '@/assets/memo.svg';
