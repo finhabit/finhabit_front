@@ -5,7 +5,7 @@ import { getLedgerHome } from '@/api/ledger.api';
 import type { LedgerHomeResponse } from '@/types/ledger';
 
 import back from '@/assets/back.svg';
-import setting from '@/assets/settingsicon.svg';
+import setting from '@/assets/settingsIcon.svg';
 import piggybank from '@/assets/mission.svg';
 import plus from '@/assets/plus.svg';
 import percategory from '@/assets/percategory.svg';
