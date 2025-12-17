@@ -134,7 +134,7 @@ export default function SetCategoryOutcome() {
         <S.DescInput
           placeholder="내역"
           value={desc}
-          onChange={(e) => setDesc(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDesc(e.target.value)}
           disabled={selectedCategory !== '기타' && selectedCategory !== null && mode !== 'edit'}
         />
       </S.DescDisplay>

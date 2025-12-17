@@ -128,7 +128,7 @@ export default function SetCategoryIncome() {
         <S.DescInput
           placeholder={selectedCategory === '기타' ? '내역 입력 후 엔터' : '내역'}
           value={desc}
-          onChange={(e) => setDesc(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDesc(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={selectedCategory !== '기타' && selectedCategory !== null && mode !== 'edit'}
         />

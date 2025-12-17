@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
+import type { CalendarProps } from 'react-calendar';
+
 import 'react-calendar/dist/Calendar.css';
 
 import { getLedgerCalendar, deleteLedger } from '@/api/ledger.api';
-import type { LedgerHomeResponse, LedgerItem, CategoryStat } from '@/types/ledger';
+import type { LedgerItem, CategoryStat } from '@/types/ledger';
 
 import back from '@/assets/back.svg';
 import setting from '@/assets/settingsicon.svg';
@@ -118,7 +120,7 @@ const LedgerCalendar: React.FC = () => {
     fetchCalendarData();
   }, [currentYear, currentMonth]);
 
-  const onDateChange = (value: Date | Date[]) => {
+  const onDateChange: CalendarProps['onChange'] = (value) => {
     if (value instanceof Date) {
       setDate(value);
       setSelectedTab('category');
@@ -226,8 +228,8 @@ const LedgerCalendar: React.FC = () => {
           <Calendar
             onChange={onDateChange}
             value={date}
-            formatDay={(locale, date) => date.getDate().toString()}
-            formatShortWeekday={(locale, date) => weekDays[date.getDay()]}
+            formatDay={(_, date) => date.getDate().toString()}
+            formatShortWeekday={(_, date) => weekDays[date.getDay()]}
             calendarType="gregory"
             next2Label={null}
             prev2Label={null}

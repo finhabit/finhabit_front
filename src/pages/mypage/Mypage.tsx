@@ -106,6 +106,13 @@ export default function Mypage() {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, action: () => void) => {
     if (e.key === 'Enter') action();
   };
+  const handleNickKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    handleKeyDown(e, saveNickname);
+  };
+
+  const handleEmailKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    handleKeyDown(e, saveEmail);
+  };
 
   const handleContentClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -222,7 +229,7 @@ export default function Mypage() {
                 ref={inputRef}
                 value={tempInput}
                 onChange={handleChange}
-                onKeyDown={(e) => handleKeyDown(e, saveNickname)}
+                onKeyDown={handleNickKeyDown}
                 placeholder="닉네임을 입력하세요"
                 maxLength={20}
               />
@@ -245,7 +252,7 @@ export default function Mypage() {
                 ref={inputRef}
                 value={tempInput}
                 onChange={handleChange}
-                onKeyDown={(e) => handleKeyDown(e, saveEmail)}
+                onKeyDown={handleEmailKeyDown}
                 placeholder="이메일 형식을 맞추어 기입해 주세요"
                 maxLength={50}
               />
