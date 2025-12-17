@@ -19,6 +19,13 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
 
   const isFormValid = email.trim() !== '' && password.length >= 1;
 
@@ -53,7 +60,7 @@ const Login: React.FC = () => {
         <S.Title>이메일로 로그인</S.Title>
 
         <S.InputWrapper>
-          <S.Input type="text" placeholder="이메일 입력" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <S.Input type="text" placeholder="이메일 입력" value={email} onChange={handleEmailChange} />{' '}
         </S.InputWrapper>
 
         <S.InputWrapper style={{ marginTop: '12px' }}>
@@ -61,7 +68,7 @@ const Login: React.FC = () => {
             type="password"
             placeholder="비밀번호 입력"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             onKeyDown={handleKeyDown}
           />
         </S.InputWrapper>
