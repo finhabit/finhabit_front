@@ -4,7 +4,7 @@ export const UpLine = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 40px 35px 20px 35px;
+  margin: 40px 45px 20px 35px;
   font-size: 22px;
   font-weight: 500;
 `;

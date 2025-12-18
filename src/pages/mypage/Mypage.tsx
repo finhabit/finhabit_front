@@ -7,7 +7,6 @@ import BottomNav from '@/components/BottomNav';
 import ComingSoon from '@/components/ComingSoon';
 
 import chevronRight from '@/assets/chevronRight.svg';
-import settingsIcon from '@/assets/settingsIcon.svg';
 import close2Icon from '@/assets/close2.svg';
 
 import { getUserProfile, updateUserProfile, withdrawUser } from '@/api/auth.api';
@@ -155,9 +154,7 @@ export default function Mypage() {
     <S.Page>
       <S.Header>
         <S.Title>마이페이지</S.Title>
-        <S.IconButton aria-label="설정" onClick={openComingSoon}>
-          <img src={settingsIcon} alt="" />
-        </S.IconButton>
+        <S.IconButton aria-label="설정" onClick={openComingSoon}></S.IconButton>
       </S.Header>
 
       <S.ItemSection>
