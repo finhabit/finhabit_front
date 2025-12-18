@@ -30,6 +30,9 @@ const LevelTest = () => {
   const [signupResult, setSignupResult] = useState<any>(null);
 
   useEffect(() => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userProfile');
+
     if (!signupData) {
       alert('잘못된 접근입니다. 회원가입 정보를 먼저 입력해주세요.');
       navigate('/signup');
@@ -119,12 +122,17 @@ const LevelTest = () => {
       }
 
       setSignupResult(response);
-
       setShowPopup(true);
     } catch (error: any) {
       console.error('회원가입 및 결과 전송 실패:', error);
-      const errorMessage = error.response?.data?.message || '회원가입 중 오류가 발생했습니다.';
-      alert(errorMessage);
+
+      if (error.response?.status === 409) {
+        alert('이미 가입된 이메일 또는 닉네임입니다.\n처음 화면으로 돌아가서 다른 정보로 가입해주세요.');
+        navigate('/signup');
+      } else {
+        const errorMessage = error.response?.data?.message || '회원가입 중 오류가 발생했습니다.';
+        alert(errorMessage);
+      }
     }
   };
 

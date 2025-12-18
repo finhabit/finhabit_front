@@ -25,11 +25,9 @@ export default function Mypage() {
   });
 
   const [tempInput, setTempInput] = useState('');
-
   const [isNickModalOpen, setIsNickModalOpen] = useState(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
   const [overlayType, setOverlayType] = useState<OverlayType>(null);
 
   useEffect(() => {
@@ -38,7 +36,13 @@ export default function Mypage() {
 
   const fetchUserData = async () => {
     try {
+      const token = localStorage.getItem('accessToken');
+      console.log('현재 사용 중인 토큰:', token);
+
       const data = await getUserProfile();
+
+      console.log('서버에서 받은 프로필:', data);
+
       setUserInfo(data);
       localStorage.setItem('userProfile', JSON.stringify(data));
     } catch (error) {
@@ -57,10 +61,8 @@ export default function Mypage() {
 
     try {
       await updateUserProfile({ nickname: next });
-
       setUserInfo((prev) => ({ ...prev, nickname: next }));
       setIsNickModalOpen(false);
-
       fetchUserData();
     } catch (error) {
       console.error('닉네임 수정 실패:', error);
@@ -75,13 +77,11 @@ export default function Mypage() {
 
   const saveEmail = async () => {
     const next = tempInput.trim();
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (next && emailRegex.test(next)) {
       try {
         await updateUserProfile({ email: next });
-
         setUserInfo((prev) => ({ ...prev, email: next }));
         setIsEmailModalOpen(false);
         fetchUserData();

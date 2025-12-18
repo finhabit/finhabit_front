@@ -125,10 +125,11 @@ export const CardArchive = styled(BaseCard)`
 
 export const CardBody = styled.div`
   height: 100%;
-  padding: 16px 10px;
   flex-direction: column;
   gap: 13px;
+  display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 export const CardBody1 = styled.div`
@@ -163,10 +164,10 @@ export const CardTitle = styled.h3`
   color: #2b2b27;
   text-align: center;
   font-family: Pretendard;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.2;
-  width: 100%;
+  width: 90%;
   white-space: pre-wrap;
 `;
 
@@ -175,11 +176,12 @@ export const Q_CardTitle = styled.h3`
   color: #2b2b27;
   text-align: center;
   font-family: Pretendard;
-  font-size: 12px;
+  font-size: 13px;
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
 `;
 
 export const A_CardTitle = styled.h3`
