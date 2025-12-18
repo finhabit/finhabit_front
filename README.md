@@ -78,3 +78,15 @@
 </table>
 
 <br />
+
+
+## 🎟 Commit Message Convention
+
+> 작업유형 - 작업간단설명
+> ex) Feat - 가계부 달력 페이지 구현, Bug - 홈페이지 연동오류 해결
+
+
+## 🎟 Brach Name Convention
+
+>  이슈번호-작업유형_작업간단설명
+> ex) 10-feature_homepage, 45-bug_ledgerpageerror
