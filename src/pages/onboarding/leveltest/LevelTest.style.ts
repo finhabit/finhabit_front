@@ -1,11 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
   overflow-y: auto;
   display: flex;
   justify-content: center;
-  background: #f5f5f5; 
 `;
 
 export const Content = styled.div`
@@ -22,7 +21,7 @@ export const Content = styled.div`
 export const Title = styled.h1`
   margin: 0 0 40px 0;
   color: #000;
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -47,14 +46,14 @@ export const SubmitButton = styled.button<SubmitButtonProps>`
   height: 49px;
   border-radius: 11px;
   border: none;
-  background: ${({ $active }) => ($active ? "#BEC372" : "#D9D9D9")};
+  background: ${({ $active }) => ($active ? '#BEC372' : '#D9D9D9')};
   color: #fff;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  cursor: ${({ $active }) => ($active ? "pointer" : "default")};
+  cursor: ${({ $active }) => ($active ? 'pointer' : 'default')};
   transition: background 0.15s ease;
 `;
 
@@ -65,7 +64,7 @@ export const PopupOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(97, 97, 97, 0.40);
+  background: rgba(97, 97, 97, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,21 +83,20 @@ export const PopupContent = styled.div`
   background: #fff;
   color: #848d00;
   text-align: center;
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
   font-size: 20px;
   font-weight: 500;
-  line-height: 121.374%;  
+  line-height: 121.374%;
 `;
 
-
-export const PopupText = styled.div` 
+export const PopupText = styled.div`
   text-align: center;
 `;
 
 export const PopupTitle = styled.h2`
   margin: 0;
-  color: #848D00;
-  font-family: "Pretendard";
+  color: #848d00;
+  font-family: 'Pretendard';
   font-size: 19px;
   font-weight: 500;
   line-height: 121.374%;
@@ -107,7 +105,7 @@ export const PopupTitle = styled.h2`
 export const PopupMessage = styled.p`
   margin: 0;
   color: #000;
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
   font-size: 18px;
   font-weight: 500;
   line-height: 121.374%;
@@ -124,10 +122,10 @@ export const PopupButton = styled.button`
   width: 266px;
   height: 42.045px;
   border-radius: 11px;
-  border:none;
-  background: #BEC372;
+  border: none;
+  background: #bec372;
   color: #fff;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-size: 15px;
   font-weight: 600;
   line-height: normal;

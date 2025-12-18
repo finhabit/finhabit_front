@@ -13,6 +13,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
   });
   const headerToken = res.headers['authorization'] || res.headers['Authorization'];
   const accessToken = headerToken ? headerToken.replace('Bearer ', '').trim() : '';
+
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
   }
@@ -37,8 +38,11 @@ export interface SignupRequest {
 }
 
 export interface SignupResponse {
-  message: string;
-  level: string;
+  id: number;
+  email: string;
+  nickname: string;
+  level: number;
+  accessToken?: string;
 }
 
 export const signup = async (data: SignupRequest): Promise<SignupResponse> => {
@@ -49,11 +53,24 @@ export const signup = async (data: SignupRequest): Promise<SignupResponse> => {
     ...(levelTestAnswers && levelTestAnswers.length > 0 ? { levelTestAnswers } : {}),
   };
 
-  const res = await instance.post<SignupResponse>('/auth/signup', payload);
-  return res.data;
+  const res = await instance.post('/auth/signup', payload);
+
+  let accessToken: string | undefined;
+
+  try {
+    const loginResponse = await login(data.email, data.password);
+    accessToken = loginResponse.accessToken;
+  } catch (error) {
+    console.error('회원가입은 성공했으나, 자동 로그인에 실패했습니다.', error);
+  }
+
+  return {
+    ...res.data,
+    accessToken,
+  };
 };
 
-// -------------------- 마이페이지 관련 --------------------
+// -------------------- 마이페이지 관련 (기존 유지) --------------------
 export interface UserProfile {
   nickname: string;
   email: string;

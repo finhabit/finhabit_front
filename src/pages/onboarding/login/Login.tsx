@@ -1,20 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '@/api/auth.api';
-import ComingSoon from '@/components/ComingSoon';
 
 import * as S from './Login.style';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-  const openOverlay = () => {
-    setIsOverlayOpen(true);
-  };
-  const closeOverlay = () => {
-    setIsOverlayOpen(false);
-  };
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -78,14 +69,9 @@ const Login: React.FC = () => {
         </S.LoginButton>
 
         <S.HelperRow>
-          <S.HelperText onClick={openOverlay}>이메일 찾기</S.HelperText>
-          <S.Divider />
-          <S.HelperText onClick={openOverlay}>비밀번호 찾기</S.HelperText>
-          <S.Divider />
           <S.SignUpText onClick={() => navigate('/signup')}>회원가입</S.SignUpText>
         </S.HelperRow>
       </S.Content>
-      {isOverlayOpen && <ComingSoon onClick={closeOverlay} />}
     </S.Container>
   );
 };
