@@ -3,16 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import BottomNav from '@/components/BottomNav';
 import Donuts from '@/components/Donuts';
 
-// API 연동 (작성하신 api 함수명 반영)
 import { getLedgerHome } from '@/api/ledger.api';
-import { getTodayMission, checkMission, uncheckMission } from '@/api/mission.api';
+import { getTodayMission, checkMission } from '@/api/mission.api';
 import { getTodayKnowledge } from '@/api/knowledge.api';
 
-// 타입 정의
 import type { Mission as MissionType } from '@/types/mission';
 import type { Knowledge } from '@/api/knowledge.api';
 
-// 에셋
 import bellIcon from '@/assets/bell.svg';
 import searchIcon from '@/assets/search.svg';
 import bulbIcon from '@/assets/bulb.svg';
@@ -47,7 +44,6 @@ export default function Home() {
   const [knowledge, setKnowledge] = useState<{ id: number; content: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // 데이터 로드 함수
   const fetchHomeData = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -57,7 +53,6 @@ export default function Home() {
         getTodayKnowledge(),
       ]);
 
-      // 소비 요약 데이터 설정
       if (ledgerRes?.todayCategories) {
         setChartData(
           ledgerRes.todayCategories.map((cat, index) => ({
@@ -69,10 +64,20 @@ export default function Home() {
         );
       }
 
-      // 오늘의 미션 설정
-      setTodayMission(missionRes?.todayMission || null);
+      let missionObj = missionRes?.todayMission || null;
 
-      // 오늘의 지식 설정
+      if (missionObj) {
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+        const lastActionDate = localStorage.getItem('lastMissionActionDate');
+
+        if (lastActionDate === todayStr) {
+          missionObj = { ...missionObj, completed: true };
+        }
+      }
+      setTodayMission(missionObj);
+
       if (knowledgeRes) {
         setKnowledge({
           id: (knowledgeRes as Knowledge).financeId,
@@ -84,7 +89,6 @@ export default function Home() {
       if (status === 500) {
         alert('서버 점검 중입니다. 잠시 후 다시 시도해주세요.');
       } else if (status === 401) {
-        // 로그인되지 않은 사용자 처리
         alert('로그인이 필요합니다.');
         navigate('/login');
       }
@@ -98,38 +102,32 @@ export default function Home() {
     fetchHomeData();
   }, [fetchHomeData]);
 
-  // 미션 체크/취소 토글 핸들러
   const handleMissionToggle = async (e: React.MouseEvent) => {
-    e.stopPropagation(); // 카드 전체 클릭 이동 이벤트 방지
+    e.stopPropagation();
     if (!todayMission) return;
 
+    if (todayMission.completed) {
+      return;
+    }
+
+    const today = new Date();
+    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
     try {
-      const { userMissionId, completed } = todayMission;
+      await checkMission(todayMission.userMissionId);
 
-      if (completed) {
-        // 이미 체크된 상태라면 취소 수행
-        await uncheckMission(userMissionId);
-      } else {
-        // 미완료 상태라면 체크 수행
-        await checkMission(userMissionId);
-      }
+      setTodayMission((prev) => (prev ? { ...prev, completed: true } : null));
 
-      // 처리 후 최신 데이터 재조회
-      await fetchHomeData();
+      localStorage.setItem('lastMissionActionDate', todayStr);
+
+      fetchHomeData();
     } catch (error: any) {
-      const status = error.response?.status;
-      const errorMessage = error.response?.data?.message;
+      setTodayMission((prev) => (prev ? { ...prev, completed: false } : null));
 
-      // 명세서 기반 에러 메시지 분기 처리
-      if (status === 409) {
-        alert('동시에 여러 요청이 발생했습니다. 다시 시도해주세요.');
-      } else if (status === 403) {
-        alert('다른 사용자의 미션은 변경할 수 없습니다.');
-      } else if (status === 404) {
-        alert('해당 미션을 찾을 수 없습니다.');
-      } else {
-        alert(errorMessage || '요청 중 오류가 발생했습니다.');
-      }
+      const status = error.response?.status;
+      if (status === 409) alert('이미 처리된 요청입니다.');
+      else if (status === 404) alert('해당 미션을 찾을 수 없습니다.');
+      else alert('오류가 발생했습니다. 다시 시도해주세요.');
     }
   };
 
