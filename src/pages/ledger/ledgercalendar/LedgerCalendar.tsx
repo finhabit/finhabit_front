@@ -6,7 +6,7 @@ import type { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 import { getLedgerCalendar, deleteLedger } from '@/api/ledger.api';
-import type { LedgerItem, CategoryStat } from '@/types/ledger';
+import type { LedgerItem, CategoryStat, LedgerCalendarResponse } from '@/types/ledger';
 
 import back from '@/assets/back.svg';
 import setting from '@/assets/settingsIcon.svg';
@@ -64,8 +64,6 @@ const CATEGORY_ICONS: Record<string, string> = {
   용돈: categoryallow,
 };
 
-import type { LedgerCalendarResponse } from '@/types/ledger';
-
 const LedgerCalendar: React.FC = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState<Date>(new Date());
@@ -73,8 +71,7 @@ const LedgerCalendar: React.FC = () => {
 
   const [dailyExpenses, setDailyExpenses] = useState<Expense[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalOutcome, setTotalOutcome] = useState(0);
+
   const [categoryStats, setCategoryStats] = useState<CategoryStat[]>([]);
 
   const [mode, setMode] = useState<'default' | 'edit' | 'delete'>('default');
@@ -91,9 +88,6 @@ const LedgerCalendar: React.FC = () => {
     setIsLoading(true);
     try {
       const responseData: LedgerCalendarResponse = await getLedgerCalendar(currentYear, currentMonth);
-
-      setTotalIncome(responseData.totalIncome || 0);
-      setTotalOutcome(responseData.totalExpense || 0);
 
       setDailyExpenses(responseData.ledgers || []);
       setCategoryStats(responseData.categories || []);
@@ -135,6 +129,14 @@ const LedgerCalendar: React.FC = () => {
 
     return dailyExpenses.filter((item) => item.date === selectedDateStr);
   }, [dailyExpenses, date]);
+
+  const { dailyIncome, dailyOutcome } = useMemo(() => {
+    const income = filteredDailyExpenses.filter((item) => item.amount > 0).reduce((acc, cur) => acc + cur.amount, 0);
+
+    const outcome = filteredDailyExpenses.filter((item) => item.amount < 0).reduce((acc, cur) => acc + cur.amount, 0);
+
+    return { dailyIncome: income, dailyOutcome: outcome };
+  }, [filteredDailyExpenses]);
 
   const handleTabClick = (tabName: string) => {
     setSelectedTab((prev) => (prev === tabName ? null : tabName));
@@ -279,11 +281,11 @@ const LedgerCalendar: React.FC = () => {
       <S.Details>
         <S.InOutcome>
           <S.InOutComeTitle>수입</S.InOutComeTitle>
-          <S.IncomeWon>{totalIncome.toLocaleString()}원</S.IncomeWon>
+          <S.IncomeWon>{dailyIncome.toLocaleString()}원</S.IncomeWon>
         </S.InOutcome>
         <S.InOutcome>
           <S.InOutComeTitle>지출</S.InOutComeTitle>
-          <S.OutcomeWon>{Math.abs(totalOutcome).toLocaleString()}원</S.OutcomeWon>
+          <S.OutcomeWon>{Math.abs(dailyOutcome).toLocaleString()}원</S.OutcomeWon>
         </S.InOutcome>
       </S.Details>
 
