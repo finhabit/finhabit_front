@@ -71,8 +71,7 @@ const LedgerCalendar: React.FC = () => {
 
   const [dailyExpenses, setDailyExpenses] = useState<Expense[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalOutcome, setTotalOutcome] = useState(0);
+
   const [categoryStats, setCategoryStats] = useState<CategoryStat[]>([]);
 
   const [mode, setMode] = useState<'default' | 'edit' | 'delete'>('default');
@@ -89,9 +88,6 @@ const LedgerCalendar: React.FC = () => {
     setIsLoading(true);
     try {
       const responseData: LedgerCalendarResponse = await getLedgerCalendar(currentYear, currentMonth);
-
-      setTotalIncome(responseData.totalIncome || 0);
-      setTotalOutcome(responseData.totalExpense || 0);
 
       setDailyExpenses(responseData.ledgers || []);
       setCategoryStats(responseData.categories || []);
@@ -282,7 +278,7 @@ const LedgerCalendar: React.FC = () => {
         </S.DetailSide>
       </S.Details>
 
-      <S.Detailss>
+      <S.Details>
         <S.InOutcome>
           <S.InOutComeTitle>수입</S.InOutComeTitle>
           <S.IncomeWon>{dailyIncome.toLocaleString()}원</S.IncomeWon>
@@ -291,7 +287,7 @@ const LedgerCalendar: React.FC = () => {
           <S.InOutComeTitle>지출</S.InOutComeTitle>
           <S.OutcomeWon>{Math.abs(dailyOutcome).toLocaleString()}원</S.OutcomeWon>
         </S.InOutcome>
-      </S.Detailss>
+      </S.Details>
 
       <S.Section>
         <S.SummaryCard>
