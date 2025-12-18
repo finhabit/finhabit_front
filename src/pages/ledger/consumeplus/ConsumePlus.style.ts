@@ -34,7 +34,7 @@ export const Won = styled.span`
 `;
 
 export const Input = styled.input`
-  width: 250px;
+  width: 100%;
   border: none;
   outline: none;
   text-align: right;

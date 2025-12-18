@@ -21,7 +21,7 @@ export const L_Section = styled.div`
 `;
 
 export const ContentBox = styled.div`
-  width: 301px;
+  width: 88%;
   min-height: 84px;
   max-height: 213px;
   overflow: hidden;
@@ -33,9 +33,9 @@ export const ContentBox = styled.div`
 `;
 
 export const ContentBox_1 = styled.div`
-  width: 301px;
+  width: 88%;
   min-height: 84px;
-  max-height: 213px;
+  max-height: 240px;
   overflow: hidden;
   border-radius: 23px;
   background: #dfe678;
@@ -47,7 +47,8 @@ export const ContentBox_1 = styled.div`
 export const ConsumeSection = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 35px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const L_Header = styled.div`
@@ -108,7 +109,6 @@ export const TitleText = styled.span`
   transform: translateX(-50%);
   pointer-events: none;
   color: #000;
-  font-family: Pretendard;
   font-size: 14px;
   font-weight: 600;
 `;

@@ -33,7 +33,6 @@ export const StartButton = styled.button`
   outline: none;
   background: #dfe678;
   color: #fffbfb;
-  font-family: 'Inter';
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -59,7 +58,6 @@ export const QuestionText = styled.p`
   margin: 0;
   color: #7b7b7b;
   text-align: center;
-  font-family: 'Pretendard';
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -72,7 +70,6 @@ export const LoginButtonText = styled.button`
   background: transparent;
   color: #7b7b7b;
   text-align: center;
-  font-family: 'Pretendard';
   font-size: 15px;
   font-style: normal;
   font-weight: 600;

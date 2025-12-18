@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Pretendard', sans-serif;
   padding: 30px;
   margin-top: 30px;
   background-color: #fff;

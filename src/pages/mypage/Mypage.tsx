@@ -35,12 +35,7 @@ export default function Mypage() {
 
   const fetchUserData = async () => {
     try {
-      const token = localStorage.getItem('accessToken');
-      console.log('현재 사용 중인 토큰:', token);
-
       const data = await getUserProfile();
-
-      console.log('서버에서 받은 프로필:', data);
 
       setUserInfo(data);
       localStorage.setItem('userProfile', JSON.stringify(data));

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const SCREEN_MAX = 414;
-export const LINE_MAX = 332;
 
 export const Page = styled.main`
   margin: 0;
@@ -11,7 +10,6 @@ export const Page = styled.main`
   padding: 55px 31px 31px 31px;
   box-sizing: border-box;
   background: #fff;
-  font-family: Pretendard;
 `;
 
 /** 상단 헤더 */
@@ -55,17 +53,24 @@ export const IconButton = styled.button`
 
 /** 섹션 스타일 */
 export const ItemSection = styled.section`
-  width: ${LINE_MAX}px;
+  width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ItemRow = styled.div`
-  width: ${LINE_MAX}px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 21px 0;
+  padding: 18px 4px;
   box-sizing: border-box;
+  transition: background-color 0.2s;
+
+  &:active {
+    background-color: #fafafa;
+  }
 `;
 
 export const LeftCol = styled.div`
@@ -80,6 +85,7 @@ export const Label = styled.span`
   font-size: 18px;
   font-weight: 600;
   line-height: normal;
+  letter-spacing: -0.02em;
 `;
 
 export const Value = styled.span`
@@ -92,19 +98,21 @@ export const Value = styled.span`
 export const RightCol = styled.div`
   width: 24px;
   height: 24px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   cursor: pointer;
 
   & > img {
-    width: 6px;
-    height: 12px;
+    width: 7px;
+    height: auto;
     display: block;
+    opacity: 0.4;
   }
 `;
 
 export const Divider = styled.hr`
-  width: ${LINE_MAX}px;
+  width: 100%;
   height: 2px;
   background: #d9d9d9;
   border: 0;
@@ -113,15 +121,16 @@ export const Divider = styled.hr`
 
 /** 성취 현황 스타일 */
 export const SectionTitle = styled.h2`
-  width: ${LINE_MAX}px;
+  width: 100%;
   color: #000;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: normal;
   cursor: pointer;
   text-align: left;
-  margin-top: 21px;
-  margin-bottom: 21px;
+  margin-top: 30px;
+  margin-bottom: 16px;
+  padding-left: 4px;
 `;
 
 export const FooterActions = styled.div`
@@ -129,7 +138,7 @@ export const FooterActions = styled.div`
   left: 50%;
   transform: translateX(-50%);
   bottom: 124px;
-  width: ${LINE_MAX}px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,7 +178,6 @@ export const EditModalSheet = styled.div`
   border-radius: 31px 31px 0 0;
   background: #fff;
   color: #000;
-  font-family: Pretendard;
   font-size: 18px;
   font-weight: 500;
   line-height: normal;
@@ -228,11 +236,9 @@ export const Input = styled.input`
   flex-shrink: 0;
   border-radius: 12px;
   border: 1px solid #5c5c5c;
-  
-  
-  color: #000; 
+
+  color: #000;
   text-align: center;
-  font-family: Pretendard;
   font-size: 18px;
   font-weight: 500;
   line-height: normal;
@@ -253,7 +259,7 @@ export const PopupOverlay = styled.div`
   inset: 0;
   background: rgba(123, 123, 123, 0.45);
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
   z-index: 1001;
 `;
@@ -263,8 +269,8 @@ export const ConfirmPopup = styled.div`
   height: 186px;
   flex-shrink: 0;
   border-radius: 70px;
-  background: #FFF;
-  
+  background: #fff;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -276,7 +282,6 @@ export const ConfirmPopup = styled.div`
 export const PopupText = styled.div`
   color: #000;
   text-align: center;
-  font-family: Pretendard;
   font-size: 22px;
   font-weight: 500;
   line-height: normal;
@@ -297,19 +302,18 @@ const BasePopupButton = styled.button`
   border-radius: 70px;
   border: 0;
   cursor: pointer;
-  
+
   color: #000;
   text-align: center;
-  font-family: Pretendard;
   font-size: 25px;
   font-weight: 600;
   line-height: normal;
 `;
 
 export const PopupYesButton = styled(BasePopupButton)`
-  background: #DFE678;
+  background: #dfe678;
 `;
 
 export const PopupNoButton = styled(BasePopupButton)`
-  background: #D9D9D9;
+  background: #d9d9d9;
 `;

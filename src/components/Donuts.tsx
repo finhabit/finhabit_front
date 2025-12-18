@@ -49,7 +49,6 @@ const LegendItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: Pretendard;
   font-size: 14px;
   color: #333;
 `;
@@ -109,7 +108,7 @@ const Donuts: React.FC<DonutsProps> = ({ categories = [], size = 176, strokeWidt
   const validCategories = categories.filter((cat) => cat.ratio > 0);
   const isSingleCategory = validCategories.length === 1;
 
-  const gapAngle = isSingleCategory ? 0 : 25; // 카테고리 별 그래프 간의 간격 설정부 (30도 괜찮은듯?)
+  const gapAngle = isSingleCategory ? 0 : 33; // 카테고리 별 그래프 간의 간격 설정부 (30도 괜찮은듯?)
   const totalGap = gapAngle * validCategories.length;
   const totalArc = 360 - totalGap;
 

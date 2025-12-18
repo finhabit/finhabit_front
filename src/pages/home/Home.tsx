@@ -27,8 +27,15 @@ import checkedIcon from '@/assets/checked_b.svg';
 import * as S from './Home.style';
 
 const CHART_COLORS = [
-  '#b6be40ff', '#626b00ff', '#cbd638ff', '#3e4300ff',
-  '#FFADAD', '#FFD6A5', '#FDFFB6', '#CAFFBF', '#9BF6FF',
+  '#b6be40ff',
+  '#626b00ff',
+  '#cbd638ff',
+  '#3e4300ff',
+  '#FFADAD',
+  '#FFD6A5',
+  '#FDFFB6',
+  '#CAFFBF',
+  '#9BF6FF',
 ];
 
 export default function Home() {
@@ -47,17 +54,19 @@ export default function Home() {
       const [ledgerRes, missionRes, knowledgeRes] = await Promise.all([
         getLedgerHome(),
         getTodayMission(),
-        getTodayKnowledge()
+        getTodayKnowledge(),
       ]);
 
       // 소비 요약 데이터 설정
       if (ledgerRes?.todayCategories) {
-        setChartData(ledgerRes.todayCategories.map((cat, index) => ({
-          id: cat.categoryId,
-          label: cat.categoryName,
-          ratio: cat.percent,
-          color: CHART_COLORS[index % CHART_COLORS.length],
-        })));
+        setChartData(
+          ledgerRes.todayCategories.map((cat, index) => ({
+            id: cat.categoryId,
+            label: cat.categoryName,
+            ratio: cat.percent,
+            color: CHART_COLORS[index % CHART_COLORS.length],
+          })),
+        );
       }
 
       // 오늘의 미션 설정
@@ -67,16 +76,16 @@ export default function Home() {
       if (knowledgeRes) {
         setKnowledge({
           id: (knowledgeRes as Knowledge).financeId,
-          content: (knowledgeRes as Knowledge).cardContent
+          content: (knowledgeRes as Knowledge).cardContent,
         });
       }
     } catch (error: any) {
       const status = error.response?.status;
       if (status === 500) {
-        alert("서버 점검 중입니다. 잠시 후 다시 시도해주세요.");
+        alert('서버 점검 중입니다. 잠시 후 다시 시도해주세요.');
       } else if (status === 401) {
         // 로그인되지 않은 사용자 처리
-        alert("로그인이 필요합니다.");
+        alert('로그인이 필요합니다.');
         navigate('/login');
       }
       console.error('데이터 로드 실패:', error);
@@ -113,13 +122,13 @@ export default function Home() {
 
       // 명세서 기반 에러 메시지 분기 처리
       if (status === 409) {
-        alert("동시에 여러 요청이 발생했습니다. 다시 시도해주세요.");
+        alert('동시에 여러 요청이 발생했습니다. 다시 시도해주세요.');
       } else if (status === 403) {
-        alert("다른 사용자의 미션은 변경할 수 없습니다.");
+        alert('다른 사용자의 미션은 변경할 수 없습니다.');
       } else if (status === 404) {
-        alert("해당 미션을 찾을 수 없습니다.");
+        alert('해당 미션을 찾을 수 없습니다.');
       } else {
-        alert(errorMessage || "요청 중 오류가 발생했습니다.");
+        alert(errorMessage || '요청 중 오류가 발생했습니다.');
       }
     }
   };
@@ -130,8 +139,12 @@ export default function Home() {
         <S.Header>
           <S.HeaderSpacer />
           <S.HeaderIcons>
-            <S.IconBtn onClick={() => navigate('/notification')}><S.TopIcon src={bellIcon} /></S.IconBtn>
-            <S.IconBtn onClick={() => navigate('/search')}><S.TopIcon src={searchIcon} /></S.IconBtn>
+            <S.IconBtn onClick={() => navigate('/notification')}>
+              <S.TopIcon src={bellIcon} />
+            </S.IconBtn>
+            <S.IconBtn onClick={() => navigate('/search')}>
+              <S.TopIcon src={searchIcon} />
+            </S.IconBtn>
           </S.HeaderIcons>
         </S.Header>
 
@@ -150,13 +163,11 @@ export default function Home() {
             <S.DecorLeft src={decoLeft} />
             <S.DecorRight src={decoRight} />
             <S.MissionContentWrapper>
-              <S.MissionText>
-                {todayMission ? todayMission.missionContent : "배정된 미션이 없습니다."}
-              </S.MissionText>
+              <S.MissionText>{todayMission ? todayMission.missionContent : '배정된 미션이 없습니다.'}</S.MissionText>
               {todayMission && (
                 <S.MissionCheck
                   src={todayMission.completed ? checkedIcon : checkBeforeIcon}
-                  alt={todayMission.completed ? "완료" : "미완료"}
+                  alt={todayMission.completed ? '완료' : '미완료'}
                   onClick={handleMissionToggle}
                 />
               )}
@@ -178,9 +189,7 @@ export default function Home() {
 
           <S.CardKnowledge onClick={() => knowledge && navigate(`/knowledge/${knowledge.id}`)}>
             <S.CardBody>
-              <S.CardTitle>
-                {knowledge ? knowledge.content : "금융 지식을 불러오는 중입니다."}
-              </S.CardTitle>
+              <S.CardTitle>{knowledge ? knowledge.content : '금융 지식을 불러오는 중입니다.'}</S.CardTitle>
             </S.CardBody>
           </S.CardKnowledge>
           <S.Gap style={{ height: gaps.afterFirst }} />
@@ -200,7 +209,7 @@ export default function Home() {
             {isLoading ? (
               <div style={{ color: '#aaa', margin: 'auto' }}>로딩 중...</div>
             ) : chartData.length > 0 ? (
-              <Donuts categories={chartData} size={170} />
+              <Donuts categories={chartData} size={140} />
             ) : (
               <div style={{ color: '#aaa', margin: 'auto', textAlign: 'center', fontSize: '14px' }}>
                 오늘의 소비 내역이 없습니다.
