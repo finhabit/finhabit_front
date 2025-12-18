@@ -93,16 +93,46 @@ export const TitleText = styled.span`
   font-weight: 600;
 `;
 
+/* ======= 오늘의 미션 카드 ======= */
 export const MissionCard = styled.div`
   position: relative;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: ${CARD_MAX}px;
   height: 114px;
   border-radius: 23px;
   background: #dfe678;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+`;
+
+export const MissionContentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 40px;
+  z-index: 1;
+`;
+
+export const MissionText = styled.div`
+  color: #2b2b27;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+  word-break: keep-all;
+`;
+
+export const MissionCheck = styled.img`
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  transition: transform 0.1s ease;
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 
 export const DecorLeft = styled.img`
@@ -121,44 +151,47 @@ export const DecorRight = styled.img`
   height: 20px;
 `;
 
-export const MissionText = styled.div`
-  color: #2b2b27;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.2;
-  width: 100%;
-  max-width: 277px;
-  white-space: nowrap;
-`;
-
 /* ======= 오늘의 지식 카드 ======= */
-export const KnowledgeCard = styled.div`
-  height: 114px;
+export const BaseCard = styled.div`
   width: 100%;
   max-width: ${CARD_MAX}px;
   border-radius: 23px;
-  background: rgba(223, 230, 120, 0.5);
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  cursor: pointer;
+  overflow: hidden;
+`;
+
+export const CardKnowledge = styled(BaseCard)`
+  height: 114px;
+  background: rgba(223, 230, 120, 0.5);
 `;
 
 export const CardBody = styled.div`
   height: 100%;
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 16px 18px;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow-y: auto;
+  &::-webkit-scrollbar { display: none; }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 export const CardTitle = styled.h3`
+  margin: 0;
   color: #2b2b27;
   text-align: center;
+  font-family: Pretendard;
   font-size: 17px;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.4;
   width: 100%;
-  max-width: 277px;
-  white-space: nowrap;
+  white-space: pre-wrap;
+  word-break: keep-all;
 `;
 
 /* ======= 간단 소비 요약 카드 ======= */
@@ -170,12 +203,11 @@ export const SummaryCard = styled.div`
   border: 2px solid #dfe678;
   background: #fdfdfd;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
-
-  /* Donuts가 그래프만 렌더 */
   padding: 25px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 export const Gap = styled.div``;
