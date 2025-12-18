@@ -50,18 +50,16 @@ export default function SetCategoryIncome() {
   ];
 
   const handleCategoryClick = async (categoryName: string) => {
-    if (categoryName === '기타' && !desc.trim()) {
-      alert('기타 카테고리는 내역을 입력해야 합니다.');
-      setSelectedCategory(categoryName);
+    setSelectedCategory(categoryName);
+
+    if (!desc.trim()) {
+      alert('내역을 입력해주세요.');
       return;
     }
 
-    setSelectedCategory(categoryName);
-
     try {
       const categoryId = CATEGORY_MAP[categoryName] || 3;
-
-      const finalMerchant = desc.trim() || categoryName;
+      const finalMerchant = desc.trim();
 
       const requestData: CreateLedgerRequest = {
         amount: Math.abs(Number(amountData)),
@@ -97,7 +95,7 @@ export default function SetCategoryIncome() {
 
       <S.DescDisplay $isPlaceholder={!desc}>
         <S.DescInput
-          placeholder="내역 입력 (선택)"
+          placeholder="내역 입력"
           value={desc}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDesc(e.target.value)}
         />

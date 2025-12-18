@@ -80,8 +80,8 @@ export default function SetCategoryOutcome() {
       return;
     }
 
-    if (selectedCategory === '기타' && !desc.trim()) {
-      alert('기타 카테고리는 내역을 입력해야 합니다.');
+    if (!desc.trim()) {
+      alert('내역을 입력해주세요.');
       return;
     }
 
@@ -95,7 +95,7 @@ export default function SetCategoryOutcome() {
         amount: -Math.abs(Number(amountData)),
         date: dateData,
         categoryId: categoryId,
-        merchant: desc.trim() || selectedCategory,
+        merchant: desc.trim(),
         payment: paymentMethod,
       };
 
@@ -125,7 +125,7 @@ export default function SetCategoryOutcome() {
 
       <S.DescDisplay $isPlaceholder={!desc}>
         <S.DescInput
-          placeholder="내역 입력 (선택)"
+          placeholder="내역 입력"
           value={desc}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDesc(e.target.value)}
         />
