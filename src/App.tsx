@@ -60,8 +60,6 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/leveltest" element={<LevelTest />} />
         <Route path="/search" element={<Search />} />
-
-        {/* 위와 같이 페이지 만들고 연결해주세요 */}
       </Routes>
     </AppWrapper>
   );

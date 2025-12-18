@@ -24,7 +24,6 @@ const LevelTest = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<Record<number, number | null>>({});
   const [score, setScore] = useState<number>(0);
-  const [userLevel, setUserLevel] = useState<string>('');
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -38,33 +37,52 @@ const LevelTest = () => {
   }, [signupData, navigate]);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchQuestions = async () => {
       try {
         const data = await getLevelTestQuestions();
 
-        const formattedQuestions: Question[] = data.map((item: LevelQuestionDto) => ({
-          id: item.testId,
-          title: item.testQuestion,
-          options: [item.testOption1, item.testOption2, item.testOption3],
-          correctAnswer: item.testAnswer - 1,
-        }));
+        if (isMounted) {
+          const uniqueData = data.filter(
+            (item: LevelQuestionDto, index: number, self: LevelQuestionDto[]) =>
+              index === self.findIndex((t) => t.testQuestion === item.testQuestion),
+          );
 
-        setQuestions(formattedQuestions);
+          const finalData = uniqueData.length > 5 ? uniqueData.slice(0, 5) : uniqueData;
 
-        const initialAnswers: Record<number, number | null> = {};
-        formattedQuestions.forEach((q) => {
-          initialAnswers[q.id] = null;
-        });
-        setAnswers(initialAnswers);
+          const formattedQuestions: Question[] = finalData.map((item: LevelQuestionDto) => ({
+            id: item.testId,
+            title: item.testQuestion,
+            options: [item.testOption1, item.testOption2, item.testOption3],
+            correctAnswer: item.testAnswer - 1,
+          }));
+
+          setQuestions(formattedQuestions);
+
+          const initialAnswers: Record<number, number | null> = {};
+          formattedQuestions.forEach((q) => {
+            initialAnswers[q.id] = null;
+          });
+          setAnswers(initialAnswers);
+        }
       } catch (error) {
-        console.error('문제를 불러오는데 실패했습니다:', error);
-        alert('문제를 불러올 수 없습니다.');
+        if (isMounted) {
+          console.error('문제를 불러오는데 실패했습니다:', error);
+          alert('문제를 불러올 수 없습니다.');
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchQuestions();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleSelect = (questionId: number, optionIndex: number) => {
@@ -94,17 +112,13 @@ const LevelTest = () => {
         levelTestAnswers,
       });
 
-      console.log('회원가입 성공 응답:', response); // 확인용 로그
+      console.log('회원가입 성공 응답:', response);
 
       if (response.accessToken) {
         localStorage.setItem('accessToken', response.accessToken);
       }
 
       setSignupResult(response);
-
-      if (response.level) {
-        setUserLevel(response.level);
-      }
 
       setShowPopup(true);
     } catch (error: any) {
@@ -120,6 +134,18 @@ const LevelTest = () => {
         userInfo: signupResult,
       },
     });
+  };
+
+  const getResultText = (currentScore: number) => {
+    if (currentScore <= 40) return '금융의 첫걸음부터 함께해요!';
+    if (currentScore <= 70) return '꽤 알고 계시네요! 이제 습관을 만들어볼까요?';
+    return '이제 투자와 자산관리까지 한 단계 더!';
+  };
+
+  const getLevelName = (currentScore: number) => {
+    if (currentScore <= 40) return '기초';
+    if (currentScore <= 70) return '중간';
+    return '상급';
   };
 
   if (loading) return <div>Loading...</div>;
@@ -151,12 +177,12 @@ const LevelTest = () => {
           <S.PopupContent>
             <S.PopupText>
               <S.PopupTitle>정답률 {score}%</S.PopupTitle>
-              <S.PopupMessage>
-                {userLevel ? `당신의 레벨은 ${userLevel}입니다!` : '이제 투자와 자산관리까지 한 단계 더!'}
-              </S.PopupMessage>
+              <S.PopupMessage>{getResultText(score)}</S.PopupMessage>
             </S.PopupText>
+
             <S.PopupImage src={levellogo} alt="levellogo" />
-            <S.PopupButton onClick={handleStart}>상급형 Finhabit 시작하기</S.PopupButton>
+
+            <S.PopupButton onClick={handleStart}>{getLevelName(score)}형 Finhabit 시작하기</S.PopupButton>
           </S.PopupContent>
         </S.PopupOverlay>
       )}
