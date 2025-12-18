@@ -104,12 +104,7 @@ export default function LedgerMain() {
             {ledgerData.today.ledgers.length > 0 ? (
               ledgerData.today.ledgers.map((item) => (
                 <S.Perrow key={item.ledgerId}>
-                  <div>
-                    {item.merchant}
-                    <span style={{ fontSize: '10px', color: '#999', marginLeft: '6px' }}>
-                      {item.payment === 'CARD' ? '(카드)' : item.payment === 'CASH' ? '(현금)' : ''}
-                    </span>
-                  </div>
+                  <div>{item.merchant}</div>
 
                   <div style={{ color: item.amount > 0 ? '#007bff' : 'inherit' }}>
                     {item.amount > 0 ? '+' : ''}

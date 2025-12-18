@@ -67,17 +67,10 @@ export default function SetCategoryOutcome() {
   const handleCategoryClick = (altText: string) => {
     if (selectedCategory === altText) {
       setSelectedCategory(null);
-      setDesc('');
       setSelectedMethod(null);
       return;
     }
     setSelectedCategory(altText);
-
-    if (altText === '기타') {
-      if (!desc) setDesc('');
-    } else {
-      setDesc(altText);
-    }
     setSelectedMethod(null);
   };
 
@@ -95,14 +88,14 @@ export default function SetCategoryOutcome() {
     setSelectedMethod(method);
 
     try {
-      const categoryId = CATEGORY_MAP[selectedCategory] || 5;
+      const categoryId = CATEGORY_MAP[selectedCategory] || 8;
       const paymentMethod = method.toUpperCase() as PaymentType;
 
       const requestData: CreateLedgerRequest = {
-        amount: -Number(amountData),
+        amount: -Math.abs(Number(amountData)),
         date: dateData,
         categoryId: categoryId,
-        merchant: desc || selectedCategory,
+        merchant: desc.trim() || selectedCategory,
         payment: paymentMethod,
       };
 
@@ -132,10 +125,9 @@ export default function SetCategoryOutcome() {
 
       <S.DescDisplay $isPlaceholder={!desc}>
         <S.DescInput
-          placeholder="내역"
+          placeholder="내역 입력 (선택)"
           value={desc}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDesc(e.target.value)}
-          disabled={selectedCategory !== '기타' && selectedCategory !== null && mode !== 'edit'}
         />
       </S.DescDisplay>
 
