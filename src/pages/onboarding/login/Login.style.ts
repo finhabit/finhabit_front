@@ -22,7 +22,6 @@ export const Content = styled.div`
 export const Title = styled.h1`
   margin: 0 0 28px 0;
   color: #000;
-  font-family: 'Inter';
   font-size: 19px;
   font-style: normal;
   font-weight: 600;
@@ -31,7 +30,7 @@ export const Title = styled.h1`
 `;
 
 export const InputWrapper = styled.div`
-  width: 310px;
+  width: 100%;
   height: 49px;
   border-radius: 11px;
   border: 1px solid #d9d9d9;
@@ -48,7 +47,6 @@ export const Input = styled.input`
   background: transparent;
 
   color: #000;
-  font-family: 'Inter';
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -56,7 +54,6 @@ export const Input = styled.input`
 
   ::placeholder {
     color: #ccc;
-    font-family: 'Inter';
     font-size: 15px;
     font-style: normal;
     font-weight: 500;
@@ -69,14 +66,13 @@ interface LoginButtonProps {
 }
 
 export const LoginButton = styled.button<LoginButtonProps>`
-  width: 310px;
+  width: 100%;
   height: 49px;
   margin-top: 16px;
   border-radius: 11px;
   border: none;
   background: ${({ $active }) => ($active ? '#DFE678' : '#D9D9D9')};
   color: #fff;
-  font-family: 'Inter';
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -89,7 +85,7 @@ export const HelperRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin: 10px 30px;
+  margin: 10px;
   gap: 8px;
 `;
 
@@ -98,7 +94,6 @@ export const HelperText = styled.button`
   background: transparent;
   padding: 0;
   color: #d9d9d9;
-  font-family: 'Inter';
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -112,7 +107,6 @@ export const SignUpText = styled.button`
   background: transparent;
   padding: 0;
   color: #7b7b7b;
-  font-family: 'Inter';
   font-size: 15px;
   font-style: normal;
   font-weight: 500;

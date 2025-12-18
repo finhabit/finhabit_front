@@ -176,7 +176,9 @@ export const CardBody = styled.div`
   align-items: center;
   box-sizing: border-box;
   overflow-y: auto;
-  &::-webkit-scrollbar { display: none; }
+  &::-webkit-scrollbar {
+    display: none;
+  }
   -ms-overflow-style: none;
   scrollbar-width: none;
 `;
@@ -185,7 +187,6 @@ export const CardTitle = styled.h3`
   margin: 0;
   color: #2b2b27;
   text-align: center;
-  font-family: Pretendard;
   font-size: 17px;
   font-weight: 600;
   line-height: 1.4;

@@ -87,7 +87,6 @@ export const TinyPlus = styled.img`
 
 export const TitleText = styled.span`
   color: #000;
-  font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -151,7 +150,6 @@ export const CardTop = styled.h3`
   margin: 0;
   color: #848d00;
   text-align: center;
-  font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -163,7 +161,6 @@ export const CardTitle = styled.h3`
   margin: 0;
   color: #2b2b27;
   text-align: center;
-  font-family: Pretendard;
   font-size: 15px;
   font-weight: 600;
   line-height: 1.2;
@@ -175,7 +172,6 @@ export const Q_CardTitle = styled.h3`
   margin: 0;
   color: #2b2b27;
   text-align: center;
-  font-family: Pretendard;
   font-size: 13px;
   width: 100%;
   white-space: nowrap;
@@ -188,7 +184,6 @@ export const A_CardTitle = styled.h3`
   margin: 0;
   color: #2b2b27;
   text-align: center;
-  font-family: Pretendard;
   font-size: 14px;
   line-height: 1.3;
   width: 100%;

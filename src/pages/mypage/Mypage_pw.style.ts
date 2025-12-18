@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SCREEN_MAX = 414;
 
@@ -10,7 +10,6 @@ export const Page = styled.main`
   background: #fff;
   box-sizing: border-box;
   padding: 29px;
-  font-family: Pretendard;
 `;
 
 export const HeaderRow = styled.header`
@@ -40,9 +39,8 @@ export const HeaderSpacer = styled.div`
 
 export const Title = styled.h1`
   margin: 0;
-  color: #2B2B27;
+  color: #2b2b27;
   text-align: left;
-  font-family: Pretendard;
   font-size: 22px;
   font-style: normal;
   font-weight: 600;
@@ -55,16 +53,14 @@ export const SubtitleWrap = styled.div`
 
 export const Subtitle = styled.p`
   margin: 0;
-  color: #CCC;
-  font-family: Pretendard;
+  color: #ccc;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 1.4;   
+  line-height: 1.4;
   white-space: nowrap;
   text-align: left;
 `;
-
 
 /** 입력 폼 */
 export const Field = styled.div`
@@ -75,7 +71,7 @@ export const Field = styled.div`
 export const Label = styled.label`
   display: block;
   margin-bottom: 5px;
-  color: #7B7B7B;
+  color: #7b7b7b;
   font-size: 14px;
   font-weight: 600;
   text-align: left;
@@ -83,27 +79,26 @@ export const Label = styled.label`
 
 export const InputWrap = styled.div`
   position: relative;
-  width: 320px;
+  width: 100%;
   height: 48px;
 `;
 
 export const Input = styled.input`
-  width: 320px;
+  width: 100%;
   height: 48px;
   flex-shrink: 0;
   border-radius: 10px;
-  border: 1px solid #CCC;
-  color: #2B2B27;
-  font-family: Pretendard;
+  border: 1px solid #ccc;
+  color: #2b2b27;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  text-align: left;             
+  text-align: left;
   box-sizing: border-box;
-  padding: 10px;              
+  padding: 10px;
   &::placeholder {
-    color: #CCC;
+    color: #ccc;
   }
 `;
 
@@ -135,7 +130,7 @@ export const Help = styled.p`
   flex-shrink: 0;
   margin: 8px 0 0 0;
   font-size: 12px;
-  color: #7B7B7B;
+  color: #7b7b7b;
 `;
 
 /** 하단 고정 버튼 */
@@ -157,13 +152,12 @@ export const SubmitBtn = styled.button<{ disabled?: boolean }>`
   height: 48px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: ${p => (p.disabled ? "#EDEDED" : "#DFE678")};
-  color: ${p => (p.disabled ? "#A0A0A0" : "#2B2B27")};
+  background: ${(p) => (p.disabled ? '#EDEDED' : '#DFE678')};
+  color: ${(p) => (p.disabled ? '#A0A0A0' : '#2B2B27')};
   border: 0;
-  font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  cursor: ${p => (p.disabled ? "not-allowed" : "pointer")};
+  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
 `;

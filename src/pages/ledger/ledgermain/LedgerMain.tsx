@@ -96,16 +96,19 @@ export default function LedgerMain() {
           </S.L_Header>
           <S.ContentBox_1>
             {ledgerData.today.ledgers.length > 0 ? (
-              ledgerData.today.ledgers.map((item) => (
-                <S.Perrow key={item.ledgerId}>
-                  <div>{item.merchant}</div>
+              [...ledgerData.today.ledgers]
+                .reverse()
+                .slice(0, 5)
+                .map((item) => (
+                  <S.Perrow key={item.ledgerId}>
+                    <div>{item.merchant}</div>
 
-                  <div style={{ color: item.amount > 0 ? '#007bff' : 'inherit' }}>
-                    {item.amount > 0 ? '+' : ''}
-                    {Math.abs(item.amount).toLocaleString()}원
-                  </div>
-                </S.Perrow>
-              ))
+                    <div style={{ color: item.amount > 0 ? '#007bff' : 'inherit' }}>
+                      {item.amount > 0 ? '+' : ''}
+                      {Math.abs(item.amount).toLocaleString()}원
+                    </div>
+                  </S.Perrow>
+                ))
             ) : (
               <div style={{ padding: '10px', color: '#999', fontSize: '14px' }}>오늘 소비 내역이 없습니다.</div>
             )}
@@ -120,7 +123,7 @@ export default function LedgerMain() {
           </S.L_Header>
           <S.ContentBox>
             {ledgerData.todayCategories.length > 0 ? (
-              ledgerData.todayCategories.map((cat) => (
+              ledgerData.todayCategories.slice(0, 5).map((cat) => (
                 <S.Perrow key={cat.categoryId}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <S.CategoryIcon src={getCategoryIcon(cat.categoryName)} alt={cat.categoryName} />

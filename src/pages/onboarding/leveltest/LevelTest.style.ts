@@ -21,7 +21,6 @@ export const Content = styled.div`
 export const Title = styled.h1`
   margin: 0 0 40px 0;
   color: #000;
-  font-family: 'Pretendard';
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -48,7 +47,6 @@ export const SubmitButton = styled.button<SubmitButtonProps>`
   border: none;
   background: ${({ $active }) => ($active ? '#BEC372' : '#D9D9D9')};
   color: #fff;
-  font-family: 'Inter';
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -83,7 +81,6 @@ export const PopupContent = styled.div`
   background: #fff;
   color: #848d00;
   text-align: center;
-  font-family: 'Pretendard';
   font-size: 20px;
   font-weight: 500;
   line-height: 121.374%;
@@ -96,7 +93,6 @@ export const PopupText = styled.div`
 export const PopupTitle = styled.h2`
   margin: 0;
   color: #848d00;
-  font-family: 'Pretendard';
   font-size: 19px;
   font-weight: 500;
   line-height: 121.374%;
@@ -105,7 +101,6 @@ export const PopupTitle = styled.h2`
 export const PopupMessage = styled.p`
   margin: 0;
   color: #000;
-  font-family: 'Pretendard';
   font-size: 18px;
   font-weight: 500;
   line-height: 121.374%;
@@ -125,7 +120,6 @@ export const PopupButton = styled.button`
   border: none;
   background: #bec372;
   color: #fff;
-  font-family: 'Inter';
   font-size: 15px;
   font-weight: 600;
   line-height: normal;

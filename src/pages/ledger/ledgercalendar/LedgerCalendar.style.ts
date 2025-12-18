@@ -109,14 +109,12 @@ export const StyledCalendarWrapper = styled.div`
 
 export const Details = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin: 10px 40px;
-`;
-
-export const Detailss = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 20px 10px 30px;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 15px 0;
+  padding: 0 20px;
+  box-sizing: border-box;
 `;
 
 export const DetailIcons = styled.img`
@@ -160,24 +158,30 @@ export const DetailSide = styled.div`
 
 export const InOutcome = styled.div`
   display: flex;
-  gap: 20px;
-  font-size: 17px;
+  align-items: center;
+  gap: 25px;
+  font-size: 18px;
   font-weight: 500;
   cursor: default;
 `;
 
 export const InOutComeTitle = styled.div`
-  width: 50px;
+  color: #333;
+  white-space: nowrap;
 `;
 
 export const IncomeWon = styled.div`
   color: #17a1fa;
-  width: 100px;
+  text-align: right;
+  font-weight: 600;
+  white-space: nowrap;
 `;
 
 export const OutcomeWon = styled.div`
   color: #dc6d6d;
-  width: 100px;
+  text-align: right;
+  font-weight: 600;
+  white-space: nowrap;
 `;
 
 export const SummaryCard = styled.div`
