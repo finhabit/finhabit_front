@@ -6,7 +6,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: flex-start; /* 위에서부터 배치 */
   align-items: center;
-  padding: 0px 24px 24px; /* 위에서 로고까지 60px 정도 */
+  padding: 0px 24px 24px;
   box-sizing: border-box;
   background: #ffffff;
 `;
@@ -21,9 +21,8 @@ export const Content = styled.div`
 
 export const LogoImg = styled.img`
   display: block;
-  width: 400.414px;
+  width: 380.414px;
   height: auto;
-  margin-bottom: 10px; /* 로고 기준 버튼까지 30px */
 `;
 
 export const StartButton = styled.button`
