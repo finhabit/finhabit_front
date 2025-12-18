@@ -6,7 +6,7 @@ import type { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 import { getLedgerCalendar, deleteLedger } from '@/api/ledger.api';
-import type { LedgerItem, CategoryStat, LedgerCalendarResponse } from '@/types/ledger';
+import type { LedgerItem, LedgerCalendarResponse } from '@/types/ledger';
 
 import back from '@/assets/back.svg';
 import stats from '@/assets/stats.svg';
@@ -71,8 +71,6 @@ const LedgerCalendar: React.FC = () => {
   const [dailyExpenses, setDailyExpenses] = useState<Expense[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [categoryStats, setCategoryStats] = useState<CategoryStat[]>([]);
-
   const [mode, setMode] = useState<'default' | 'edit' | 'delete'>('default');
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
@@ -89,7 +87,6 @@ const LedgerCalendar: React.FC = () => {
       const responseData: LedgerCalendarResponse = await getLedgerCalendar(currentYear, currentMonth);
 
       setDailyExpenses(responseData.ledgers || []);
-      setCategoryStats(responseData.categories || []);
     } catch (error) {
       console.error('가계부 캘린더 데이터 로드 실패:', error);
       alert('데이터 로드에 실패했습니다.');
@@ -97,17 +94,6 @@ const LedgerCalendar: React.FC = () => {
       setIsLoading(false);
     }
   };
-
-  const donutChartData: DonutCategory[] = useMemo(() => {
-    if (categoryStats.length === 0) return [];
-
-    return categoryStats.map((stat, index) => ({
-      id: stat.categoryId,
-      label: stat.categoryName,
-      ratio: stat.percent,
-      color: CHART_COLORS[index % CHART_COLORS.length],
-    }));
-  }, [categoryStats]);
 
   useEffect(() => {
     fetchCalendarData();
@@ -131,10 +117,42 @@ const LedgerCalendar: React.FC = () => {
 
   const { dailyIncome, dailyOutcome } = useMemo(() => {
     const income = filteredDailyExpenses.filter((item) => item.amount > 0).reduce((acc, cur) => acc + cur.amount, 0);
-
     const outcome = filteredDailyExpenses.filter((item) => item.amount < 0).reduce((acc, cur) => acc + cur.amount, 0);
 
     return { dailyIncome: income, dailyOutcome: outcome };
+  }, [filteredDailyExpenses]);
+
+  const donutChartData: DonutCategory[] = useMemo(() => {
+    const expenses = filteredDailyExpenses.filter((item) => item.amount < 0);
+
+    if (expenses.length === 0) return [];
+
+    const categoryMap = new Map<string, number>(); // 카테고리별 합계
+    const categoryIdMap = new Map<string, number>(); // 카테고리 ID 저장
+    let totalAmount = 0;
+
+    expenses.forEach((item) => {
+      const amount = Math.abs(item.amount);
+      totalAmount += amount;
+
+      const currentAmount = categoryMap.get(item.categoryName) || 0;
+      categoryMap.set(item.categoryName, currentAmount + amount);
+      categoryIdMap.set(item.categoryName, item.categoryId);
+    });
+
+    if (totalAmount === 0) return [];
+
+    return Array.from(categoryMap.keys())
+      .map((name, index) => {
+        const amount = categoryMap.get(name)!;
+        return {
+          id: categoryIdMap.get(name)!,
+          label: name,
+          ratio: (amount / totalAmount) * 100,
+          color: CHART_COLORS[index % CHART_COLORS.length],
+        };
+      })
+      .sort((a, b) => b.ratio - a.ratio);
   }, [filteredDailyExpenses]);
 
   const handleTabClick = (tabName: string) => {
@@ -296,7 +314,7 @@ const LedgerCalendar: React.FC = () => {
                 <Donuts categories={donutChartData} size={170} />
               ) : (
                 <div style={{ color: '#aaa', marginTop: 'auto', marginBottom: 'auto' }}>
-                  조회 기간의 내역이 없어 통계를 표시할 수 없습니다.
+                  해당 날짜의 지출 내역이 없습니다.
                 </div>
               )}
             </>
