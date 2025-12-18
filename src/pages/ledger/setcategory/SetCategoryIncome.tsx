@@ -33,7 +33,6 @@ export default function SetCategoryIncome() {
     if (mode === 'edit' && initialData) {
       const categoryName = ID_TO_CATEGORY[initialData.categoryId] || '기타';
       setSelectedCategory(categoryName);
-
       setDesc(initialData.merchant || '');
     }
   }, [mode, initialData]);
@@ -50,20 +49,22 @@ export default function SetCategoryIncome() {
     { src: categoryetc, alt: '기타' },
   ];
 
-  const handleSubmit = async (categoryName: string, description: string) => {
+  const handleCategoryClick = async (categoryName: string) => {
+    if (categoryName === '기타' && !desc.trim()) {
+      alert('기타 카테고리는 내역을 입력해야 합니다.');
+      setSelectedCategory(categoryName);
+      return;
+    }
+
+    setSelectedCategory(categoryName);
+
     try {
-      if (!categoryName) return;
-
-      if (categoryName === '기타' && !description.trim()) {
-        alert('기타 카테고리는 내역을 입력해야 합니다.');
-        return;
-      }
-
       const categoryId = CATEGORY_MAP[categoryName] || 3;
-      const finalMerchant = description || categoryName;
+
+      const finalMerchant = desc.trim() || categoryName;
 
       const requestData: CreateLedgerRequest = {
-        amount: Number(amountData),
+        amount: Math.abs(Number(amountData)),
         date: dateData,
         categoryId: categoryId,
         merchant: finalMerchant,
@@ -84,36 +85,6 @@ export default function SetCategoryIncome() {
     }
   };
 
-  const onCategoryBadgeClick = (altText: string) => {
-    if (selectedCategory === altText) {
-      setSelectedCategory(null);
-      setDesc('');
-      return;
-    }
-
-    setSelectedCategory(altText);
-
-    if (altText !== '기타') {
-      const finalDesc = desc || altText;
-      setDesc(finalDesc);
-      handleSubmit(altText, finalDesc);
-    } else {
-      if (!desc) setDesc('');
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && selectedCategory && desc.trim()) {
-      handleSubmit(selectedCategory, desc.trim());
-    } else if (e.key === 'Enter' && selectedCategory && !desc.trim()) {
-      if (selectedCategory !== '기타') {
-        handleSubmit(selectedCategory, selectedCategory);
-      } else {
-        alert('내역을 입력해주세요.');
-      }
-    }
-  };
-
   return (
     <S.Container>
       <S.TopBar>
@@ -126,11 +97,9 @@ export default function SetCategoryIncome() {
 
       <S.DescDisplay $isPlaceholder={!desc}>
         <S.DescInput
-          placeholder={selectedCategory === '기타' ? '내역 입력 후 엔터' : '내역'}
+          placeholder="내역 입력 (선택)"
           value={desc}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDesc(e.target.value)}
-          onKeyDown={handleKeyDown}
-          disabled={selectedCategory !== '기타' && selectedCategory !== null && mode !== 'edit'}
         />
       </S.DescDisplay>
 
@@ -142,7 +111,7 @@ export default function SetCategoryIncome() {
             alt={c.alt}
             $active={selectedCategory === c.alt}
             $dimOthers={!!selectedCategory && selectedCategory !== c.alt}
-            onClick={() => onCategoryBadgeClick(c.alt)}
+            onClick={() => handleCategoryClick(c.alt)}
           />
         ))}
       </S.CategoryContainer>
