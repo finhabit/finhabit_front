@@ -74,9 +74,6 @@ const LedgerCalendar: React.FC = () => {
   const [mode, setMode] = useState<'default' | 'edit' | 'delete'>('default');
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
-  const currentYear = useMemo(() => date.getFullYear().toString(), [date]);
-  const currentMonth = useMemo(() => (date.getMonth() + 1).toString().padStart(2, '0'), [date]);
-
   const getCategoryIcon = (name: string) => {
     return CATEGORY_ICONS[name] || categoryetc;
   };
@@ -84,12 +81,19 @@ const LedgerCalendar: React.FC = () => {
   const fetchCalendarData = async () => {
     setIsLoading(true);
     try {
-      const responseData: LedgerCalendarResponse = await getLedgerCalendar(currentYear, currentMonth);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+
+      console.log('데이터 요청 날짜:', formattedDate);
+
+      const responseData: LedgerCalendarResponse = await getLedgerCalendar(formattedDate);
 
       setDailyExpenses(responseData.ledgers || []);
     } catch (error) {
       console.error('가계부 캘린더 데이터 로드 실패:', error);
-      alert('데이터 로드에 실패했습니다.');
+      setDailyExpenses([]);
     } finally {
       setIsLoading(false);
     }
@@ -97,7 +101,7 @@ const LedgerCalendar: React.FC = () => {
 
   useEffect(() => {
     fetchCalendarData();
-  }, [currentYear, currentMonth]);
+  }, [date]);
 
   const onDateChange: CalendarProps['onChange'] = (value) => {
     if (value instanceof Date) {
@@ -106,14 +110,7 @@ const LedgerCalendar: React.FC = () => {
     }
   };
 
-  const filteredDailyExpenses = useMemo(() => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const selectedDateStr = `${year}-${month}-${day}`;
-
-    return dailyExpenses.filter((item) => item.date === selectedDateStr);
-  }, [dailyExpenses, date]);
+  const filteredDailyExpenses = dailyExpenses;
 
   const { dailyIncome, dailyOutcome } = useMemo(() => {
     const income = filteredDailyExpenses.filter((item) => item.amount > 0).reduce((acc, cur) => acc + cur.amount, 0);
@@ -127,8 +124,8 @@ const LedgerCalendar: React.FC = () => {
 
     if (expenses.length === 0) return [];
 
-    const categoryMap = new Map<string, number>(); // 카테고리별 합계
-    const categoryIdMap = new Map<string, number>(); // 카테고리 ID 저장
+    const categoryMap = new Map<string, number>();
+    const categoryIdMap = new Map<string, number>();
     let totalAmount = 0;
 
     expenses.forEach((item) => {
@@ -201,7 +198,6 @@ const LedgerCalendar: React.FC = () => {
       if (confirm(`${selectedIds.length}개의 항목을 삭제하시겠습니까?`)) {
         try {
           console.log('삭제 요청 ID 목록:', selectedIds);
-
           await Promise.all(selectedIds.map((id) => deleteLedger(id)));
 
           alert('성공적으로 삭제되었습니다.');
