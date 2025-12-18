@@ -13,6 +13,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
   });
   const headerToken = res.headers['authorization'] || res.headers['Authorization'];
   const accessToken = headerToken ? headerToken.replace('Bearer ', '').trim() : '';
+
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
   }
@@ -39,6 +40,7 @@ export interface SignupRequest {
 export interface SignupResponse {
   message: string;
   level: string;
+  accessToken?: string;
 }
 
 export const signup = async (data: SignupRequest): Promise<SignupResponse> => {
@@ -50,7 +52,18 @@ export const signup = async (data: SignupRequest): Promise<SignupResponse> => {
   };
 
   const res = await instance.post<SignupResponse>('/auth/signup', payload);
-  return res.data;
+
+  const headerToken = res.headers['authorization'] || res.headers['Authorization'];
+  const accessToken = headerToken ? headerToken.replace('Bearer ', '').trim() : undefined;
+
+  if (accessToken) {
+    localStorage.setItem('accessToken', accessToken);
+  }
+
+  return {
+    ...res.data,
+    accessToken,
+  };
 };
 
 // -------------------- 마이페이지 관련 --------------------

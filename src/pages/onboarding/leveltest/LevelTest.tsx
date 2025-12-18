@@ -28,6 +28,8 @@ const LevelTest = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const [signupResult, setSignupResult] = useState<any>(null);
+
   useEffect(() => {
     if (!signupData) {
       alert('잘못된 접근입니다. 회원가입 정보를 먼저 입력해주세요.');
@@ -92,6 +94,14 @@ const LevelTest = () => {
         levelTestAnswers,
       });
 
+      console.log('회원가입 성공 응답:', response); // 확인용 로그
+
+      if (response.accessToken) {
+        localStorage.setItem('accessToken', response.accessToken);
+      }
+
+      setSignupResult(response);
+
       if (response.level) {
         setUserLevel(response.level);
       }
@@ -105,7 +115,11 @@ const LevelTest = () => {
   };
 
   const handleStart = () => {
-    navigate('/home');
+    navigate('/home', {
+      state: {
+        userInfo: signupResult,
+      },
+    });
   };
 
   if (loading) return <div>Loading...</div>;
