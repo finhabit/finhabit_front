@@ -5,7 +5,6 @@ import { getLedgerHome } from '@/api/ledger.api';
 import type { LedgerHomeResponse } from '@/types/ledger';
 
 import back from '@/assets/back.svg';
-import setting from '@/assets/settingsIcon.svg';
 import piggybank from '@/assets/mission.svg';
 import plus from '@/assets/plus.svg';
 import percategory from '@/assets/percategory.svg';
@@ -17,7 +16,6 @@ import categoryrest from '@/assets/categoryrest.svg';
 import categorytran from '@/assets/categorytran.svg';
 import categoryetc from '@/assets/etcbtn.svg';
 
-import ComingSoon from '@/components/ComingSoon';
 import Donuts, { type CategoryData } from '@/components/Donuts';
 import * as S from './LedgerMain.style';
 
@@ -46,7 +44,6 @@ export default function LedgerMain() {
 
   const [ledgerData, setLedgerData] = useState<LedgerHomeResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,9 +60,6 @@ export default function LedgerMain() {
 
     fetchData();
   }, []);
-
-  const openOverlay = () => setIsOverlayOpen(true);
-  const closeOverlay = () => setIsOverlayOpen(false);
 
   const getChartData = (): CategoryData[] => {
     if (!ledgerData?.todayCategories) return [];
@@ -90,7 +84,7 @@ export default function LedgerMain() {
       <S.UpLine>
         <S.Icons src={back} alt="이전으로" onClick={() => navigate('/home')} />
         가계부
-        <S.Icons src={setting} alt="설정아이콘" onClick={openOverlay} />
+        <div></div>
       </S.UpLine>
 
       <S.ConsumeSection>
@@ -160,8 +154,6 @@ export default function LedgerMain() {
           )}
         </S.SummaryCard>
       </S.Section>
-
-      {isOverlayOpen && <ComingSoon onClick={closeOverlay} />}
     </>
   );
 }

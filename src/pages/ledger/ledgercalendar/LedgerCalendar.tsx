@@ -9,7 +9,6 @@ import { getLedgerCalendar, deleteLedger } from '@/api/ledger.api';
 import type { LedgerItem, CategoryStat, LedgerCalendarResponse } from '@/types/ledger';
 
 import back from '@/assets/back.svg';
-import setting from '@/assets/settingsIcon.svg';
 import stats from '@/assets/stats.svg';
 import search from '@/assets/docsearch.svg';
 import memo from '@/assets/memo.svg';
@@ -222,7 +221,7 @@ const LedgerCalendar: React.FC = () => {
       <S.UpLine>
         <S.Icons src={back} alt="이전으로" onClick={() => navigate('/ledger')} />
         가계부
-        <S.Icons src={setting} alt="설정아이콘" onClick={() => handleTabClick('settings')} />
+        <div> </div>
       </S.UpLine>
 
       <S.CalendarSection>
@@ -378,7 +377,6 @@ const LedgerCalendar: React.FC = () => {
           )}
         </S.SummaryCard>
       </S.Section>
-      {selectedTab === 'settings' && <ComingSoon onClick={closeOverlay} />}
     </>
   );
 };
