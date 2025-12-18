@@ -4,14 +4,14 @@
 
 <table>
   <tr>
-    <td align="center"width="200px">
+    <td align="center"width="400px">
       <a href="https://github.com/kimjiwoo1223">
-      <img alt="김지우" width="150px" alt="image" src="https://github.com/user-attachments/assets/d3e90cee-caaf-4884-97f6-39cfbf1f7730" />
+      <img alt="김지우" width="300px" alt="image" src="https://github.com/user-attachments/assets/d3e90cee-caaf-4884-97f6-39cfbf1f7730" />
       </a>
     </td>
-    <td align="center"width="200px">
+    <td align="center"width="400px">
       <a href="https://github.com/gjdbsdk">
-        <img alt="허윤아" width="150px"alt="image" src="https://github.com/user-attachments/assets/a464187d-7646-4cc7-9deb-f61df54a42d9" />
+        <img alt="허윤아" width="300px"alt="image" src="https://github.com/user-attachments/assets/a464187d-7646-4cc7-9deb-f61df54a42d9" />
       </a>
     </td>
   </tr>
@@ -35,22 +35,23 @@
     <td valign="top">
       <ul>
         <b>[ 맡은 페이지 ]</b>
-        <li>구매자 홈 페이지</li>
-        <li>캐릭터 페이지</li>
-        <li>예약 현황 페이지</li>
-        <li>구매 내역 페이지</li>
+        <li>홈 페이지</li>
+        <li>마이 페이지</li>
+        <li>자산 페이지</li>
+        <li>회원가입 페이지</li>
+        <li>레벨테스트 페이지</li>
+        <li>로그인 페이지</li>
       </ul>
     </td>
     <td valign="top">
       <ul>
         <b>[ 맡은 페이지 ]</b>
-        <li>판매자 홈 페이지</li>
-        <li>판매자, 구매자 지도 페이지</li>
-        <li>가게 추가 페이지</li>
-        <li>판매자 예약 페이지</li>
-        <li>판매자 온보딩 페이지</li>
-        <li>공통 온보딩</li>
-        <li>AI(장보기) 페이지</li>
+        <li>가계부 페이지</li>
+        <li>알림 페이지</li>
+        <li>미션 페이지</li>
+        <li>지식 페이지</li>
+        <li>퀴즈 페이지</li>
+        <li>검색 페이지</li>
       </ul>
     </td>
   </tr>
@@ -66,9 +67,12 @@
   </tr>
   <tr>
     <td valign="top">
-      <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /><br />
-      <img src="https://img.shields.io/badge/css-663399?style=for-the-badge&logo=css&logoColor=white" /><br />
-      <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" /><br />
+      <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"><br />  
+      <img src="https://img.shields.io/badge/TypeScript-4477C0?style=for-the-badge&logo=TypeScript&logoColor=white"/><br />
+      <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"><br />
+      <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"><br />
+      <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white"><br />
+      <img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"> 
     </td>
   </tr>
 </table>
