@@ -70,10 +70,17 @@ export default function Home() {
         const today = new Date();
         const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-        const lastActionDate = localStorage.getItem('lastMissionActionDate');
+        const savedRecord = localStorage.getItem('lastMissionAction');
 
-        if (lastActionDate === todayStr) {
-          missionObj = { ...missionObj, completed: true };
+        if (savedRecord) {
+          try {
+            const { date, id } = JSON.parse(savedRecord);
+            if (date === todayStr && id === missionObj.userMissionId) {
+              missionObj = { ...missionObj, completed: true };
+            }
+          } catch (e) {
+            localStorage.removeItem('lastMissionAction');
+          }
         }
       }
       setTodayMission(missionObj);
@@ -113,12 +120,25 @@ export default function Home() {
     const today = new Date();
     const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
+    const savedRecord = localStorage.getItem('lastMissionAction');
+    if (savedRecord) {
+      const { date, id } = JSON.parse(savedRecord);
+      if (date === todayStr && id === todayMission.userMissionId) {
+        alert('미션 확인은 하루에 한 번만 가능합니다.');
+        return;
+      }
+    }
+
     try {
       await checkMission(todayMission.userMissionId);
 
       setTodayMission((prev) => (prev ? { ...prev, completed: true } : null));
 
-      localStorage.setItem('lastMissionActionDate', todayStr);
+      const record = JSON.stringify({
+        date: todayStr,
+        id: todayMission.userMissionId,
+      });
+      localStorage.setItem('lastMissionAction', record);
 
       fetchHomeData();
     } catch (error: any) {
