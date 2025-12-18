@@ -113,6 +113,12 @@ export const Details = styled.div`
   margin: 10px 40px;
 `;
 
+export const Detailss = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 20px 10px 30px;
+`;
+
 export const DetailIcons = styled.img`
   height: 20px;
 `;
@@ -154,7 +160,7 @@ export const DetailSide = styled.div`
 
 export const InOutcome = styled.div`
   display: flex;
-  gap: 23px;
+  gap: 20px;
   font-size: 17px;
   font-weight: 500;
   cursor: default;
