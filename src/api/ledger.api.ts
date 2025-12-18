@@ -16,9 +16,9 @@ export const getLedgerHome = async (date?: string): Promise<LedgerHomeResponse> 
   return response.data;
 };
 
-export const getLedgerCalendar = async (year: string, month: string): Promise<LedgerCalendarResponse> => {
+export const getLedgerCalendar = async (date: string): Promise<LedgerCalendarResponse> => {
   const response = await instance.get<LedgerCalendarResponse>('/ledger/calendar', {
-    params: { year, month },
+    params: { date },
   });
   return response.data;
 };

@@ -62,9 +62,12 @@ export default function LedgerMain() {
   }, []);
 
   const getChartData = (): CategoryData[] => {
-    if (!ledgerData?.todayCategories) return [];
+    // 기존: ledgerData?.todayCategories
+    // 변경: ledgerData?.monthSummary?.categories
+    // monthSummary가 없거나 그 안에 categories가 없는 경우를 방어합니다.
+    if (!ledgerData?.monthSummary?.categories) return [];
 
-    return ledgerData.todayCategories.map((cat, index) => ({
+    return ledgerData.monthSummary.categories.map((cat, index) => ({
       id: cat.categoryId,
       label: cat.categoryName,
       ratio: cat.percent,
@@ -91,7 +94,7 @@ export default function LedgerMain() {
         <S.L_Section>
           <S.L_Header>
             <S.MiniIcons src={piggybank} alt="저금통 아이콘" />
-            오늘의 소비
+            <S.TitleText>오늘의 소비</S.TitleText>
             <S.PlusIcons src={plus} alt="추가버튼" onClick={() => navigate('/consumeplus')} />
           </S.L_Header>
           <S.ContentBox_1>
@@ -118,7 +121,7 @@ export default function LedgerMain() {
         <S.L_Section>
           <S.L_Header>
             <S.MiniIcons src={percategory} alt="카테고리 아이콘" />
-            카테고리별 소비
+            <S.TitleText>카테고리별 소비</S.TitleText>
             <S.PlusIcons src={plus} alt="추가버튼" onClick={() => navigate('/ledgercalendar')} />
           </S.L_Header>
           <S.ContentBox>
@@ -143,7 +146,7 @@ export default function LedgerMain() {
         <S.TitleRow>
           <S.Left>
             <S.MiniIcons src={chartIcon} alt="소비 요약" />
-            <S.TitleText>간단 소비 요약</S.TitleText>
+            <S.TitleText>월간 소비 요약</S.TitleText>
           </S.Left>
           <S.Right>
             <S.PlusIcons src={plus} alt="추가버튼" onClick={() => navigate('/ledgercalendar')} />
