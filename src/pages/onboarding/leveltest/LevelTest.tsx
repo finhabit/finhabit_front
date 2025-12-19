@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LevelCard from '@/components/LevelCard';
 import * as S from './LevelTest.style';
+
 import levellogo from '@/assets/levellogo.svg';
+import levellogo1 from '@/assets/levellogo1.svg';
+import levellogo2 from '@/assets/levellogo2.svg';
 
 import { getLevelTestQuestions } from '@/api/levelTest.api';
 import { signup } from '@/api/auth.api';
@@ -156,6 +159,12 @@ const LevelTest = () => {
     return '상급';
   };
 
+  const getLevelImage = (currentScore: number) => {
+    if (currentScore <= 40) return levellogo;
+    if (currentScore <= 70) return levellogo1;
+    return levellogo2;
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -188,7 +197,7 @@ const LevelTest = () => {
               <S.PopupMessage>{getResultText(score)}</S.PopupMessage>
             </S.PopupText>
 
-            <S.PopupImage src={levellogo} alt="levellogo" />
+            <S.PopupImage src={getLevelImage(score)} alt="level logo" />
 
             <S.PopupButton onClick={handleStart}>{getLevelName(score)}형 Finhabit 시작하기</S.PopupButton>
           </S.PopupContent>
