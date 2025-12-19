@@ -108,7 +108,7 @@ export const PopupMessage = styled.p`
 `;
 
 export const PopupImage = styled.img`
-  width: 183.798px;
+  width: 300px;
   height: 303.502px;
   margin: 27px 0;
 `;
