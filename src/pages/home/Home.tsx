@@ -4,7 +4,7 @@ import BottomNav from '@/components/BottomNav';
 import Donuts from '@/components/Donuts';
 
 import { getLedgerHome } from '@/api/ledger.api';
-import { getTodayMission, checkMission } from '@/api/mission.api';
+import { getTodayMission, checkMission, uncheckMission } from '@/api/mission.api';
 import { getTodayKnowledge } from '@/api/knowledge.api';
 
 import type { Mission as MissionType } from '@/types/mission';
@@ -113,41 +113,37 @@ export default function Home() {
     e.stopPropagation();
     if (!todayMission) return;
 
-    if (todayMission.completed) {
-      return;
-    }
+    const nextCompletedState = !todayMission.completed;
 
     const today = new Date();
     const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-    const savedRecord = localStorage.getItem('lastMissionAction');
-    if (savedRecord) {
-      const { date, id } = JSON.parse(savedRecord);
-      if (date === todayStr && id === todayMission.userMissionId) {
-        alert('미션 확인은 하루에 한 번만 가능합니다.');
-        return;
-      }
-    }
-
     try {
-      await checkMission(todayMission.userMissionId);
+      setTodayMission((prev) => (prev ? { ...prev, completed: nextCompletedState } : null));
 
-      setTodayMission((prev) => (prev ? { ...prev, completed: true } : null));
+      if (nextCompletedState) {
+        await checkMission(todayMission.userMissionId);
 
-      const record = JSON.stringify({
-        date: todayStr,
-        id: todayMission.userMissionId,
-      });
-      localStorage.setItem('lastMissionAction', record);
+        const record = JSON.stringify({
+          date: todayStr,
+          id: todayMission.userMissionId,
+        });
+        localStorage.setItem('lastMissionAction', record);
+      } else {
+        await uncheckMission(todayMission.userMissionId);
+
+        localStorage.removeItem('lastMissionAction');
+      }
 
       fetchHomeData();
     } catch (error: any) {
-      setTodayMission((prev) => (prev ? { ...prev, completed: false } : null));
+      setTodayMission((prev) => (prev ? { ...prev, completed: !nextCompletedState } : null));
 
       const status = error.response?.status;
       if (status === 409) alert('이미 처리된 요청입니다.');
       else if (status === 404) alert('해당 미션을 찾을 수 없습니다.');
       else alert('오류가 발생했습니다. 다시 시도해주세요.');
+      console.error(error);
     }
   };
 

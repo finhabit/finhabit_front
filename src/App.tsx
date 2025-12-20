@@ -40,6 +40,7 @@ function App() {
     <AppWrapper>
       <GlobalStyle />
       <Routes>
+        <Route path="/" element={<Main />} />
         <Route path="/home" element={<Home />} />
         <Route path="/finance" element={<Finance />} />
         <Route path="/mypage" element={<Mypage />} />
@@ -55,7 +56,6 @@ function App() {
         <Route path="/setcategoryincome" element={<SetCategoryIncome />} />
         <Route path="/ledgercalendar" element={<LedgerCalendar />} />
         <Route path="/mypage/pw" element={<Mypage_pw />} />
-        <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/leveltest" element={<LevelTest />} />
